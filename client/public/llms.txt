@@ -1,0 +1,29 @@
+# GEN Learning
+
+> GEN Learning is a platform for practical IT learning, web development, digital solutions and real-world projects.
+
+## Main Pages
+
+- [Home](https://genlearning.in/)
+- [Courses](https://genlearning.in/courses)
+- [IT Services](https://genlearning.in/services)
+- [Projects](https://genlearning.in/projects)
+- [About](https://genlearning.in/about)
+- [Contact](https://genlearning.in/contact)
+
+## Learning
+
+- [Courses](https://genlearning.in/courses)
+
+## Services
+
+- [Website Development](https://genlearning.in/services/website-development)
+- [Web Applications](https://genlearning.in/services/web-applications)
+- [E-Commerce Solutions](https://genlearning.in/services/ecommerce-solutions)
+- [Custom Software](https://genlearning.in/services/custom-software)
+- [UI/UX Design](https://genlearning.in/services/ui-ux-design)
+- [Website Maintenance](https://genlearning.in/services/website-maintenance)
+
+## Projects
+
+- [Projects](https://genlearning.in/projects)

@@ -17,7 +17,11 @@ const app = express();
 
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: [
+      "http://localhost:5173",
+      "https://observant-kindness-production-efec.up.railway.app"
+    ],
+    credentials: true
   })
 );
 

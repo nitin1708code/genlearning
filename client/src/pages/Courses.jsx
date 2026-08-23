@@ -19,7 +19,7 @@ const Courses = () => {
   useEffect(() => {
     const fetchCourses = async () => {
       try {
-        const response = await fetch(
+         const response = await fetch(
   "https://genlearning-production.up.railway.app/api/courses"
 );
 

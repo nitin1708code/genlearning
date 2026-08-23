@@ -20,8 +20,8 @@ const Courses = () => {
     const fetchCourses = async () => {
       try {
         const response = await fetch(
-          "http://localhost:5000/api/courses"
-        );
+  "https://genlearning-production.up.railway.app/api/courses"
+);
 
         const data = await response.json();
 

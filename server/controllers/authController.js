@@ -146,6 +146,8 @@ const registerUser = async (req, res) => {
   `,
 });
 
+console.log("REGISTER OTP EMAIL SENT:", cleanEmail);
+
     res.status(200).json({
       success: true,
       message: "OTP sent successfully. Please verify your email.",

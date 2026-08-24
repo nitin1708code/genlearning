@@ -99,7 +99,7 @@ const registerUser = async (req, res) => {
     );
  
   const { data, error } = await transporter.emails.send({
-  from: "GEN Learning <onboarding@resend.dev>",
+  from: "GEN Learning <noreply@genlearning.in>",
   to: [cleanEmail],
   subject: "GEN Learning - Email Verification OTP",
   html: `
@@ -547,7 +547,7 @@ const forgotPassword = async (req, res) => {
 
     // Send email
     await transporter.emails.send({
-  from: "GEN Learning <onboarding@resend.dev>",
+  from: "GEN Learning <noreply@genlearning.in>",
   to: [cleanEmail],
   subject: "GEN Learning - Password Reset OTP",
 

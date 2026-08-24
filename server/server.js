@@ -19,7 +19,7 @@ app.use(
   cors({
     origin: [
       "http://localhost:5173",
-      "https://observant-kindness-production-efec.up.railway.app"
+      "https://genlearning.in"
     ],
     credentials: true
   })

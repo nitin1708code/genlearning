@@ -147,7 +147,7 @@ const registerUser = async (req, res) => {
   `,
 });
 
-});
+
 
 console.log("REGISTER RESEND DATA:", data);
 console.log("REGISTER RESEND ERROR:", error);

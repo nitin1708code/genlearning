@@ -9,9 +9,9 @@ import {
 import MainLayout from "./layouts/MainLayout";
 import ProtectedRoute from "./components/ProtectedRoute";
 import ScrollToTop from "./components/ScrollToTop";
+import Home from "./pages/Home";
 
 // Lazy-loaded pages
-const Home = lazy(() => import("./pages/Home"));
 const Courses = lazy(() => import("./pages/Courses"));
 const CourseDetail = lazy(() => import("./pages/coursedetail"));
 const Services = lazy(() => import("./pages/Services"));

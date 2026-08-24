@@ -56,7 +56,7 @@ const Dashboard = () => {
       }
 
       const response = await fetch(
-  "http://localhost:5000/api/enrollments/my",
+  "https://genlearning.in/api/enrollments/my",
   {
     cache: "no-store",
     headers: {

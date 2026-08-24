@@ -22,7 +22,7 @@ const CourseDetail = () => {
         setError("");
 
         const response = await fetch(
-  `http://localhost:5000/api/courses/${courseId}`,
+  `https://genlearning.in/api/courses/${courseId}`,
   {
     cache: "no-store",
   }
@@ -66,7 +66,7 @@ const CourseDetail = () => {
 
       try {
         const response = await fetch(
-          "http://localhost:5000/api/enrollments/my",
+          "https://genlearning.in/api/enrollments/my",
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -128,7 +128,7 @@ const CourseDetail = () => {
       setError("");
 
       const response = await fetch(
-        `http://localhost:5000/api/enrollments/${course.id}`,
+        `https://genlearning.in/api/enrollments/${course.id}`,
         {
           method: "POST",
 

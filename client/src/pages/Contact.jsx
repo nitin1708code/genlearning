@@ -26,7 +26,7 @@ const Contact = () => {
 
     try {
       const response = await fetch(
-        "http://localhost:5000/api/contact",
+        "https://genlearning.in/api/contact",
         {
           method: "POST",
 

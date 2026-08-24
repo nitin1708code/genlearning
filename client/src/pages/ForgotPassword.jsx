@@ -36,7 +36,7 @@ const ForgotPassword = () => {
       setLoading(true);
 
       const response = await fetch(
-        "http://localhost:5000/api/auth/forgot-password",
+        "https://genlearning.in/api/auth/forgot-password",
         {
           method: "POST",
           headers: {
@@ -99,7 +99,7 @@ const ForgotPassword = () => {
       setLoading(true);
 
       const response = await fetch(
-        "http://localhost:5000/api/auth/verify-reset-otp",
+        "https://genlearning.in/api/auth/verify-reset-otp",
         {
           method: "POST",
           headers: {
@@ -172,7 +172,7 @@ const ForgotPassword = () => {
       setLoading(true);
 
       const response = await fetch(
-        "http://localhost:5000/api/auth/reset-password",
+        "https://genlearning.in/api/auth/reset-password",
         {
           method: "POST",
           headers: {

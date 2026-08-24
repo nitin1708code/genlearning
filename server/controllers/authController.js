@@ -97,56 +97,54 @@ const registerUser = async (req, res) => {
         otpExpiresAt,
       ]
     );
+ await transporter.emails.send({
+  from: "GEN Learning <onboarding@resend.dev>",
+  to: [cleanEmail],
+  subject: "GEN Learning - Email Verification OTP",
+  html: `
+    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 30px;">
+      
+      <h2 style="margin-bottom: 10px;">
+        Welcome to GEN Learning
+      </h2>
 
-    // Send OTP email
-    await transporter.sendMail({
-      from: `"GEN Learning" <${process.env.EMAIL_USER}>`,
-      to: cleanEmail,
-      subject: "GEN Learning - Email Verification OTP",
-      html: `
-        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 30px;">
-          
-          <h2 style="margin-bottom: 10px;">
-            Welcome to GEN Learning
-          </h2>
+      <p>
+        Hi ${cleanName},
+      </p>
 
-          <p>
-            Hi ${cleanName},
-          </p>
+      <p>
+        Use the OTP below to verify your email address.
+      </p>
 
-          <p>
-            Use the OTP below to verify your email address.
-          </p>
+      <div style="
+        font-size: 32px;
+        font-weight: bold;
+        letter-spacing: 8px;
+        padding: 20px;
+        background: #f5f5f5;
+        text-align: center;
+        margin: 25px 0;
+      ">
+        ${otp}
+      </div>
 
-          <div style="
-            font-size: 32px;
-            font-weight: bold;
-            letter-spacing: 8px;
-            padding: 20px;
-            background: #f5f5f5;
-            text-align: center;
-            margin: 25px 0;
-          ">
-            ${otp}
-          </div>
+      <p>
+        This OTP will expire in <strong>10 minutes</strong>.
+      </p>
 
-          <p>
-            This OTP will expire in <strong>10 minutes</strong>.
-          </p>
+      <p>
+        If you did not create a GEN Learning account,
+        you can safely ignore this email.
+      </p>
 
-          <p>
-            If you did not create a GEN Learning account,
-            you can safely ignore this email.
-          </p>
+      <p>
+        Regards,<br />
+        <strong>GEN Learning</strong>
+      </p>
 
-          <p>
-            Regards,<br />
-            <strong>GEN Learning</strong>
-          </p>
-
-        </div>
-      `,
-    });
+    </div>
+  `,
+});
 
     res.status(200).json({
       success: true,
@@ -541,62 +539,61 @@ const forgotPassword = async (req, res) => {
     );
 
     // Send email
-    await transporter.sendMail({
-      from: `"GEN Learning" <${process.env.EMAIL_USER}>`,
-      to: cleanEmail,
-      subject: "GEN Learning - Password Reset OTP",
+    await transporter.emails.send({
+  from: "GEN Learning <onboarding@resend.dev>",
+  to: [cleanEmail],
+  subject: "GEN Learning - Password Reset OTP",
 
-      html: `
-        <div style="
-          font-family: Arial, sans-serif;
-          max-width: 600px;
-          margin: auto;
-          padding: 30px;
-        ">
+  html: `
+    <div style="
+      font-family: Arial, sans-serif;
+      max-width: 600px;
+      margin: auto;
+      padding: 30px;
+    ">
 
-          <h2>
-            Reset your GEN Learning password
-          </h2>
+      <h2>
+        Reset your GEN Learning password
+      </h2>
 
-          <p>
-            Hi ${user.name},
-          </p>
+      <p>
+        Hi ${user.name},
+      </p>
 
-          <p>
-            Use the OTP below to reset your password.
-          </p>
+      <p>
+        Use the OTP below to reset your password.
+      </p>
 
-          <div style="
-            font-size: 32px;
-            font-weight: bold;
-            letter-spacing: 8px;
-            padding: 20px;
-            background: #f5f5f5;
-            text-align: center;
-            margin: 25px 0;
-          ">
-            ${otp}
-          </div>
+      <div style="
+        font-size: 32px;
+        font-weight: bold;
+        letter-spacing: 8px;
+        padding: 20px;
+        background: #f5f5f5;
+        text-align: center;
+        margin: 25px 0;
+      ">
+        ${otp}
+      </div>
 
-          <p>
-            This OTP will expire in
-            <strong>10 minutes</strong>.
-          </p>
+      <p>
+        This OTP will expire in
+        <strong>10 minutes</strong>.
+      </p>
 
-          <p>
-            If you did not request a password reset,
-            you can safely ignore this email.
-          </p>
+      <p>
+        If you did not request a password reset,
+        you can safely ignore this email.
+      </p>
 
-          <p>
-            Regards,<br />
-            <strong>GEN Learning</strong>
-          </p>
+      <p>
+        Regards,<br />
+        <strong>GEN Learning</strong>
+      </p>
 
-        </div>
-      `,
-    });
-
+    </div>
+  `,
+});
     res.json({
       success: true,
       message: "Password reset OTP sent successfully.",

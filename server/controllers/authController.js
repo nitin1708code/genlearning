@@ -97,7 +97,8 @@ const registerUser = async (req, res) => {
         otpExpiresAt,
       ]
     );
- await transporter.emails.send({
+ 
+  const { data, error } = await transporter.emails.send({
   from: "GEN Learning <onboarding@resend.dev>",
   to: [cleanEmail],
   subject: "GEN Learning - Email Verification OTP",
@@ -146,6 +147,10 @@ const registerUser = async (req, res) => {
   `,
 });
 
+});
+
+console.log("REGISTER RESEND DATA:", data);
+console.log("REGISTER RESEND ERROR:", error);
 console.log("REGISTER OTP EMAIL SENT:", cleanEmail);
 
     res.status(200).json({

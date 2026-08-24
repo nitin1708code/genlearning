@@ -35,7 +35,7 @@ const ProtectedRoute = () => {
       try {
 
         const response = await fetch(
-          "https://genlearning.in/api/auth/me",
+          "https://api.genlearning.in/api/auth/me",
           {
             method: "GET",
 

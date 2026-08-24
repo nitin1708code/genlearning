@@ -65,7 +65,7 @@ const Login = () => {
 
     try {
       const response = await fetch(
-        "https://genlearning.in/api/auth/login",
+        "https://api.genlearning.in/api/auth/login",
         {
           method: "POST",
 
@@ -126,7 +126,7 @@ const Login = () => {
 
     try {
       const response = await fetch(
-        "https://genlearning.in/api/auth/google",
+        "https://api.genlearning.in/api/auth/google",
         {
           method: "POST",
 

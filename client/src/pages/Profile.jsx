@@ -41,7 +41,7 @@ const Profile = () => {
       }
 
       const response = await fetch(
-        "https://genlearning.in/api/auth/me",
+        "https://api.genlearning.in/api/auth/me",
         {
           cache: "no-store",
           headers: {
@@ -129,7 +129,7 @@ const Profile = () => {
         localStorage.getItem("genlearningToken");
 
       const response = await fetch(
-        "https://genlearning.in/api/auth/profile",
+        "https://api.genlearning.in/api/auth/profile",
         {
           method: "PUT",
           headers: {
@@ -219,7 +219,7 @@ const Profile = () => {
         localStorage.getItem("genlearningToken");
 
       const response = await fetch(
-        "https://genlearning.in/api/auth/change-password",
+        "https://api.genlearning.in/api/auth/change-password",
         {
           method: "PUT",
           headers: {

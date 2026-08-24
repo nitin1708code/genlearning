@@ -120,7 +120,7 @@ const Register = () => {
       setLoading(true);
 
       const response = await fetch(
-        "https://genlearning.in/api/auth/register",
+        "https://api.genlearning.in/api/auth/register",
         {
           method: "POST",
 
@@ -186,7 +186,7 @@ const Register = () => {
 
     try {
       const response = await fetch(
-        "https://genlearning.in/api/auth/google",
+        "https://api.genlearning.in/api/auth/google",
         {
           method: "POST",
 
@@ -284,7 +284,7 @@ const Register = () => {
       setLoading(true);
 
       const response = await fetch(
-        "https://genlearning.in/api/auth/verify-email",
+        "https://api.genlearning.in/api/auth/verify-email",
         {
           method: "POST",
 

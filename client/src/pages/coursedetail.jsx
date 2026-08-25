@@ -104,71 +104,142 @@ const CourseDetail = () => {
   // ENROLL
   // ========================================
 
-  const handleEnroll = async () => {
+   const handleEnroll = async () => {
+  const token = localStorage.getItem("genlearningToken");
 
-    const token = localStorage.getItem(
-      "genlearningToken"
+  // User is not logged in
+  if (!token) {
+    navigate("/login");
+    return;
+  }
+
+  // Already enrolled
+  if (isEnrolled) {
+    navigate("/dashboard");
+    return;
+  }
+
+  try {
+    setEnrolling(true);
+    setError("");
+
+    // ========================================
+    // CREATE RAZORPAY ORDER
+    // ========================================
+
+    const orderResponse = await fetch(
+       "https://api.genlearning.in/api/payments/create-order",
+      {
+        method: "POST",
+
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+
+        body: JSON.stringify({
+          courseId: course.id,
+        }),
+      }
     );
 
-    // User is not logged in
-    if (!token) {
-      navigate("/login");
-      return;
-    }
+    const orderData = await orderResponse.json();
 
-    // Already enrolled
-    if (isEnrolled) {
-      navigate("/dashboard");
-      return;
-    }
-
-    try {
-
-      setEnrolling(true);
-      setError("");
-
-      const response = await fetch(
-        `https://api.genlearning.in/api/enrollments/${course.id}`,
-        {
-          method: "POST",
-
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        }
+    if (!orderResponse.ok) {
+      throw new Error(
+        orderData.message || "Failed to create payment order"
       );
+    }
 
-      const data = await response.json();
+    // ========================================
+    // OPEN RAZORPAY CHECKOUT
+    // ========================================
 
-      if (!response.ok) {
-        throw new Error(
-          data.message || "Enrollment failed"
+    const options = {
+      key: orderData.keyId,
+
+      amount: orderData.order.amount,
+
+      currency: orderData.order.currency,
+
+      name: "GEN Learning",
+
+      description: course.title,
+
+      order_id: orderData.order.id,
+
+      handler: async function (response) {
+
+        // ========================================
+        // VERIFY PAYMENT
+        // ========================================
+
+        const verifyResponse = await fetch(
+          "https://api.genlearning.in/api/payments/verify-payment",
+          {
+            method: "POST",
+
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+
+            body: JSON.stringify({
+              courseId: course.id,
+              razorpay_order_id: response.razorpay_order_id,
+              razorpay_payment_id: response.razorpay_payment_id,
+              razorpay_signature: response.razorpay_signature,
+            }),
+          }
         );
-      }
 
-      setIsEnrolled(true);
+        const verifyData = await verifyResponse.json();
 
-      // Go to dashboard after successful enrollment
-      navigate("/dashboard");
+        if (!verifyResponse.ok) {
+          throw new Error(
+            verifyData.message || "Payment verification failed"
+          );
+        }
 
-    } catch (error) {
+        setIsEnrolled(true);
 
-      console.error(
-        "Enrollment error:",
-        error
-      );
+        navigate("/dashboard");
+      },
 
-      setError(
-        error.message ||
-        "Failed to enroll in course."
-      );
+      prefill: {
+        name: "",
+        email: "",
+      },
 
-    } finally {
+      theme: {
+        color: "#000000",
+      },
+    };
+
+    const razorpay = new window.Razorpay(options);
+
+    razorpay.open();
+
+    razorpay.on("payment.failed", function () {
+      setError("Payment failed. Please try again.");
       setEnrolling(false);
-    }
-  };
+    });
 
+  } catch (error) {
+
+    console.error(
+      "Payment error:",
+      error
+    );
+
+    setError(
+      error.message ||
+      "Unable to start payment."
+    );
+
+    setEnrolling(false);
+  }
+};
 
   // ========================================
   // LOADING

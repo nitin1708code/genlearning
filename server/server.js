@@ -7,6 +7,7 @@ const coursesRoutes = require("./routes/courses");
 const authRoutes = require("./routes/authRoutes");
 const enrollmentRoutes = require("./routes/enrollments");
 const contactRoutes = require("./routes/contactRoutes");
+const paymentRoutes = require("./routes/paymentRoutes");
 
 const app = express();
 
@@ -39,6 +40,11 @@ app.use(
 app.use(
   "/api/contact",
   contactRoutes
+);
+
+app.use(
+  "/api/payments",
+  paymentRoutes
 );
 
 

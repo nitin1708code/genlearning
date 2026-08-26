@@ -6,10 +6,9 @@ const API_URL = "https://api.genlearning.in";
 const Mentoring = () => {
   const [searchParams] = useSearchParams();
 
-  // ========================================
+  // =====================================================
   // INITIAL DURATION
-  // Hero se ?duration=60 / ?duration=120
-  // ========================================
+  // =====================================================
 
   const queryDuration = Number(
     searchParams.get("duration")
@@ -36,21 +35,18 @@ const Mentoring = () => {
   const [error, setError] =
     useState("");
 
-
-  // ========================================
+  // =====================================================
   // PRICE
-  // ========================================
+  // =====================================================
 
   const price =
     duration === 60 ? 199 : 349;
 
-
-  // ========================================
-  // LOAD RAZORPAY SCRIPT
-  // ========================================
+  // =====================================================
+  // LOAD RAZORPAY
+  // =====================================================
 
   useEffect(() => {
-
     if (window.Razorpay) {
       return;
     }
@@ -73,37 +69,28 @@ const Mentoring = () => {
     script.async = true;
 
     document.body.appendChild(script);
-
-    return () => {
-      // Do not remove script here.
-      // Razorpay may still be required after navigation.
-    };
-
   }, []);
 
-
-  // ========================================
-  // DATE LIMIT
-  // ========================================
+  // =====================================================
+  // TODAY
+  // =====================================================
 
   const today = new Date()
     .toISOString()
     .split("T")[0];
 
-
-  // ========================================
-  // RESET MESSAGES
-  // ========================================
+  // =====================================================
+  // CLEAR MESSAGES
+  // =====================================================
 
   const clearMessages = () => {
     setError("");
     setMessage("");
   };
 
-
-  // ========================================
+  // =====================================================
   // OPEN RAZORPAY
-  // ========================================
+  // =====================================================
 
   const openRazorpay = (
     razorpayData,
@@ -113,16 +100,16 @@ const Mentoring = () => {
     if (
       !razorpayData ||
       !razorpayData.key_id ||
-      !razorpayData.order_id
+      !razorpayData.order_id ||
+      !razorpayData.amount
     ) {
-
       console.error(
         "Invalid Razorpay data:",
         razorpayData
       );
 
       setError(
-        "Payment could not be initialized. Please try again."
+        "Payment could not be initialized."
       );
 
       setLoading(false);
@@ -130,10 +117,19 @@ const Mentoring = () => {
       return;
     }
 
+    if (!window.Razorpay) {
+      setError(
+        "Razorpay checkout is not loaded. Please refresh and try again."
+      );
 
-    // ========================================
+      setLoading(false);
+
+      return;
+    }
+
+    // ===================================================
     // RAZORPAY OPTIONS
-    // ========================================
+    // ===================================================
 
     const options = {
 
@@ -154,14 +150,7 @@ const Mentoring = () => {
       order_id:
         razorpayData.order_id,
 
-
-      // ========================================
-      // PAYMENT SUCCESS
-      // ========================================
-
-      handler: async (
-        paymentResponse
-      ) => {
+      handler: async (paymentResponse) => {
 
         try {
 
@@ -170,10 +159,9 @@ const Mentoring = () => {
             paymentResponse
           );
 
-
-          // ========================================
+          // =============================================
           // VERIFY PAYMENT
-          // ========================================
+          // =============================================
 
           const verifyResponse =
             await fetch(
@@ -190,7 +178,6 @@ const Mentoring = () => {
                 },
 
                 body: JSON.stringify({
-
                   razorpay_order_id:
                     paymentResponse.razorpay_order_id,
 
@@ -199,25 +186,17 @@ const Mentoring = () => {
 
                   razorpay_signature:
                     paymentResponse.razorpay_signature,
-
                 }),
               }
             );
 
-
           const verifyData =
             await verifyResponse.json();
 
-
           console.log(
-            "Payment verification response:",
+            "Payment verification:",
             verifyData
           );
-
-
-          // ========================================
-          // VERIFY ERROR
-          // ========================================
 
           if (!verifyResponse.ok) {
 
@@ -231,10 +210,9 @@ const Mentoring = () => {
             return;
           }
 
-
-          // ========================================
+          // =============================================
           // SUCCESS
-          // ========================================
+          // =============================================
 
           setError("");
 
@@ -243,11 +221,9 @@ const Mentoring = () => {
           );
 
           setBookingDate("");
-
           setBookingTime("");
 
           setLoading(false);
-
 
         } catch (verificationError) {
 
@@ -264,21 +240,11 @@ const Mentoring = () => {
         }
       },
 
-
-      // ========================================
-      // PREFILL
-      // ========================================
-
       prefill: {
         name: "",
         email: "",
         contact: "",
       },
-
-
-      // ========================================
-      // NOTES
-      // ========================================
 
       notes: {
         mentoring_duration:
@@ -291,24 +257,12 @@ const Mentoring = () => {
           bookingTime,
       },
 
-
-      // ========================================
-      // THEME
-      // ========================================
-
       theme: {
         color: "#111111",
       },
 
-
-      // ========================================
-      // MODAL
-      // ========================================
-
       modal: {
-
         ondismiss: () => {
-
           setLoading(false);
 
           setMessage("");
@@ -317,23 +271,19 @@ const Mentoring = () => {
             "Payment was cancelled."
           );
         },
-
       },
-
     };
 
-
-    // ========================================
+    // ===================================================
     // CREATE RAZORPAY INSTANCE
-    // ========================================
+    // ===================================================
 
     const razorpay =
       new window.Razorpay(options);
 
-
-    // ========================================
+    // ===================================================
     // PAYMENT FAILED
-    // ========================================
+    // ===================================================
 
     razorpay.on(
       "payment.failed",
@@ -353,41 +303,35 @@ const Mentoring = () => {
       }
     );
 
-
-    // ========================================
+    // ===================================================
     // OPEN CHECKOUT
-    // ========================================
+    // ===================================================
 
     razorpay.open();
   };
 
-
-  // ========================================
-  // CREATE BOOKING
-  // ========================================
+  // =====================================================
+  // HANDLE BOOKING
+  // =====================================================
 
   const handleBooking = async (event) => {
 
     event.preventDefault();
 
     setLoading(true);
-
     setError("");
-
     setMessage("");
-
 
     try {
 
-      // ========================================
-      // AUTH TOKEN
-      // ========================================
+      // =================================================
+      // TOKEN
+      // =================================================
 
       const token =
         localStorage.getItem(
           "genlearningToken"
         );
-
 
       if (!token) {
 
@@ -400,10 +344,9 @@ const Mentoring = () => {
         return;
       }
 
-
-      // ========================================
-      // DATE / TIME VALIDATION
-      // ========================================
+      // =================================================
+      // DATE / TIME
+      // =================================================
 
       if (
         !bookingDate ||
@@ -419,10 +362,9 @@ const Mentoring = () => {
         return;
       }
 
-
-      // ========================================
-      // LOAD RAZORPAY IF NOT LOADED
-      // ========================================
+      // =================================================
+      // RAZORPAY SCRIPT
+      // =================================================
 
       if (!window.Razorpay) {
 
@@ -433,7 +375,6 @@ const Mentoring = () => {
               document.querySelector(
                 'script[src="https://checkout.razorpay.com/v1/checkout.js"]'
               );
-
 
             if (existingScript) {
 
@@ -452,7 +393,6 @@ const Mentoring = () => {
               return;
             }
 
-
             const script =
               document.createElement("script");
 
@@ -460,7 +400,6 @@ const Mentoring = () => {
               "https://checkout.razorpay.com/v1/checkout.js";
 
             script.async = true;
-
 
             script.onload = resolve;
 
@@ -471,31 +410,22 @@ const Mentoring = () => {
                 )
               );
 
-
             document.body.appendChild(
               script
             );
-
           }
         );
       }
 
-
-      // ========================================
-      // FINAL CHECK
-      // ========================================
-
       if (!window.Razorpay) {
-
         throw new Error(
           "Razorpay checkout is not available"
         );
       }
 
-
-      // ========================================
-      // CREATE BOOKING + ORDER
-      // ========================================
+      // =================================================
+      // CREATE BOOKING + RAZORPAY ORDER
+      // =================================================
 
       const response =
         await fetch(
@@ -526,20 +456,17 @@ const Mentoring = () => {
           }
         );
 
-
       const data =
         await response.json();
-
 
       console.log(
         "Mentoring booking response:",
         data
       );
 
-
-      // ========================================
+      // =================================================
       // BACKEND ERROR
-      // ========================================
+      // =================================================
 
       if (!response.ok) {
 
@@ -553,15 +480,15 @@ const Mentoring = () => {
         return;
       }
 
-
-      // ========================================
-      // RAZORPAY DATA CHECK
-      // ========================================
+      // =================================================
+      // RAZORPAY DATA
+      // =================================================
 
       if (
         !data.razorpay ||
         !data.razorpay.key_id ||
-        !data.razorpay.order_id
+        !data.razorpay.order_id ||
+        !data.razorpay.amount
       ) {
 
         console.error(
@@ -578,16 +505,14 @@ const Mentoring = () => {
         return;
       }
 
-
-      // ========================================
+      // =================================================
       // OPEN RAZORPAY
-      // ========================================
+      // =================================================
 
       openRazorpay(
         data.razorpay,
         token
       );
-
 
     } catch (bookingError) {
 
@@ -597,30 +522,28 @@ const Mentoring = () => {
       );
 
       setError(
-        "Unable to initialize payment. Please try again."
+        bookingError.message ||
+          "Unable to initialize payment. Please try again."
       );
 
       setLoading(false);
     }
   };
 
-
-  // ========================================
+  // =====================================================
   // UI
-  // ========================================
+  // =====================================================
 
   return (
-
     <main className="mentoring-page">
 
       <section className="mentoring-hero">
 
         <div className="mentoring-container">
 
-
-          {/* ========================================
+          {/* =================================================
               LEFT CONTENT
-          ======================================== */}
+          ================================================= */}
 
           <div className="mentoring-content">
 
@@ -628,14 +551,12 @@ const Mentoring = () => {
               1:1 MENTORING
             </span>
 
-
             <h1>
               Learn directly
               <span>
                 with guidance.
               </span>
             </h1>
-
 
             <p>
               Get focused one-on-one guidance
@@ -645,10 +566,9 @@ const Mentoring = () => {
 
           </div>
 
-
-          {/* ========================================
+          {/* =================================================
               BOOKING CARD
-          ======================================== */}
+          ================================================= */}
 
           <div className="mentoring-card">
 
@@ -665,15 +585,11 @@ const Mentoring = () => {
 
             </div>
 
+            <form onSubmit={handleBooking}>
 
-            <form
-              onSubmit={handleBooking}
-            >
-
-
-              {/* ========================================
-                  SESSION DURATION
-              ======================================== */}
+              {/* =================================================
+                  DURATION
+              ================================================= */}
 
               <div className="mentoring-field">
 
@@ -681,11 +597,7 @@ const Mentoring = () => {
                   Session Duration
                 </label>
 
-
                 <div className="mentoring-options">
-
-
-                  {/* 1 HOUR */}
 
                   <button
                     type="button"
@@ -695,14 +607,10 @@ const Mentoring = () => {
                         : "mentoring-option"
                     }
                     onClick={() => {
-
                       setDuration(60);
-
                       clearMessages();
-
                     }}
                   >
-
                     <span>
                       1 Hour
                     </span>
@@ -710,11 +618,7 @@ const Mentoring = () => {
                     <strong>
                       ₹199
                     </strong>
-
                   </button>
-
-
-                  {/* 2 HOURS */}
 
                   <button
                     type="button"
@@ -724,14 +628,10 @@ const Mentoring = () => {
                         : "mentoring-option"
                     }
                     onClick={() => {
-
                       setDuration(120);
-
                       clearMessages();
-
                     }}
                   >
-
                     <span>
                       2 Hours
                     </span>
@@ -739,26 +639,21 @@ const Mentoring = () => {
                     <strong>
                       ₹349
                     </strong>
-
                   </button>
 
                 </div>
 
               </div>
 
-
-              {/* ========================================
+              {/* =================================================
                   DATE
-              ======================================== */}
+              ================================================= */}
 
               <div className="mentoring-field">
 
-                <label
-                  htmlFor="booking-date"
-                >
+                <label htmlFor="booking-date">
                   Date
                 </label>
-
 
                 <input
                   id="booking-date"
@@ -766,55 +661,46 @@ const Mentoring = () => {
                   value={bookingDate}
                   min={today}
                   onChange={(event) => {
-
                     setBookingDate(
                       event.target.value
                     );
 
                     clearMessages();
-
                   }}
                   required
                 />
 
               </div>
 
-
-              {/* ========================================
+              {/* =================================================
                   TIME
-              ======================================== */}
+              ================================================= */}
 
               <div className="mentoring-field">
 
-                <label
-                  htmlFor="booking-time"
-                >
+                <label htmlFor="booking-time">
                   Time
                 </label>
-
 
                 <input
                   id="booking-time"
                   type="time"
                   value={bookingTime}
                   onChange={(event) => {
-
                     setBookingTime(
                       event.target.value
                     );
 
                     clearMessages();
-
                   }}
                   required
                 />
 
               </div>
 
-
-              {/* ========================================
+              {/* =================================================
                   SUMMARY
-              ======================================== */}
+              ================================================= */}
 
               <div className="mentoring-summary">
 
@@ -828,47 +714,38 @@ const Mentoring = () => {
 
               </div>
 
-
-              {/* ========================================
+              {/* =================================================
                   ERROR
-              ======================================== */}
+              ================================================= */}
 
               {error && (
-
                 <p className="mentoring-error">
                   {error}
                 </p>
-
               )}
 
-
-              {/* ========================================
+              {/* =================================================
                   SUCCESS
-              ======================================== */}
+              ================================================= */}
 
               {message && (
-
                 <p className="mentoring-success">
                   {message}
                 </p>
-
               )}
 
-
-              {/* ========================================
-                  BOOK / PAY BUTTON
-              ======================================== */}
+              {/* =================================================
+                  PAYMENT BUTTON
+              ================================================= */}
 
               <button
                 type="submit"
                 className="mentoring-submit"
                 disabled={loading}
               >
-
                 {loading
                   ? "Processing..."
                   : `Pay ₹${price} & Book`}
-
               </button>
 
             </form>
@@ -880,7 +757,6 @@ const Mentoring = () => {
       </section>
 
     </main>
-
   );
 };
 

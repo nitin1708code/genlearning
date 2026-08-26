@@ -1,672 +1,448 @@
-import React, {
-  useEffect,
-  useState,
-} from "react";
+const express = require("express");
+const Razorpay = require("razorpay");
+const crypto = require("crypto");
+
+const router = express.Router();
+
+const db = require("../config/db");
+const protect = require("../middleware/authMiddleware");
 
 
-const Mentoring = () => {
+// ========================================
+// RAZORPAY
+// ========================================
 
-  const [duration, setDuration] =
-    useState(60);
-
-  const [bookingDate, setBookingDate] =
-    useState("");
-
-  const [bookingTime, setBookingTime] =
-    useState("");
-
-  const [loading, setLoading] =
-    useState(false);
-
-  const [message, setMessage] =
-    useState("");
-
-  const [error, setError] =
-    useState("");
+const razorpay = new Razorpay({
+  key_id: process.env.RAZORPAY_KEY_ID,
+  key_secret: process.env.RAZORPAY_KEY_SECRET,
+});
 
 
-  const price =
-    duration === 60
-      ? 199
-      : 349;
+// ========================================
+// GET MENTORING OPTIONS
+// ========================================
+
+router.get("/options", (req, res) => {
+
+  res.json({
+    success: true,
+
+    options: [
+      {
+        duration: 60,
+        durationLabel: "1 Hour",
+        price: 199,
+      },
+      {
+        duration: 120,
+        durationLabel: "2 Hours",
+        price: 349,
+      },
+    ],
+  });
+
+});
 
 
-  // ========================================
-  // LOAD RAZORPAY SCRIPT
-  // ========================================
+// ========================================
+// CREATE MENTORING BOOKING + RAZORPAY ORDER
+// ========================================
 
-  useEffect(() => {
+router.post("/book", protect, async (req, res) => {
 
-    const existingScript =
-      document.querySelector(
-        'script[src="https://checkout.razorpay.com/v1/checkout.js"]'
-      );
+  try {
 
-    if (existingScript) {
-      return;
+    const userId = req.user.userId;
+
+    const {
+      duration_minutes,
+      booking_date,
+      booking_time,
+    } = req.body;
+
+
+    // ========================================
+    // VALIDATE DURATION
+    // ========================================
+
+    if (
+      duration_minutes !== 60 &&
+      duration_minutes !== 120
+    ) {
+
+      return res.status(400).json({
+        success: false,
+        message: "Invalid mentoring duration",
+      });
+
     }
 
-    const script =
-      document.createElement("script");
 
-    script.src =
-      "https://checkout.razorpay.com/v1/checkout.js";
+    // ========================================
+    // VALIDATE DATE / TIME
+    // ========================================
 
-    script.async = true;
+    if (!booking_date || !booking_time) {
 
-    document.body.appendChild(script);
+      return res.status(400).json({
+        success: false,
+        message: "Booking date and time are required",
+      });
 
-  }, []);
+    }
 
 
-  // ========================================
-  // VERIFY PAYMENT
-  // ========================================
+    // ========================================
+    // PRICE FROM BACKEND
+    // ========================================
 
-  const verifyPayment = async (
-    paymentResponse,
-    token
-  ) => {
+    const price =
+      duration_minutes === 60
+        ? 199
+        : 349;
+
+
+    // ========================================
+    // CHECK SLOT
+    // ========================================
+
+    const [existing] = await db.query(
+      `
+      SELECT id
+      FROM mentoring_bookings
+      WHERE booking_date = ?
+      AND booking_time = ?
+      AND status IN ('pending', 'confirmed')
+      LIMIT 1
+      `,
+      [
+        booking_date,
+        booking_time,
+      ]
+    );
+
+
+    if (existing.length > 0) {
+
+      return res.status(409).json({
+        success: false,
+        message: "This time slot is already booked",
+      });
+
+    }
+
+
+    // ========================================
+    // CREATE RAZORPAY ORDER
+    // ========================================
+
+    const amount = price * 100;
+
+    const order = await razorpay.orders.create({
+      amount,
+      currency: "INR",
+      receipt: `mentor_${userId}_${Date.now()}`,
+    });
+
+
+    // ========================================
+    // SAVE BOOKING
+    // ========================================
+
+    const [result] = await db.query(
+      `
+      INSERT INTO mentoring_bookings
+      (
+        user_id,
+        duration_minutes,
+        price,
+        booking_date,
+        booking_time,
+        status,
+        razorpay_order_id
+      )
+      VALUES (?, ?, ?, ?, ?, ?, ?)
+      `,
+      [
+        userId,
+        duration_minutes,
+        price,
+        booking_date,
+        booking_time,
+        "pending",
+        order.id,
+      ]
+    );
+
+
+    // ========================================
+    // RESPONSE
+    // ========================================
+
+    res.status(201).json({
+
+      success: true,
+
+      message: "Mentoring booking created",
+
+      booking: {
+        id: result.insertId,
+        duration_minutes,
+        price,
+        booking_date,
+        booking_time,
+        status: "pending",
+      },
+
+      razorpay: {
+        key_id: process.env.RAZORPAY_KEY_ID,
+        order_id: order.id,
+        amount: order.amount,
+        currency: order.currency,
+      },
+
+    });
+
+
+  } catch (error) {
+
+    console.error(
+      "Mentoring booking / Razorpay error:",
+      error
+    );
+
+    res.status(500).json({
+      success: false,
+      message: "Failed to create mentoring payment",
+    });
+
+  }
+
+});
+
+
+// ========================================
+// VERIFY MENTORING PAYMENT
+// ========================================
+
+router.post(
+  "/verify-payment",
+  protect,
+  async (req, res) => {
 
     try {
 
-      const response = await fetch(
-        "https://api.genlearning.in/api/mentoring/verify-payment",
-        {
-          method: "POST",
+      const userId = req.user.userId;
 
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-
-          body: JSON.stringify({
-            razorpay_order_id:
-              paymentResponse.razorpay_order_id,
-
-            razorpay_payment_id:
-              paymentResponse.razorpay_payment_id,
-
-            razorpay_signature:
-              paymentResponse.razorpay_signature,
-          }),
-        }
-      );
+      const {
+        razorpay_order_id,
+        razorpay_payment_id,
+        razorpay_signature,
+      } = req.body;
 
 
-      const data =
-        await response.json();
+      // ========================================
+      // VALIDATE
+      // ========================================
 
+      if (
+        !razorpay_order_id ||
+        !razorpay_payment_id ||
+        !razorpay_signature
+      ) {
 
-      if (!response.ok) {
+        return res.status(400).json({
+          success: false,
+          message: "Payment details are required",
+        });
 
-        setError(
-          data.message ||
-            "Payment verification failed."
-        );
-
-        return;
       }
 
 
-      setMessage(
-        "Payment successful! Your mentoring session is confirmed."
+      // ========================================
+      // FIND BOOKING
+      // ========================================
+
+      const [bookings] = await db.query(
+        `
+        SELECT
+          id,
+          price,
+          status
+        FROM mentoring_bookings
+        WHERE razorpay_order_id = ?
+        AND user_id = ?
+        LIMIT 1
+        `,
+        [
+          razorpay_order_id,
+          userId,
+        ]
       );
 
-      setBookingDate("");
-      setBookingTime("");
+
+      if (bookings.length === 0) {
+
+        return res.status(404).json({
+          success: false,
+          message: "Mentoring booking not found",
+        });
+
+      }
+
+
+      const booking = bookings[0];
+
+
+      // ========================================
+      // PREVENT DUPLICATE PAYMENT
+      // ========================================
+
+      if (booking.status === "confirmed") {
+
+        return res.status(409).json({
+          success: false,
+          message: "Payment already verified",
+        });
+
+      }
+
+
+      // ========================================
+      // VERIFY RAZORPAY SIGNATURE
+      // ========================================
+
+      const generatedSignature =
+        crypto
+          .createHmac(
+            "sha256",
+            process.env.RAZORPAY_KEY_SECRET
+          )
+          .update(
+            `${razorpay_order_id}|${razorpay_payment_id}`
+          )
+          .digest("hex");
+
+
+      if (
+        generatedSignature !==
+        razorpay_signature
+      ) {
+
+        return res.status(400).json({
+          success: false,
+          message: "Payment verification failed",
+        });
+
+      }
+
+
+      // ========================================
+      // UPDATE BOOKING
+      // ========================================
+
+      await db.query(
+        `
+        UPDATE mentoring_bookings
+        SET
+          razorpay_payment_id = ?,
+          status = 'confirmed'
+        WHERE id = ?
+        `,
+        [
+          razorpay_payment_id,
+          booking.id,
+        ]
+      );
+
+
+      // ========================================
+      // SUCCESS
+      // ========================================
+
+      res.json({
+
+        success: true,
+
+        message:
+          "Payment verified and mentoring session confirmed",
+
+      });
 
 
     } catch (error) {
 
       console.error(
-        "Payment verification error:",
+        "Mentoring payment verification error:",
         error
       );
 
-      setError(
-        "Payment completed, but verification failed. Please contact support."
-      );
+      res.status(500).json({
+        success: false,
+        message: "Failed to verify payment",
+      });
+
     }
-  };
+
+  }
+);
 
 
-  // ========================================
-  // CREATE BOOKING + OPEN RAZORPAY
-  // ========================================
+// ========================================
+// GET MY BOOKINGS
+// ========================================
 
-  const handleBooking = async (
-    event
-  ) => {
-
-    event.preventDefault();
-
-    setLoading(true);
-    setMessage("");
-    setError("");
-
+router.get(
+  "/my-bookings",
+  protect,
+  async (req, res) => {
 
     try {
 
-      const token =
-        localStorage.getItem(
-          "genlearningToken"
-        );
+      const userId = req.user.userId;
 
-
-      // ========================================
-      // LOGIN CHECK
-      // ========================================
-
-      if (!token) {
-
-        setError(
-          "Please login before booking a mentoring session."
-        );
-
-        return;
-      }
-
-
-      // ========================================
-      // DATE / TIME CHECK
-      // ========================================
-
-      if (
-        !bookingDate ||
-        !bookingTime
-      ) {
-
-        setError(
-          "Please select date and time."
-        );
-
-        return;
-      }
-
-
-      // ========================================
-      // CHECK RAZORPAY
-      // ========================================
-
-      if (
-        !window.Razorpay
-      ) {
-
-        setError(
-          "Payment system is loading. Please try again."
-        );
-
-        return;
-      }
-
-
-      // ========================================
-      // CREATE BOOKING + RAZORPAY ORDER
-      // ========================================
-
-      const response =
-        await fetch(
-          "https://api.genlearning.in/api/mentoring/book",
-          {
-            method: "POST",
-
-            headers: {
-              "Content-Type":
-                "application/json",
-
-              Authorization:
-                `Bearer ${token}`,
-            },
-
-            body: JSON.stringify({
-              duration_minutes:
-                duration,
-
-              booking_date:
-                bookingDate,
-
-              booking_time:
-                bookingTime,
-            }),
-          }
-        );
-
-
-      const data =
-        await response.json();
-
-
-      if (!response.ok) {
-
-        setError(
-          data.message ||
-            "Unable to create mentoring booking."
-        );
-
-        return;
-      }
-
-
-      // ========================================
-      // RAZORPAY OPTIONS
-      // ========================================
-
-      const options = {
-
-        key:
-          data.razorpay.key_id,
-
-        amount:
-          data.razorpay.amount,
-
-        currency:
-          data.razorpay.currency,
-
-        name:
-          "GEN Learning",
-
-        description:
-          `${duration === 60 ? "1 Hour" : "2 Hours"} Mentoring Session`,
-
-        order_id:
-          data.razorpay.order_id,
-
-
-        theme: {
-          color: "#111111",
-        },
-
-
-        handler:
-          async function (
-            paymentResponse
-          ) {
-
-            await verifyPayment(
-              paymentResponse,
-              token
-            );
-
-          },
-
-
-        modal: {
-
-          confirm_close: true,
-
-          ondismiss:
-            function () {
-
-              setError(
-                "Payment was cancelled. Your booking is still pending."
-              );
-
-            },
-
-        },
-
-      };
-
-
-      // ========================================
-      // OPEN RAZORPAY
-      // ========================================
-
-      const razorpay =
-        new window.Razorpay(
-          options
-        );
-
-
-      razorpay.on(
-        "payment.failed",
-        function (response) {
-
-          console.error(
-            "Razorpay payment failed:",
-            response.error
-          );
-
-          setError(
-            response.error?.description ||
-              "Payment failed. Please try again."
-          );
-
-        }
+      const [bookings] = await db.query(
+        `
+        SELECT
+          id,
+          duration_minutes,
+          price,
+          booking_date,
+          booking_time,
+          status,
+          razorpay_order_id,
+          razorpay_payment_id,
+          created_at
+        FROM mentoring_bookings
+        WHERE user_id = ?
+        ORDER BY booking_date DESC, booking_time DESC
+        `,
+        [userId]
       );
 
 
-      razorpay.open();
+      res.json({
+        success: true,
+        bookings,
+      });
 
 
     } catch (error) {
 
       console.error(
-        "Mentoring booking error:",
+        "Mentoring bookings fetch error:",
         error
       );
 
-      setError(
-        "Unable to connect to the server. Please try again."
-      );
-
-    } finally {
-
-      setLoading(false);
+      res.status(500).json({
+        success: false,
+        message: "Failed to fetch mentoring bookings",
+      });
 
     }
-  };
 
+  }
+);
 
-  // ========================================
-  // DATE LIMIT
-  // ========================================
 
-  const today =
-    new Date()
-      .toISOString()
-      .split("T")[0];
-
-
-  // ========================================
-  // UI
-  // ========================================
-
-  return (
-
-    <main className="mentoring-page">
-
-      <section className="mentoring-hero">
-
-        <div className="mentoring-container">
-
-
-          {/* ========================================
-              LEFT CONTENT
-          ======================================== */}
-
-          <div className="mentoring-content">
-
-            <span className="section-eyebrow">
-              1:1 MENTORING
-            </span>
-
-
-            <h1>
-              Learn directly
-
-              <span>
-                with guidance.
-              </span>
-            </h1>
-
-
-            <p>
-              Get focused one-on-one guidance for
-              coding, projects, technical problems,
-              and your learning journey.
-            </p>
-
-          </div>
-
-
-          {/* ========================================
-              BOOKING CARD
-          ======================================== */}
-
-          <div className="mentoring-card">
-
-            <div className="mentoring-card-header">
-
-              <h2>
-                Book a Session
-              </h2>
-
-              <p>
-                Choose your preferred duration and time.
-              </p>
-
-            </div>
-
-
-            <form
-              onSubmit={handleBooking}
-            >
-
-
-              {/* ========================================
-                  SESSION DURATION
-              ======================================== */}
-
-              <div className="mentoring-field">
-
-                <label>
-                  Session Duration
-                </label>
-
-
-                <div className="mentoring-options">
-
-
-                  <button
-                    type="button"
-
-                    className={
-                      duration === 60
-                        ? "mentoring-option active"
-                        : "mentoring-option"
-                    }
-
-                    onClick={() => {
-
-                      setDuration(60);
-
-                      setError("");
-
-                      setMessage("");
-
-                    }}
-                  >
-
-                    <span>
-                      1 Hour
-                    </span>
-
-                    <strong>
-                      ₹199
-                    </strong>
-
-                  </button>
-
-
-                  <button
-                    type="button"
-
-                    className={
-                      duration === 120
-                        ? "mentoring-option active"
-                        : "mentoring-option"
-                    }
-
-                    onClick={() => {
-
-                      setDuration(120);
-
-                      setError("");
-
-                      setMessage("");
-
-                    }}
-                  >
-
-                    <span>
-                      2 Hours
-                    </span>
-
-                    <strong>
-                      ₹349
-                    </strong>
-
-                  </button>
-
-                </div>
-
-              </div>
-
-
-              {/* ========================================
-                  DATE
-              ======================================== */}
-
-              <div className="mentoring-field">
-
-                <label
-                  htmlFor="booking-date"
-                >
-                  Date
-                </label>
-
-
-                <input
-                  id="booking-date"
-
-                  type="date"
-
-                  value={bookingDate}
-
-                  min={today}
-
-                  onChange={(event) => {
-
-                    setBookingDate(
-                      event.target.value
-                    );
-
-                    setError("");
-
-                    setMessage("");
-
-                  }}
-
-                  required
-                />
-
-              </div>
-
-
-              {/* ========================================
-                  TIME
-              ======================================== */}
-
-              <div className="mentoring-field">
-
-                <label
-                  htmlFor="booking-time"
-                >
-                  Time
-                </label>
-
-
-                <input
-                  id="booking-time"
-
-                  type="time"
-
-                  value={bookingTime}
-
-                  onChange={(event) => {
-
-                    setBookingTime(
-                      event.target.value
-                    );
-
-                    setError("");
-
-                    setMessage("");
-
-                  }}
-
-                  required
-                />
-
-              </div>
-
-
-              {/* ========================================
-                  SUMMARY
-              ======================================== */}
-
-              <div className="mentoring-summary">
-
-                <span>
-                  Total
-                </span>
-
-                <strong>
-                  ₹{price}
-                </strong>
-
-              </div>
-
-
-              {/* ========================================
-                  ERROR
-              ======================================== */}
-
-              {error && (
-
-                <p className="mentoring-error">
-                  {error}
-                </p>
-
-              )}
-
-
-              {/* ========================================
-                  SUCCESS
-              ======================================== */}
-
-              {message && (
-
-                <p className="mentoring-success">
-                  {message}
-                </p>
-
-              )}
-
-
-              {/* ========================================
-                  BOOK / PAY BUTTON
-              ======================================== */}
-
-              <button
-                type="submit"
-
-                className="mentoring-submit"
-
-                disabled={loading}
-              >
-
-                {loading
-                  ? "Preparing Payment..."
-                  : `Pay ₹${price} & Book`}
-
-              </button>
-
-
-            </form>
-
-          </div>
-
-        </div>
-
-      </section>
-
-    </main>
-
-  );
-};
-
-
-export default Mentoring;
+module.exports = router;

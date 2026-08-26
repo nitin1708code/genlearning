@@ -34,6 +34,11 @@ router.get("/options", (req, res) => {
         durationLabel: "2 Hours",
         price: 349,
       },
+      {
+  duration: 2,
+  durationLabel: "2 Minutes",
+  price: 10,
+},
     ],
   });
 });
@@ -57,9 +62,10 @@ router.post("/book", protect, async (req, res) => {
     // -----------------------------------------------------
 
     if (
-      duration_minutes !== 60 &&
-      duration_minutes !== 120
-    ) {
+  duration_minutes !== 2 &&
+  duration_minutes !== 60 &&
+  duration_minutes !== 120
+) {
       return res.status(400).json({
         success: false,
         message: "Invalid mentoring duration",
@@ -83,9 +89,11 @@ router.post("/book", protect, async (req, res) => {
     // -----------------------------------------------------
 
     const price =
-      duration_minutes === 60
-        ? 199
-        : 349;
+  duration_minutes === 2
+    ? 10
+    : duration_minutes === 60
+      ? 199
+      : 349;
 
     const amount = price * 100;
 

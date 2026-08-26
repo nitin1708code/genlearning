@@ -40,7 +40,11 @@ const Mentoring = () => {
   // =====================================================
 
   const price =
-    duration === 60 ? 199 : 349;
+  duration === 2
+    ? 10
+    : duration === 60
+      ? 199
+      : 349;
 
   // =====================================================
   // LOAD RAZORPAY
@@ -640,6 +644,21 @@ const Mentoring = () => {
                       ₹349
                     </strong>
                   </button>
+                  <button
+  type="button"
+  className={
+    duration === 2
+      ? "mentoring-option active"
+      : "mentoring-option"
+  }
+  onClick={() => {
+    setDuration(2);
+    clearMessages();
+  }}
+>
+  <span>2 Minutes</span>
+  <strong>₹10</strong>
+</button>
 
                 </div>
 

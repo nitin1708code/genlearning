@@ -1,12 +1,68 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 const Hero = () => {
+  const [mentoringDuration, setMentoringDuration] = useState(60);
+  const [showPrice, setShowPrice] = useState(false);
+
+  const mentoringPrice =
+    mentoringDuration === 60 ? 199 : 349;
+
+  const handleDurationChange = (event) => {
+    setMentoringDuration(Number(event.target.value));
+    setShowPrice(true);
+  };
+
   return (
     <section className="hero">
       <div className="hero-container">
 
-        {/* Left Content */}
+        {/* =====================================================
+            QUICK MENTORING BOOKING
+        ===================================================== */}
+
+        <div className="hero-mentoring-quick">
+
+          <span className="hero-mentoring-quick-label">
+            1:1 Mentoring
+          </span>
+
+          <select
+            className="hero-mentoring-quick-select"
+            value={mentoringDuration}
+            onChange={handleDurationChange}
+            aria-label="Select mentoring duration"
+          >
+            <option value={60}>
+              1 Hour
+            </option>
+
+            <option value={120}>
+              2 Hours
+            </option>
+          </select>
+
+          {showPrice && (
+            <span className="hero-mentoring-quick-price">
+              ₹{mentoringPrice}
+            </span>
+          )}
+
+          <Link
+            to={`/mentoring?duration=${mentoringDuration}`}
+            className="hero-mentoring-quick-link"
+          >
+            Book
+            <span>→</span>
+          </Link>
+
+        </div>
+
+
+        {/* =====================================================
+            LEFT CONTENT
+        ===================================================== */}
+
         <div className="hero-content">
 
           <div className="hero-badge">
@@ -14,18 +70,22 @@ const Hero = () => {
             Learn • Build • Grow
           </div>
 
+
           <h1 className="hero-title">
             Build Your
             <span> Future </span>
             With Technology.
           </h1>
 
+
           <p className="hero-description">
             Learn practical IT skills and get professional digital
             solutions for your business — all in one place.
           </p>
 
+
           <div className="hero-actions">
+
             <Link
               to="/courses"
               className="hero-btn hero-btn-primary"
@@ -40,24 +100,43 @@ const Hero = () => {
             >
               Get a Quote
             </Link>
+
           </div>
 
+
           <div className="hero-note">
-            <span className="hero-note-icon">✓</span>
+
+            <span className="hero-note-icon">
+              ✓
+            </span>
 
             <div>
-              <strong>Learn. Build. Grow.</strong>
-              <p>Practical skills for the real world.</p>
+              <strong>
+                Learn. Build. Grow.
+              </strong>
+
+              <p>
+                Practical skills for the real world.
+              </p>
             </div>
+
           </div>
 
         </div>
 
 
-        {/* Right Visual */}
+        {/* =====================================================
+            RIGHT VISUAL
+        ===================================================== */}
+
         <div className="hero-visual">
 
           <div className="hero-glow"></div>
+
+
+          {/* =================================================
+              CODE WINDOW
+          ================================================= */}
 
           <div className="code-window">
 
@@ -69,9 +148,12 @@ const Hero = () => {
                 <span></span>
               </div>
 
-              <span>genlearning.js</span>
+              <span>
+                genlearning.js
+              </span>
 
             </div>
+
 
             <div className="code-window-body">
 
@@ -79,11 +161,14 @@ const Hero = () => {
                 <span className="code-keyword">
                   const
                 </span>{" "}
+
                 <span className="code-variable">
                   future
                 </span>{" "}
+
                 = {"{"}
               </div>
+
 
               <div className="code-line">
                 <span className="code-property">
@@ -96,6 +181,7 @@ const Hero = () => {
                 ,
               </div>
 
+
               <div className="code-line">
                 <span className="code-property">
                   build
@@ -107,6 +193,7 @@ const Hero = () => {
                 ,
               </div>
 
+
               <div className="code-line">
                 <span className="code-property">
                   grow
@@ -117,7 +204,11 @@ const Hero = () => {
                 </span>
               </div>
 
-              <div>{"};"}</div>
+
+              <div>
+                {"};"}
+              </div>
+
 
               <div className="code-result">
                 <span>✓</span>
@@ -125,10 +216,14 @@ const Hero = () => {
               </div>
 
             </div>
+
           </div>
 
 
-          {/* Floating Card 1 */}
+          {/* =================================================
+              FLOATING CARD — IT SKILLS
+          ================================================= */}
+
           <div className="hero-floating-card hero-card-top">
 
             <div className="floating-icon">
@@ -136,14 +231,22 @@ const Hero = () => {
             </div>
 
             <div>
-              <strong>IT Skills</strong>
-              <small>Learn & Grow</small>
+              <strong>
+                IT Skills
+              </strong>
+
+              <small>
+                Learn & Grow
+              </small>
             </div>
 
           </div>
 
 
-          {/* Floating Card 2 */}
+          {/* =================================================
+              FLOATING CARD — REAL PROJECTS
+          ================================================= */}
+
           <div className="hero-floating-card hero-card-bottom">
 
             <div className="floating-icon">
@@ -151,8 +254,13 @@ const Hero = () => {
             </div>
 
             <div>
-              <strong>Real Projects</strong>
-              <small>Build Experience</small>
+              <strong>
+                Real Projects
+              </strong>
+
+              <small>
+                Build Experience
+              </small>
             </div>
 
           </div>

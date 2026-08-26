@@ -12540,3 +12540,1394 @@ html[data-theme="dark"] {
     flex-direction: column;
   }
 }
+
+/* =========================================================
+   GEN LEARNING — MENTORING PAGE
+   Works with ThemeContext:
+   html[data-theme="dark"]
+   html[data-theme="light"]
+========================================================= */
+
+
+/* =========================================================
+   PAGE
+========================================================= */
+
+.mentoring-page {
+  width: 100%;
+  min-height: calc(100vh - 80px);
+  box-sizing: border-box;
+}
+
+
+/* =========================================================
+   DARK THEME
+========================================================= */
+
+html[data-theme="dark"] .mentoring-page {
+  background: #000;
+  color: #fff;
+}
+
+
+/* =========================================================
+   LIGHT THEME
+========================================================= */
+
+html[data-theme="light"] .mentoring-page {
+  background: #fff;
+  color: #111;
+}
+
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.mentoring-hero {
+  width: 100%;
+  min-height: calc(100vh - 80px);
+
+  display: flex;
+  align-items: center;
+
+  padding: 80px 24px 100px;
+
+  box-sizing: border-box;
+}
+
+
+/* =========================================================
+   CONTAINER
+========================================================= */
+
+.mentoring-container {
+  width: min(1100px, 100%);
+  margin: 0 auto;
+
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 1fr)
+    420px;
+
+  gap: 80px;
+
+  align-items: center;
+}
+
+
+/* =========================================================
+   LEFT CONTENT
+========================================================= */
+
+.mentoring-content {
+  max-width: 650px;
+}
+
+
+/* EYEBROW */
+
+.mentoring-content .section-eyebrow {
+  display: inline-block;
+
+  margin-bottom: 24px;
+
+  font-size: 12px;
+  font-weight: 600;
+
+  letter-spacing: 0.18em;
+}
+
+
+/* DARK */
+
+html[data-theme="dark"]
+.mentoring-content .section-eyebrow {
+  color: #999;
+}
+
+
+/* LIGHT */
+
+html[data-theme="light"]
+.mentoring-content .section-eyebrow {
+  color: #444;
+}
+
+
+/* HEADING */
+
+.mentoring-content h1 {
+  margin: 0;
+
+  font-size: clamp(48px, 6vw, 78px);
+
+  line-height: 0.98;
+
+  letter-spacing: -0.055em;
+
+  font-weight: 700;
+}
+
+
+/* DARK */
+
+html[data-theme="dark"]
+.mentoring-content h1 {
+  color: #fff;
+}
+
+
+/* LIGHT */
+
+html[data-theme="light"]
+.mentoring-content h1 {
+  color: #111;
+}
+
+
+/* SECOND LINE */
+
+.mentoring-content h1 span {
+  display: block;
+}
+
+
+/* DARK */
+
+html[data-theme="dark"]
+.mentoring-content h1 span {
+  color: #858585;
+}
+
+
+/* LIGHT */
+
+html[data-theme="light"]
+.mentoring-content h1 span {
+  color: #555;
+}
+
+
+/* DESCRIPTION */
+
+.mentoring-content p {
+  max-width: 600px;
+
+  margin: 30px 0 0;
+
+  font-size: 17px;
+
+  line-height: 1.7;
+}
+
+
+/* DARK */
+
+html[data-theme="dark"]
+.mentoring-content p {
+  color: #aaa;
+}
+
+
+/* LIGHT */
+
+html[data-theme="light"]
+.mentoring-content p {
+  color: #333;
+}
+
+
+/* =========================================================
+   BOOKING CARD
+========================================================= */
+
+.mentoring-card {
+  width: 100%;
+
+  box-sizing: border-box;
+
+  padding: 34px;
+
+  border-radius: 22px;
+
+  box-shadow:
+    0 25px 70px rgba(0, 0, 0, 0.12);
+}
+
+
+/* DARK */
+
+html[data-theme="dark"]
+.mentoring-card {
+  background: #101010;
+  border: 1px solid #292929;
+}
+
+
+/* LIGHT */
+
+html[data-theme="light"]
+.mentoring-card {
+  background: #f8f8f8;
+  border: 1px solid #d8d8d8;
+}
+
+
+/* =========================================================
+   CARD HEADER
+========================================================= */
+
+.mentoring-card-header {
+  margin-bottom: 30px;
+}
+
+
+.mentoring-card-header h2 {
+  margin: 0;
+
+  font-size: 28px;
+
+  line-height: 1.2;
+
+  letter-spacing: -0.03em;
+}
+
+
+/* DARK */
+
+html[data-theme="dark"]
+.mentoring-card-header h2 {
+  color: #fff;
+}
+
+
+/* LIGHT */
+
+html[data-theme="light"]
+.mentoring-card-header h2 {
+  color: #111;
+}
+
+
+.mentoring-card-header p {
+  margin: 9px 0 0;
+
+  font-size: 14px;
+
+  line-height: 1.5;
+}
+
+
+/* DARK */
+
+html[data-theme="dark"]
+.mentoring-card-header p {
+  color: #999;
+}
+
+
+/* LIGHT */
+
+html[data-theme="light"]
+.mentoring-card-header p {
+  color: #444;
+}
+
+
+/* =========================================================
+   FORM FIELD
+========================================================= */
+
+.mentoring-field {
+  margin-bottom: 24px;
+}
+
+
+.mentoring-field > label {
+  display: block;
+
+  margin-bottom: 10px;
+
+  font-size: 12px;
+
+  font-weight: 600;
+
+  letter-spacing: 0.08em;
+
+  text-transform: uppercase;
+}
+
+
+/* DARK */
+
+html[data-theme="dark"]
+.mentoring-field > label {
+  color: #aaa;
+}
+
+
+/* LIGHT */
+
+html[data-theme="light"]
+.mentoring-field > label {
+  color: #333;
+}
+
+
+/* =========================================================
+   DURATION OPTIONS
+========================================================= */
+
+.mentoring-options {
+  display: grid;
+
+  grid-template-columns: 1fr 1fr;
+
+  gap: 10px;
+}
+
+
+.mentoring-option {
+  width: 100%;
+
+  min-height: 92px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  justify-content: center;
+
+  align-items: flex-start;
+
+  gap: 8px;
+
+  padding: 16px;
+
+  box-sizing: border-box;
+
+  border-radius: 12px;
+
+  cursor: pointer;
+
+  text-align: left;
+
+  font-family: inherit;
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+
+/* =========================================================
+   DARK OPTION
+========================================================= */
+
+html[data-theme="dark"]
+.mentoring-option {
+  background: #151515;
+
+  border: 1px solid #303030;
+
+  color: #fff;
+}
+
+
+html[data-theme="dark"]
+.mentoring-option:hover {
+  border-color: #777;
+
+  transform: translateY(-1px);
+}
+
+
+html[data-theme="dark"]
+.mentoring-option span {
+  color: #b0b0b0;
+}
+
+
+html[data-theme="dark"]
+.mentoring-option strong {
+  color: #fff;
+
+  font-size: 20px;
+}
+
+
+/* =========================================================
+   LIGHT OPTION
+========================================================= */
+
+html[data-theme="light"]
+.mentoring-option {
+  background: #fff;
+
+  border: 1px solid #cfcfcf;
+
+  color: #111;
+}
+
+
+html[data-theme="light"]
+.mentoring-option:hover {
+  border-color: #888;
+
+  transform: translateY(-1px);
+}
+
+
+html[data-theme="light"]
+.mentoring-option span {
+  color: #444;
+}
+
+
+html[data-theme="light"]
+.mentoring-option strong {
+  color: #111;
+
+  font-size: 20px;
+}
+
+
+/* =========================================================
+   ACTIVE OPTION — DARK
+========================================================= */
+
+html[data-theme="dark"]
+.mentoring-option.active {
+  background: #222 !important;
+
+  border-color: #fff !important;
+
+  color: #fff !important;
+}
+
+
+html[data-theme="dark"]
+.mentoring-option.active span,
+html[data-theme="dark"]
+.mentoring-option.active strong {
+  color: #fff !important;
+}
+
+
+/* =========================================================
+   ACTIVE OPTION — LIGHT
+========================================================= */
+
+/*
+   IMPORTANT:
+   Selected option becomes BLACK,
+   therefore ₹199 remains clearly visible.
+*/
+
+html[data-theme="light"]
+.mentoring-option.active {
+  background: #111 !important;
+
+  border-color: #111 !important;
+
+  color: #fff !important;
+}
+
+
+html[data-theme="light"]
+.mentoring-option.active span,
+html[data-theme="light"]
+.mentoring-option.active strong {
+  color: #fff !important;
+}
+
+
+/* =========================================================
+   DATE / TIME
+========================================================= */
+
+.mentoring-field input[type="date"],
+.mentoring-field input[type="time"] {
+  width: 100%;
+
+  height: 52px;
+
+  padding: 0 15px;
+
+  box-sizing: border-box;
+
+  border-radius: 10px;
+
+  font-family: inherit;
+
+  font-size: 14px;
+
+  outline: none;
+
+  transition:
+    border-color 0.2s ease,
+    background 0.2s ease;
+}
+
+
+/* DARK */
+
+html[data-theme="dark"]
+.mentoring-field input[type="date"],
+html[data-theme="dark"]
+.mentoring-field input[type="time"] {
+  background: #151515;
+
+  border: 1px solid #303030;
+
+  color: #fff;
+
+  color-scheme: dark;
+}
+
+
+/* LIGHT */
+
+html[data-theme="light"]
+.mentoring-field input[type="date"],
+html[data-theme="light"]
+.mentoring-field input[type="time"] {
+  background: #fff;
+
+  border: 1px solid #cfcfcf;
+
+  color: #111;
+
+  color-scheme: light;
+}
+
+
+/* FOCUS */
+
+.mentoring-field input[type="date"]:focus,
+.mentoring-field input[type="time"]:focus {
+  border-color: #777;
+}
+
+
+/* =========================================================
+   SUMMARY
+========================================================= */
+
+.mentoring-summary {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  margin: 28px 0 22px;
+
+  padding-top: 22px;
+}
+
+
+/* DARK */
+
+html[data-theme="dark"]
+.mentoring-summary {
+  border-top: 1px solid #292929;
+}
+
+
+/* LIGHT */
+
+html[data-theme="light"]
+.mentoring-summary {
+  border-top: 1px solid #d5d5d5;
+}
+
+
+.mentoring-summary span {
+  font-size: 14px;
+}
+
+
+/* DARK */
+
+html[data-theme="dark"]
+.mentoring-summary span {
+  color: #999;
+}
+
+
+/* LIGHT */
+
+html[data-theme="light"]
+.mentoring-summary span {
+  color: #333;
+}
+
+
+.mentoring-summary strong {
+  font-size: 26px;
+
+  line-height: 1;
+}
+
+
+/* DARK */
+
+html[data-theme="dark"]
+.mentoring-summary strong {
+  color: #fff;
+}
+
+
+/* LIGHT */
+
+html[data-theme="light"]
+.mentoring-summary strong {
+  color: #111;
+}
+
+
+/* =========================================================
+   BOOK BUTTON
+========================================================= */
+
+.mentoring-submit {
+  width: 100%;
+
+  min-height: 56px;
+
+  padding: 15px 20px;
+
+  border: none;
+
+  border-radius: 10px;
+
+  font-family: inherit;
+
+  font-size: 15px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.2s ease,
+    opacity 0.2s ease;
+}
+
+
+/* DARK */
+
+html[data-theme="dark"]
+.mentoring-submit {
+  background: #fff;
+
+  color: #000;
+}
+
+
+/* LIGHT */
+
+html[data-theme="light"]
+.mentoring-submit {
+  background: #111;
+
+  color: #fff;
+}
+
+
+/* HOVER */
+
+.mentoring-submit:hover {
+  transform: translateY(-1px);
+}
+
+
+/* DISABLED */
+
+.mentoring-submit:disabled {
+  opacity: 0.5;
+
+  cursor: not-allowed;
+
+  transform: none;
+}
+
+
+/* =========================================================
+   ERROR
+========================================================= */
+
+.mentoring-error {
+  margin: 10px 0 16px;
+
+  color: #e53935;
+
+  font-size: 13px;
+
+  line-height: 1.5;
+}
+
+
+/* =========================================================
+   SUCCESS
+========================================================= */
+
+.mentoring-success {
+  margin: 10px 0 16px;
+
+  color: #249653;
+
+  font-size: 13px;
+
+  line-height: 1.5;
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 950px) {
+
+  .mentoring-container {
+    grid-template-columns:
+      minmax(0, 1fr)
+      390px;
+
+    gap: 45px;
+  }
+
+  .mentoring-content h1 {
+    font-size: clamp(44px, 6vw, 64px);
+  }
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 800px) {
+
+  .mentoring-hero {
+    min-height: auto;
+
+    padding: 65px 20px 90px;
+  }
+
+  .mentoring-container {
+    grid-template-columns: 1fr;
+
+    gap: 55px;
+  }
+
+  .mentoring-content {
+    max-width: 650px;
+  }
+
+  .mentoring-content h1 {
+    font-size: clamp(44px, 12vw, 64px);
+
+    line-height: 0.98;
+  }
+
+  .mentoring-content p {
+    margin-top: 24px;
+
+    font-size: 15px;
+  }
+
+  .mentoring-card {
+    padding: 26px;
+
+    border-radius: 18px;
+  }
+
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 480px) {
+
+  .mentoring-hero {
+    padding: 50px 16px 70px;
+  }
+
+  .mentoring-content .section-eyebrow {
+    margin-bottom: 18px;
+
+    font-size: 11px;
+  }
+
+  .mentoring-content h1 {
+    font-size: 46px;
+  }
+
+  .mentoring-content p {
+    font-size: 14px;
+
+    line-height: 1.65;
+  }
+
+  .mentoring-card {
+    padding: 21px;
+
+    border-radius: 16px;
+  }
+
+  .mentoring-card-header h2 {
+    font-size: 25px;
+  }
+
+  .mentoring-options {
+    grid-template-columns: 1fr;
+  }
+
+  .mentoring-option {
+    min-height: 78px;
+  }
+
+}
+
+
+/* =========================================================
+   VERY SMALL DEVICES
+========================================================= */
+
+@media (max-width: 360px) {
+
+  .mentoring-content h1 {
+    font-size: 40px;
+  }
+
+  .mentoring-card {
+    padding: 18px;
+  }
+
+}
+
+ /* =========================================================
+   HERO CONTAINER
+========================================================= */
+
+.hero-container {
+  position: relative;
+}
+
+
+/* =========================================================
+   1:1 MENTORING QUICK BOOK
+   DESKTOP
+========================================================= */
+
+.hero-mentoring-quick {
+  position: absolute;
+
+  /*
+    Right side ke empty hero area me.
+    Negative top nahi — isliye desktop par gayab nahi hoga.
+  */
+  top: 22px;
+  right: 28px;
+
+  z-index: 100;
+
+  display: flex;
+  align-items: center;
+
+  min-height: 42px;
+
+  padding: 4px 5px 4px 13px;
+
+  gap: 7px;
+
+  border: 1px solid rgba(255, 255, 255, 0.14);
+
+  border-radius: 999px;
+
+  background: rgba(18, 18, 18, 0.90);
+
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.22);
+
+  white-space: nowrap;
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+
+/* =========================================================
+   LABEL
+========================================================= */
+
+.hero-mentoring-quick-label {
+  color: #fff;
+
+  font-size: 11px;
+
+  font-weight: 600;
+
+  letter-spacing: 0.01em;
+
+  white-space: nowrap;
+}
+
+
+/* =========================================================
+   DROPDOWN
+========================================================= */
+
+.hero-mentoring-quick-select {
+  height: 30px;
+
+  min-width: 92px;
+
+  padding: 0 25px 0 9px;
+
+  border: 1px solid #383838;
+
+  border-radius: 7px;
+
+  background: #202020;
+
+  color: #fff;
+
+  font-family: inherit;
+
+  font-size: 10px;
+
+  font-weight: 600;
+
+  outline: none;
+
+  cursor: pointer;
+
+  color-scheme: dark;
+
+  transition:
+    border-color 0.2s ease,
+    background 0.2s ease;
+}
+
+
+.hero-mentoring-quick-select:hover {
+  border-color: #666;
+}
+
+
+.hero-mentoring-quick-select:focus {
+  border-color: #888;
+}
+
+
+.hero-mentoring-quick-select option {
+  background: #202020;
+  color: #fff;
+}
+
+
+/* =========================================================
+   PRICE
+   Hidden until dropdown is changed
+========================================================= */
+
+.hero-mentoring-quick-price {
+  min-width: 34px;
+
+  color: #fff;
+
+  font-size: 11px;
+
+  font-weight: 700;
+
+  text-align: center;
+
+  white-space: nowrap;
+
+  animation: mentoringPriceIn 0.18s ease;
+}
+
+
+@keyframes mentoringPriceIn {
+  from {
+    opacity: 0;
+    transform: translateX(-3px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+
+/* =========================================================
+   BOOK BUTTON
+========================================================= */
+
+.hero-mentoring-quick-link {
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  height: 30px;
+
+  padding: 0 10px;
+
+  gap: 4px;
+
+  border-radius: 7px;
+
+  background: #fff;
+
+  color: #000;
+
+  text-decoration: none;
+
+  font-family: inherit;
+
+  font-size: 10px;
+
+  font-weight: 700;
+
+  white-space: nowrap;
+
+  transition:
+    transform 0.2s ease,
+    opacity 0.2s ease;
+}
+
+
+.hero-mentoring-quick-link span {
+  font-size: 12px;
+}
+
+
+.hero-mentoring-quick-link:hover {
+  transform: translateY(-1px);
+
+  opacity: 0.9;
+}
+
+
+.hero-mentoring-quick-link:active {
+  transform: translateY(0);
+}
+
+
+/* =========================================================
+   DARK THEME
+========================================================= */
+
+[data-theme="dark"] .hero-mentoring-quick {
+  background: rgba(18, 18, 18, 0.90);
+
+  border-color: rgba(255, 255, 255, 0.14);
+
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.28);
+}
+
+
+[data-theme="dark"] .hero-mentoring-quick-label {
+  color: #fff;
+}
+
+
+[data-theme="dark"] .hero-mentoring-quick-select {
+  background: #202020;
+
+  border-color: #383838;
+
+  color: #fff;
+
+  color-scheme: dark;
+}
+
+
+[data-theme="dark"] .hero-mentoring-quick-price {
+  color: #fff;
+}
+
+
+[data-theme="dark"] .hero-mentoring-quick-link {
+  background: #fff;
+
+  color: #000;
+}
+
+
+/* =========================================================
+   LIGHT THEME
+========================================================= */
+
+[data-theme="light"] .hero-mentoring-quick {
+  background: rgba(255, 255, 255, 0.96);
+
+  border-color: #d5d5d5;
+
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.10);
+}
+
+
+[data-theme="light"] .hero-mentoring-quick-label {
+  color: #111;
+}
+
+
+[data-theme="light"] .hero-mentoring-quick-select {
+  background: #f5f5f5;
+
+  border-color: #cfcfcf;
+
+  color: #111;
+
+  color-scheme: light;
+}
+
+
+[data-theme="light"] .hero-mentoring-quick-select option {
+  background: #fff;
+
+  color: #111;
+}
+
+
+[data-theme="light"] .hero-mentoring-quick-price {
+  color: #111;
+}
+
+
+[data-theme="light"] .hero-mentoring-quick-link {
+  background: #111;
+
+  color: #fff;
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 1100px) {
+
+  .hero-mentoring-quick {
+    top: 18px;
+
+    right: 15px;
+  }
+
+}
+
+
+/* =========================================================
+   SMALL TABLET
+========================================================= */
+
+@media (max-width: 900px) {
+
+  .hero-mentoring-quick {
+    top: 14px;
+
+    right: 10px;
+
+    transform: scale(0.95);
+
+    transform-origin: right top;
+  }
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 700px) {
+
+  /*
+    Mobile me navbar ke just neeche.
+    Hero content ka layout disturb nahi karega.
+  */
+
+  .hero-mentoring-quick {
+    position: absolute;
+
+    top: 10px;
+
+    left: 50%;
+
+    right: auto;
+
+    transform: translateX(-50%);
+
+    min-height: 40px;
+
+    padding: 4px 5px 4px 12px;
+
+    gap: 6px;
+
+    max-width: calc(100% - 20px);
+
+    z-index: 100;
+  }
+
+
+  .hero-mentoring-quick-label {
+    font-size: 10px;
+  }
+
+
+  .hero-mentoring-quick-select {
+    height: 29px;
+
+    min-width: 86px;
+
+    max-width: 86px;
+
+    padding: 0 21px 0 8px;
+
+    font-size: 10px;
+  }
+
+
+  .hero-mentoring-quick-price {
+    font-size: 10px;
+
+    min-width: 30px;
+  }
+
+
+  .hero-mentoring-quick-link {
+    height: 29px;
+
+    padding: 0 9px;
+
+    font-size: 10px;
+  }
+
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 480px) {
+
+  .hero-mentoring-quick {
+
+    top: 8px;
+
+    min-height: 40px;
+
+    padding-left: 10px;
+
+    gap: 5px;
+  }
+
+
+  .hero-mentoring-quick-label {
+    font-size: 9px;
+  }
+
+
+  .hero-mentoring-quick-select {
+
+    min-width: 80px;
+
+    max-width: 80px;
+
+    height: 28px;
+
+    padding-left: 7px;
+
+    padding-right: 18px;
+
+    font-size: 9px;
+  }
+
+
+  .hero-mentoring-quick-price {
+
+    font-size: 10px;
+
+    min-width: 28px;
+  }
+
+
+  .hero-mentoring-quick-link {
+
+    height: 28px;
+
+    padding: 0 8px;
+
+    font-size: 9px;
+  }
+
+
+  .hero-mentoring-quick-link span {
+    font-size: 10px;
+  }
+
+}
+
+
+/* =========================================================
+   VERY SMALL DEVICES
+========================================================= */
+
+@media (max-width: 360px) {
+
+  .hero-mentoring-quick {
+
+    gap: 4px;
+
+    padding-left: 8px;
+  }
+
+
+  .hero-mentoring-quick-label {
+    font-size: 8px;
+  }
+
+
+  .hero-mentoring-quick-select {
+
+    min-width: 72px;
+
+    max-width: 72px;
+
+    font-size: 8px;
+  }
+
+
+  .hero-mentoring-quick-price {
+    font-size: 9px;
+  }
+
+
+  .hero-mentoring-quick-link {
+
+    padding: 0 7px;
+
+    font-size: 8px;
+  }
+
+}

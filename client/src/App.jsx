@@ -10,6 +10,9 @@ import MainLayout from "./layouts/MainLayout";
 import ProtectedRoute from "./components/ProtectedRoute";
 import ScrollToTop from "./components/ScrollToTop";
 import Home from "./pages/Home";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import Terms from "./pages/Terms";
+import Mentoring from "./pages/Mentoring";
 
 // Lazy-loaded pages
 const Courses = lazy(() => import("./pages/Courses"));
@@ -25,8 +28,7 @@ const Dashboard = lazy(() => import("./pages/Dashboard"));
 const Register = lazy(() => import("./pages/Register"));
 const Profile = lazy(() => import("./pages/Profile"));
 const ForgotPassword = lazy(() => import("./pages/ForgotPassword"));
-import PrivacyPolicy from "./pages/PrivacyPolicy";
-import Terms from "./pages/Terms";
+
 
 
 const PageLoader = () => (
@@ -99,6 +101,11 @@ const App = () => {
               path="/contact"
               element={<Contact />}
             />
+
+            <Route
+  path="/mentoring"
+  element={<Mentoring />}
+/>
 
             <Route
   path="/privacy"

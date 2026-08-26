@@ -8,6 +8,7 @@ const authRoutes = require("./routes/authRoutes");
 const enrollmentRoutes = require("./routes/enrollments");
 const contactRoutes = require("./routes/contactRoutes");
 const paymentRoutes = require("./routes/paymentRoutes");
+const mentoringRoutes = require("./routes/mentoringRoutes");
 
 const app = express();
 
@@ -47,6 +48,9 @@ app.use(
   paymentRoutes
 );
 
+app.use("/api/mentoring", 
+  mentoringRoutes
+);
 
 // ========================================
 // TEST ROUTE

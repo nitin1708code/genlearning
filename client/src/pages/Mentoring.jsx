@@ -13,9 +13,12 @@ const Mentoring = () => {
   const queryDuration = Number(
     searchParams.get("duration")
   );
-
-  const initialDuration =
-    queryDuration === 120 ? 120 : 60;
+const initialDuration =
+  queryDuration === 2
+    ? 2
+    : queryDuration === 120
+      ? 120
+      : 60;
 
   const [duration, setDuration] =
     useState(initialDuration);
@@ -145,11 +148,12 @@ const Mentoring = () => {
         razorpayData.currency || "INR",
 
       name: "GEN Learning",
-
-      description:
-        duration === 60
-          ? "1 Hour 1:1 Mentoring Session"
-          : "2 Hours 1:1 Mentoring Session",
+description:
+  duration === 2
+    ? "2 Minutes 1:1 Mentoring Session"
+    : duration === 60
+      ? "1 Hour 1:1 Mentoring Session"
+      : "2 Hours 1:1 Mentoring Session",
 
       order_id:
         razorpayData.order_id,

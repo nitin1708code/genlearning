@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams, useNavigate } from "react-router-dom";
 
 const API_URL = "https://api.genlearning.in";
-
+ 
 const Mentoring = () => {
   const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
 
   // =====================================================
   // INITIAL DURATION
@@ -224,14 +225,19 @@ description:
 
           setError("");
 
-          setMessage(
-            "Payment successful! Your mentoring session is confirmed."
-          );
+setMessage(
+  "Payment successful! Your mentoring session is confirmed."
+);
 
-          setBookingDate("");
-          setBookingTime("");
+setBookingDate("");
+setBookingTime("");
 
-          setLoading(false);
+setLoading(false);
+
+// Redirect to My Bookings
+setTimeout(() => {
+  navigate("/my-bookings");
+}, 1000);
 
         } catch (verificationError) {
 

@@ -13,6 +13,7 @@ import Home from "./pages/Home";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import Terms from "./pages/Terms";
 import Mentoring from "./pages/Mentoring";
+import MyBookings from "./pages/MyBookings";
 
 // Lazy-loaded pages
 const Courses = lazy(() => import("./pages/Courses"));
@@ -128,6 +129,11 @@ const App = () => {
                 path="/profile"
                 element={<Profile />}
               />
+
+                <Route
+    path="/my-bookings"
+    element={<MyBookings />}
+  />
 
             </Route>
 

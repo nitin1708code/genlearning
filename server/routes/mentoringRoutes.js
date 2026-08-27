@@ -1,6 +1,7 @@
 const express = require("express");
 const Razorpay = require("razorpay");
 const crypto = require("crypto");
+const nodemailer = require("nodemailer");
 
 const router = express.Router();
 
@@ -17,28 +18,45 @@ const razorpay = new Razorpay({
 });
 
 // =========================================================
+// EMAIL / NODEMAILER
+// =========================================================
+
+const transporter = nodemailer.createTransport({
+  host: process.env.SMTP_HOST,
+  port: Number(process.env.SMTP_PORT),
+  secure: Number(process.env.SMTP_PORT) === 465,
+  auth: {
+    user: process.env.SMTP_USER,
+    pass: process.env.SMTP_PASS,
+  },
+});
+
+// =========================================================
 // GET MENTORING OPTIONS
 // =========================================================
 
 router.get("/options", (req, res) => {
   res.json({
     success: true,
+
     options: [
       {
         duration: 60,
         durationLabel: "1 Hour",
         price: 199,
       },
+
       {
         duration: 120,
         durationLabel: "2 Hours",
         price: 349,
       },
+
       {
-  duration: 2,
-  durationLabel: "2 Minutes",
-  price: 10,
-},
+        duration: 2,
+        durationLabel: "2 Minutes",
+        price: 10,
+      },
     ],
   });
 });
@@ -62,10 +80,10 @@ router.post("/book", protect, async (req, res) => {
     // -----------------------------------------------------
 
     if (
-  duration_minutes !== 2 &&
-  duration_minutes !== 60 &&
-  duration_minutes !== 120
-) {
+      duration_minutes !== 2 &&
+      duration_minutes !== 60 &&
+      duration_minutes !== 120
+    ) {
       return res.status(400).json({
         success: false,
         message: "Invalid mentoring duration",
@@ -88,17 +106,20 @@ router.post("/book", protect, async (req, res) => {
     // NEVER TRUST FRONTEND PRICE
     // -----------------------------------------------------
 
-    const price =
-  duration_minutes === 2
-    ? 10
-    : duration_minutes === 60
-      ? 199
-      : 349;
+    let price;
+
+    if (duration_minutes === 2) {
+      price = 10;
+    } else if (duration_minutes === 60) {
+      price = 199;
+    } else {
+      price = 349;
+    }
 
     const amount = price * 100;
 
     // -----------------------------------------------------
-    // CHECK SLOT
+    // CHECK IF SLOT IS ALREADY BOOKED
     // -----------------------------------------------------
 
     const [existing] = await db.query(
@@ -164,8 +185,6 @@ router.post("/book", protect, async (req, res) => {
 
     // -----------------------------------------------------
     // RESPONSE
-    // IMPORTANT:
-    // FRONTEND NEEDS razorpay OBJECT
     // -----------------------------------------------------
 
     return res.status(201).json({
@@ -221,7 +240,7 @@ router.post(
       } = req.body;
 
       // ---------------------------------------------------
-      // VALIDATE
+      // VALIDATE PAYMENT DETAILS
       // ---------------------------------------------------
 
       if (
@@ -243,7 +262,10 @@ router.post(
         `
         SELECT
           id,
+          duration_minutes,
           price,
+          booking_date,
+          booking_time,
           status
         FROM mentoring_bookings
         WHERE razorpay_order_id = ?
@@ -277,19 +299,18 @@ router.post(
       }
 
       // ---------------------------------------------------
-      // VERIFY SIGNATURE
+      // VERIFY RAZORPAY SIGNATURE
       // ---------------------------------------------------
 
-      const generatedSignature =
-        crypto
-          .createHmac(
-            "sha256",
-            process.env.RAZORPAY_KEY_SECRET
-          )
-          .update(
-            `${razorpay_order_id}|${razorpay_payment_id}`
-          )
-          .digest("hex");
+      const generatedSignature = crypto
+        .createHmac(
+          "sha256",
+          process.env.RAZORPAY_KEY_SECRET
+        )
+        .update(
+          `${razorpay_order_id}|${razorpay_payment_id}`
+        )
+        .digest("hex");
 
       if (
         generatedSignature !==
@@ -320,13 +341,204 @@ router.post(
       );
 
       // ---------------------------------------------------
+      // GET USER DETAILS
+      // ---------------------------------------------------
+
+      const [users] = await db.query(
+        `
+        SELECT
+          name,
+          email
+        FROM users
+        WHERE id = ?
+        LIMIT 1
+        `,
+        [userId]
+      );
+
+      // ---------------------------------------------------
+      // SEND CONFIRMATION EMAIL
+      // ---------------------------------------------------
+
+      if (users.length > 0) {
+        const user = users[0];
+
+        let durationLabel;
+
+        if (booking.duration_minutes === 2) {
+          durationLabel = "2 Minutes";
+        } else if (booking.duration_minutes === 60) {
+          durationLabel = "1 Hour";
+        } else {
+          durationLabel = "2 Hours";
+        }
+
+        try {
+          await transporter.sendMail({
+            from:
+              process.env.EMAIL_FROM ||
+              process.env.SMTP_USER,
+
+            to: user.email,
+
+            subject:
+              "Mentoring Session Confirmed - GenLearning",
+
+            html: `
+              <!DOCTYPE html>
+
+              <html>
+              <head>
+                <meta charset="UTF-8">
+                <title>Mentoring Booking Confirmed</title>
+              </head>
+
+              <body
+                style="
+                  margin:0;
+                  padding:0;
+                  background:#f5f5f5;
+                  font-family:Arial, sans-serif;
+                "
+              >
+
+                <div
+                  style="
+                    max-width:600px;
+                    margin:40px auto;
+                    background:#ffffff;
+                    border-radius:12px;
+                    overflow:hidden;
+                    border:1px solid #e5e5e5;
+                  "
+                >
+
+                  <div
+                    style="
+                      padding:25px;
+                      background:#111111;
+                      color:white;
+                    "
+                  >
+                    <h2 style="margin:0;">
+                      GenLearning
+                    </h2>
+
+                    <p
+                      style="
+                        margin:8px 0 0;
+                        color:#bbbbbb;
+                      "
+                    >
+                      1:1 Mentoring
+                    </p>
+                  </div>
+
+                  <div style="padding:30px;">
+
+                    <h2>
+                      Mentoring Session Confirmed 🎉
+                    </h2>
+
+                    <p>
+                      Hi ${user.name},
+                    </p>
+
+                    <p>
+                      Your mentoring session has been
+                      successfully booked and payment
+                      has been confirmed.
+                    </p>
+
+                    <div
+                      style="
+                        margin:25px 0;
+                        padding:20px;
+                        background:#f7f7f7;
+                        border-radius:10px;
+                      "
+                    >
+
+                      <p>
+                        <strong>Duration:</strong>
+                        ${durationLabel}
+                      </p>
+
+                      <p>
+                        <strong>Date:</strong>
+                        ${booking.booking_date}
+                      </p>
+
+                      <p>
+                        <strong>Time:</strong>
+                        ${booking.booking_time}
+                      </p>
+
+                      <p>
+                        <strong>Amount Paid:</strong>
+                        ₹${booking.price}
+                      </p>
+
+                      <p>
+                        <strong>Payment ID:</strong>
+                        ${razorpay_payment_id}
+                      </p>
+
+                    </div>
+
+                    <p>
+                      Please keep this email for your
+                      records.
+                    </p>
+
+                    <p>
+                      Regards,<br>
+                      <strong>GenLearning Team</strong>
+                    </p>
+
+                  </div>
+
+                </div>
+
+              </body>
+              </html>
+            `,
+          });
+
+          console.log(
+            `Mentoring confirmation email sent to ${user.email}`
+          );
+
+        } catch (emailError) {
+          // Payment successful even if email fails
+          console.error(
+            "Mentoring confirmation email failed:",
+            emailError
+          );
+        }
+      }
+
+      // ---------------------------------------------------
       // SUCCESS
       // ---------------------------------------------------
 
       return res.json({
         success: true,
+
         message:
           "Payment verified and mentoring session confirmed",
+
+        booking: {
+          id: booking.id,
+          duration_minutes:
+            booking.duration_minutes,
+          price: booking.price,
+          booking_date:
+            booking.booking_date,
+          booking_time:
+            booking.booking_time,
+          status: "confirmed",
+        },
       });
 
     } catch (error) {
@@ -337,7 +549,8 @@ router.post(
 
       return res.status(500).json({
         success: false,
-        message: "Failed to verify mentoring payment",
+        message:
+          "Failed to verify mentoring payment",
       });
     }
   }

@@ -13,6 +13,7 @@ import {
 
 
 const Navbar = () => {
+
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -223,7 +224,6 @@ const Navbar = () => {
     );
 
     setUser(null);
-
     setAccountOpen(false);
     setMenuOpen(false);
 

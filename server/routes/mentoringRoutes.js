@@ -23,7 +23,7 @@ const razorpay = new Razorpay({
 
 const transporter = nodemailer.createTransport({
   host: process.env.SMTP_HOST,
-  port: Number(process.env.SMTP_PORT),
+  port: Number(process.env.SMTP_PORT) || 587,
   secure: Number(process.env.SMTP_PORT) === 465,
   auth: {
     user: process.env.SMTP_USER,
@@ -119,7 +119,7 @@ router.post("/book", protect, async (req, res) => {
     const amount = price * 100;
 
     // -----------------------------------------------------
-    // CHECK IF SLOT IS ALREADY BOOKED
+    // CHECK SLOT
     // -----------------------------------------------------
 
     const [existing] = await db.query(
@@ -360,7 +360,7 @@ router.post(
       // SEND CONFIRMATION EMAIL
       // ---------------------------------------------------
 
-      if (users.length > 0) {
+      if (users.length > 0 && users[0].email) {
         const user = users[0];
 
         let durationLabel;
@@ -388,6 +388,7 @@ router.post(
               <!DOCTYPE html>
 
               <html>
+
               <head>
                 <meta charset="UTF-8">
                 <title>Mentoring Booking Confirmed</title>
@@ -398,7 +399,7 @@ router.post(
                   margin:0;
                   padding:0;
                   background:#f5f5f5;
-                  font-family:Arial, sans-serif;
+                  font-family:Arial,sans-serif;
                 "
               >
 
@@ -413,6 +414,8 @@ router.post(
                   "
                 >
 
+                  <!-- HEADER -->
+
                   <div
                     style="
                       padding:25px;
@@ -420,6 +423,7 @@ router.post(
                       color:white;
                     "
                   >
+
                     <h2 style="margin:0;">
                       GenLearning
                     </h2>
@@ -432,7 +436,11 @@ router.post(
                     >
                       1:1 Mentoring
                     </p>
+
                   </div>
+
+
+                  <!-- CONTENT -->
 
                   <div style="padding:30px;">
 
@@ -441,7 +449,7 @@ router.post(
                     </h2>
 
                     <p>
-                      Hi ${user.name},
+                      Hi ${user.name || "there"},
                     </p>
 
                     <p>
@@ -449,6 +457,9 @@ router.post(
                       successfully booked and payment
                       has been confirmed.
                     </p>
+
+
+                    <!-- BOOKING DETAILS -->
 
                     <div
                       style="
@@ -486,6 +497,7 @@ router.post(
 
                     </div>
 
+
                     <p>
                       Please keep this email for your
                       records.
@@ -501,6 +513,7 @@ router.post(
                 </div>
 
               </body>
+
               </html>
             `,
           });
@@ -510,7 +523,9 @@ router.post(
           );
 
         } catch (emailError) {
-          // Payment successful even if email fails
+
+          // Payment remains successful even if email fails
+
           console.error(
             "Mentoring confirmation email failed:",
             emailError
@@ -530,18 +545,25 @@ router.post(
 
         booking: {
           id: booking.id,
+
           duration_minutes:
             booking.duration_minutes,
-          price: booking.price,
+
+          price:
+            booking.price,
+
           booking_date:
             booking.booking_date,
+
           booking_time:
             booking.booking_time,
+
           status: "confirmed",
         },
       });
 
     } catch (error) {
+
       console.error(
         "Mentoring payment verification error:",
         error
@@ -564,7 +586,9 @@ router.get(
   "/my-bookings",
   protect,
   async (req, res) => {
+
     try {
+
       const userId = req.user.userId;
 
       const [bookings] = await db.query(
@@ -592,6 +616,7 @@ router.get(
       });
 
     } catch (error) {
+
       console.error(
         "Mentoring bookings fetch error:",
         error
@@ -599,10 +624,15 @@ router.get(
 
       return res.status(500).json({
         success: false,
-        message: "Failed to fetch mentoring bookings",
+        message:
+          "Failed to fetch mentoring bookings",
       });
     }
   }
 );
+
+// =========================================================
+// EXPORT
+// =========================================================
 
 module.exports = router;

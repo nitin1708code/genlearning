@@ -1,16 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
-const API_URL = "https://api.genlearning.in";
-
 const MyBookings = () => {
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-
-  // =========================================================
-  // FETCH MY BOOKINGS
-  // =========================================================
 
   const fetchBookings = async () => {
     try {
@@ -21,14 +15,14 @@ const MyBookings = () => {
 
       if (!token) {
         setError("Please login to view your bookings.");
-        setLoading(false);
         return;
       }
 
       const response = await fetch(
-        `${API_URL}/api/mentoring/my-bookings`,
+        "https://api.genlearning.in/api/mentoring/my-bookings",
         {
           method: "GET",
+          cache: "no-store",
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -37,346 +31,312 @@ const MyBookings = () => {
 
       const data = await response.json();
 
-      if (!response.ok) {
-        setError(
-          data.message || "Unable to fetch your bookings."
+      if (!response.ok || !data.success) {
+        throw new Error(
+          data.message || "Failed to load bookings."
         );
-        return;
       }
 
       setBookings(data.bookings || []);
-    } catch (err) {
-      console.error("My bookings error:", err);
+    } catch (error) {
+      console.error("My bookings error:", error);
 
       setError(
-        "Unable to connect to the server. Please try again."
+        error.message ||
+          "Unable to load your mentoring bookings."
       );
     } finally {
       setLoading(false);
     }
   };
 
-  // =========================================================
-  // LOAD
-  // =========================================================
-
   useEffect(() => {
     fetchBookings();
   }, []);
 
-  // =========================================================
-  // FORMAT DATE
-  // =========================================================
+  const getDurationLabel = (minutes) => {
+    if (Number(minutes) === 2) return "2 Minutes";
+    if (Number(minutes) === 60) return "1 Hour";
+    if (Number(minutes) === 120) return "2 Hours";
+
+    return `${minutes} Minutes`;
+  };
 
   const formatDate = (date) => {
     if (!date) return "-";
 
-    const parsedDate = new Date(date);
+    const value = new Date(date);
 
-    if (Number.isNaN(parsedDate.getTime())) {
+    if (Number.isNaN(value.getTime())) {
       return date;
     }
 
-    return parsedDate.toLocaleDateString("en-IN", {
-      day: "2-digit",
+    return value.toLocaleDateString("en-IN", {
+      day: "numeric",
       month: "short",
       year: "numeric",
     });
   };
 
-  // =========================================================
-  // FORMAT TIME
-  // =========================================================
-
   const formatTime = (time) => {
     if (!time) return "-";
 
-    const [hours, minutes] = String(time).split(":");
+    const [hours, minutes] = String(time)
+      .split(":")
+      .map(Number);
+
+    if (
+      Number.isNaN(hours) ||
+      Number.isNaN(minutes)
+    ) {
+      return time;
+    }
 
     const date = new Date();
 
-    date.setHours(
-      Number(hours),
-      Number(minutes),
-      0,
-      0
-    );
+    date.setHours(hours, minutes, 0, 0);
 
     return date.toLocaleTimeString("en-IN", {
-      hour: "2-digit",
+      hour: "numeric",
       minute: "2-digit",
+      hour12: true,
     });
   };
-
-  // =========================================================
-  // DURATION
-  // =========================================================
-
-  const getDurationLabel = (minutes) => {
-    if (Number(minutes) === 2) {
-      return "2 Minutes";
-    }
-
-    if (Number(minutes) === 60) {
-      return "1 Hour";
-    }
-
-    if (Number(minutes) === 120) {
-      return "2 Hours";
-    }
-
-    return `${minutes} Minutes`;
-  };
-
-  // =========================================================
-  // STATUS
-  // =========================================================
-
-  const getStatusLabel = (status) => {
-    if (status === "confirmed") {
-      return "Confirmed";
-    }
-
-    if (status === "pending") {
-      return "Payment Pending";
-    }
-
-    if (status === "cancelled") {
-      return "Cancelled";
-    }
-
-    return status || "Unknown";
-  };
-
-  // =========================================================
-  // LOADING
-  // =========================================================
-
-  if (loading) {
-    return (
-      <main className="my-bookings-page">
-        <section className="my-bookings-container">
-          <div className="my-bookings-loading">
-            Loading your bookings...
-          </div>
-        </section>
-      </main>
-    );
-  }
-
-  // =========================================================
-  // UI
-  // =========================================================
 
   return (
     <main className="my-bookings-page">
 
-      <section className="my-bookings-container">
+      {/* =================================================
+          HEADER
+      ================================================= */}
 
-        {/* =====================================================
-            HEADER
-        ===================================================== */}
+      <section className="my-bookings-header">
 
-        <div className="my-bookings-header">
+        <div className="my-bookings-container">
 
-          <div>
-            <span className="section-eyebrow">
-              MY BOOKINGS
-            </span>
+          <span className="section-eyebrow">
+            MY BOOKINGS
+          </span>
 
-            <h1>
-              Your mentoring
-              <span> sessions.</span>
-            </h1>
+          <h1>
+            Your mentoring
+            <span> sessions.</span>
+          </h1>
 
-            <p>
-              View your upcoming and previous 1:1
-              mentoring sessions in one place.
-            </p>
-          </div>
-
-          <Link
-            to="/mentoring"
-            className="my-bookings-new-button"
-          >
-            Book New Session →
-          </Link>
+          <p>
+            View your upcoming and previous
+            1:1 mentoring sessions in one place.
+          </p>
 
         </div>
 
-
-        {/* =====================================================
-            ERROR
-        ===================================================== */}
-
-        {error && (
-          <div className="my-bookings-message error">
-            {error}
-          </div>
-        )}
+      </section>
 
 
-        {/* =====================================================
-            EMPTY
-        ===================================================== */}
+      {/* =================================================
+          BOOKINGS
+      ================================================= */}
 
-        {!error && bookings.length === 0 && (
-          <div className="my-bookings-empty">
+      <section className="my-bookings-main">
 
-            <div className="my-bookings-empty-icon">
-              ○
+        <div className="my-bookings-container">
+
+          {/* ERROR */}
+
+          {error && (
+            <div className="my-bookings-message error">
+              {error}
+            </div>
+          )}
+
+
+          {/* LOADING */}
+
+          {loading ? (
+            <div className="my-bookings-empty">
+              <div className="my-bookings-loader"></div>
+
+              <p>
+                Loading your bookings...
+              </p>
+            </div>
+          ) : bookings.length === 0 ? (
+
+            /* EMPTY */
+
+            <div className="my-bookings-empty">
+
+              <div className="my-bookings-empty-icon">
+                ◷
+              </div>
+
+              <h2>
+                No mentoring sessions yet.
+              </h2>
+
+              <p>
+                Book your first 1:1 mentoring
+                session and start learning directly
+                with guidance.
+              </p>
+
+              <Link
+                to="/mentoring"
+                className="my-bookings-primary-btn"
+              >
+                Book a Session
+                <span>→</span>
+              </Link>
+
             </div>
 
-            <h2>
-              No bookings yet
-            </h2>
+          ) : (
 
-            <p>
-              You haven't booked a mentoring session yet.
-            </p>
+            /* BOOKINGS */
 
-            <Link
-              to="/mentoring"
-              className="my-bookings-empty-button"
-            >
-              Book Your First Session
-            </Link>
+            <div className="my-bookings-list">
 
-          </div>
-        )}
+              <div className="my-bookings-list-header">
 
-
-        {/* =====================================================
-            BOOKINGS
-        ===================================================== */}
-
-        {bookings.length > 0 && (
-          <div className="my-bookings-list">
-
-            {bookings.map((booking) => (
-
-              <article
-                className="my-booking-card"
-                key={booking.id}
-              >
-
-                {/* TOP */}
-
-                <div className="my-booking-top">
-
-                  <div>
-                    <span className="my-booking-label">
-                      1:1 MENTORING
-                    </span>
-
-                    <h2>
-                      Mentoring Session
-                    </h2>
-                  </div>
-
-                  <span
-                    className={`my-booking-status ${
-                      booking.status || ""
-                    }`}
-                  >
-                    <span className="my-booking-status-dot">
-                      ●
-                    </span>
-
-                    {getStatusLabel(
-                      booking.status
-                    )}
+                <div>
+                  <span className="section-eyebrow">
+                    BOOKING HISTORY
                   </span>
 
+                  <h2>
+                    Your sessions
+                  </h2>
                 </div>
 
+                <Link
+                  to="/mentoring"
+                  className="my-bookings-secondary-btn"
+                >
+                  Book another
+                </Link>
 
-                {/* DETAILS */}
+              </div>
 
-                <div className="my-booking-details">
 
-                  <div className="my-booking-detail">
+              {bookings.map((booking) => {
 
-                    <span>
-                      Duration
-                    </span>
+                const confirmed =
+                  booking.status === "confirmed";
 
-                    <strong>
-                      {getDurationLabel(
-                        booking.duration_minutes
+                return (
+                  <article
+                    key={booking.id}
+                    className="my-booking-card"
+                  >
+
+                    {/* TOP */}
+
+                    <div className="my-booking-card-top">
+
+                      <div>
+
+                        <span className="my-booking-label">
+                          1:1 MENTORING
+                        </span>
+
+                        <h3>
+                          {getDurationLabel(
+                            booking.duration_minutes
+                          )}
+                        </h3>
+
+                      </div>
+
+                      <span
+                        className={
+                          confirmed
+                            ? "my-booking-status confirmed"
+                            : "my-booking-status pending"
+                        }
+                      >
+                        {confirmed
+                          ? "Confirmed"
+                          : "Pending"}
+                      </span>
+
+                    </div>
+
+
+                    {/* DETAILS */}
+
+                    <div className="my-booking-details">
+
+                      <div className="my-booking-detail">
+
+                        <span>
+                          DATE
+                        </span>
+
+                        <strong>
+                          {formatDate(
+                            booking.booking_date
+                          )}
+                        </strong>
+
+                      </div>
+
+
+                      <div className="my-booking-detail">
+
+                        <span>
+                          TIME
+                        </span>
+
+                        <strong>
+                          {formatTime(
+                            booking.booking_time
+                          )}
+                        </strong>
+
+                      </div>
+
+
+                      <div className="my-booking-detail">
+
+                        <span>
+                          AMOUNT
+                        </span>
+
+                        <strong>
+                          ₹{booking.price}
+                        </strong>
+
+                      </div>
+
+                    </div>
+
+
+                    {/* PAYMENT */}
+
+                    {confirmed &&
+                      booking.razorpay_payment_id && (
+                        <div className="my-booking-payment">
+
+                          <span>
+                            PAYMENT ID
+                          </span>
+
+                          <strong>
+                            {booking.razorpay_payment_id}
+                          </strong>
+
+                        </div>
                       )}
-                    </strong>
 
-                  </div>
+                  </article>
+                );
+              })}
 
+            </div>
 
-                  <div className="my-booking-detail">
+          )}
 
-                    <span>
-                      Date
-                    </span>
-
-                    <strong>
-                      {formatDate(
-                        booking.booking_date
-                      )}
-                    </strong>
-
-                  </div>
-
-
-                  <div className="my-booking-detail">
-
-                    <span>
-                      Time
-                    </span>
-
-                    <strong>
-                      {formatTime(
-                        booking.booking_time
-                      )}
-                    </strong>
-
-                  </div>
-
-
-                  <div className="my-booking-detail">
-
-                    <span>
-                      Amount
-                    </span>
-
-                    <strong>
-                      ₹{booking.price}
-                    </strong>
-
-                  </div>
-
-                </div>
-
-
-                {/* PAYMENT */}
-
-                {booking.razorpay_payment_id && (
-                  <div className="my-booking-payment">
-
-                    <span>
-                      Payment ID
-                    </span>
-
-                    <code>
-                      {booking.razorpay_payment_id}
-                    </code>
-
-                  </div>
-                )}
-
-              </article>
-
-            ))}
-
-          </div>
-        )}
+        </div>
 
       </section>
 

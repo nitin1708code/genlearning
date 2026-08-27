@@ -581,14 +581,15 @@ router.post(
 // =========================================================
 // MY BOOKINGS
 // =========================================================
+ // =========================================================
+// MY BOOKINGS
+// =========================================================
 
 router.get(
   "/my-bookings",
   protect,
   async (req, res) => {
-
     try {
-
       const userId = req.user.userId;
 
       const [bookings] = await db.query(
@@ -605,6 +606,7 @@ router.get(
           created_at
         FROM mentoring_bookings
         WHERE user_id = ?
+        AND status = 'confirmed'
         ORDER BY booking_date DESC, booking_time DESC
         `,
         [userId]
@@ -616,7 +618,6 @@ router.get(
       });
 
     } catch (error) {
-
       console.error(
         "Mentoring bookings fetch error:",
         error
@@ -624,8 +625,7 @@ router.get(
 
       return res.status(500).json({
         success: false,
-        message:
-          "Failed to fetch mentoring bookings",
+        message: "Failed to fetch mentoring bookings",
       });
     }
   }

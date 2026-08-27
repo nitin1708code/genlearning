@@ -599,7 +599,21 @@ const Navbar = () => {
 
                   </Link>
 
+                 {/* MY BOOKINGS */}
 
+<Link
+  to="/my-bookings"
+  onClick={() => {
+    setAccountOpen(false);
+    handleNavClick();
+  }}
+>
+  <span>
+    02
+  </span>
+
+  My Bookings
+</Link>
                   {/* PROFILE */}
 
                   <Link
@@ -614,7 +628,7 @@ const Navbar = () => {
                   >
 
                     <span>
-                      02
+                      03
                     </span>
 
                     Profile
@@ -630,7 +644,7 @@ const Navbar = () => {
                   >
 
                     <span>
-                      03
+                      04
                     </span>
 
                     Logout
@@ -752,7 +766,15 @@ const Navbar = () => {
 
             </Link>
 
-
+          <Link
+  to="/my-bookings"
+  className="mobile-link"
+  onClick={() =>
+    handleNavClick()
+  }
+>
+  My Bookings
+</Link>
             <Link
               to="/profile"
               className="mobile-link"

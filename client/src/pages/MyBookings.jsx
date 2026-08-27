@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import "./MyBookings.css";
 
 const MyBookings = () => {
   const [bookings, setBookings] = useState([]);
@@ -15,6 +16,7 @@ const MyBookings = () => {
 
       if (!token) {
         setError("Please login to view your bookings.");
+        setLoading(false);
         return;
       }
 
@@ -54,13 +56,23 @@ const MyBookings = () => {
     fetchBookings();
   }, []);
 
-  const getDurationLabel = (minutes) => {
-    if (Number(minutes) === 2) return "2 Minutes";
-    if (Number(minutes) === 60) return "1 Hour";
-    if (Number(minutes) === 120) return "2 Hours";
+  // =====================================================
+  // DURATION
+  // =====================================================
 
-    return `${minutes} Minutes`;
+  const getDurationLabel = (minutes) => {
+    const value = Number(minutes);
+
+    if (value === 2) return "2 Minutes";
+    if (value === 60) return "1 Hour";
+    if (value === 120) return "2 Hours";
+
+    return `${value} Minutes`;
   };
+
+  // =====================================================
+  // DATE
+  // =====================================================
 
   const formatDate = (date) => {
     if (!date) return "-";
@@ -72,18 +84,27 @@ const MyBookings = () => {
     }
 
     return value.toLocaleDateString("en-IN", {
-      day: "numeric",
+      day: "2-digit",
       month: "short",
       year: "numeric",
     });
   };
 
+  // =====================================================
+  // TIME
+  // =====================================================
+
   const formatTime = (time) => {
     if (!time) return "-";
 
-    const [hours, minutes] = String(time)
-      .split(":")
-      .map(Number);
+    const parts = String(time).split(":");
+
+    if (parts.length < 2) {
+      return time;
+    }
+
+    const hours = Number(parts[0]);
+    const minutes = Number(parts[1]);
 
     if (
       Number.isNaN(hours) ||
@@ -103,20 +124,36 @@ const MyBookings = () => {
     });
   };
 
+  // =====================================================
+  // STATUS
+  // =====================================================
+
+  const getStatusLabel = (status) => {
+    if (status === "confirmed") {
+      return "Confirmed";
+    }
+
+    if (status === "pending") {
+      return "Payment Pending";
+    }
+
+    return status || "Pending";
+  };
+
   return (
     <main className="my-bookings-page">
 
       {/* =================================================
-          HEADER
+          HERO
       ================================================= */}
 
-      <section className="my-bookings-header">
+      <section className="my-bookings-hero">
 
         <div className="my-bookings-container">
 
-          <span className="section-eyebrow">
+          <div className="my-bookings-eyebrow">
             MY BOOKINGS
-          </span>
+          </div>
 
           <h1>
             Your mentoring
@@ -128,46 +165,78 @@ const MyBookings = () => {
             1:1 mentoring sessions in one place.
           </p>
 
+          <Link
+            to="/mentoring"
+            className="my-bookings-hero-btn"
+          >
+            Book New Session
+            <span>↗</span>
+          </Link>
+
         </div>
 
       </section>
 
 
       {/* =================================================
-          BOOKINGS
+          CONTENT
       ================================================= */}
 
-      <section className="my-bookings-main">
+      <section className="my-bookings-content">
 
         <div className="my-bookings-container">
 
           {/* ERROR */}
 
           {error && (
-            <div className="my-bookings-message error">
-              {error}
+            <div className="my-bookings-alert">
+              <div className="my-bookings-alert-icon">
+                !
+              </div>
+
+              <div>
+                <strong>
+                  Something went wrong
+                </strong>
+
+                <p>
+                  {error}
+                </p>
+              </div>
             </div>
           )}
 
 
-          {/* LOADING */}
+          {/* =================================================
+              LOADING
+          ================================================= */}
 
           {loading ? (
-            <div className="my-bookings-empty">
-              <div className="my-bookings-loader"></div>
+
+            <div className="my-bookings-loading">
+
+              <div className="my-bookings-spinner"></div>
 
               <p>
                 Loading your bookings...
               </p>
+
             </div>
+
           ) : bookings.length === 0 ? (
 
-            /* EMPTY */
+            /* =================================================
+                EMPTY STATE
+            ================================================= */
 
             <div className="my-bookings-empty">
 
               <div className="my-bookings-empty-icon">
                 ◷
+              </div>
+
+              <div className="my-bookings-eyebrow">
+                NO BOOKINGS
               </div>
 
               <h2>
@@ -176,8 +245,8 @@ const MyBookings = () => {
 
               <p>
                 Book your first 1:1 mentoring
-                session and start learning directly
-                with guidance.
+                session and start learning
+                directly with guidance.
               </p>
 
               <Link
@@ -192,20 +261,34 @@ const MyBookings = () => {
 
           ) : (
 
-            /* BOOKINGS */
+            /* =================================================
+                BOOKINGS
+            ================================================= */
 
-            <div className="my-bookings-list">
+            <div className="my-bookings-wrapper">
+
+              {/* HEADER */}
 
               <div className="my-bookings-list-header">
 
                 <div>
-                  <span className="section-eyebrow">
+
+                  <div className="my-bookings-eyebrow">
                     BOOKING HISTORY
-                  </span>
+                  </div>
 
                   <h2>
                     Your sessions
                   </h2>
+
+                  <p>
+                    {bookings.length}{" "}
+                    {bookings.length === 1
+                      ? "session"
+                      : "sessions"}{" "}
+                    found
+                  </p>
+
                 </div>
 
                 <Link
@@ -213,124 +296,145 @@ const MyBookings = () => {
                   className="my-bookings-secondary-btn"
                 >
                   Book another
+                  <span>↗</span>
                 </Link>
 
               </div>
 
 
-              {bookings.map((booking) => {
+              {/* CARDS */}
 
-                const confirmed =
-                  booking.status === "confirmed";
+              <div className="my-bookings-list">
 
-                return (
-                  <article
-                    key={booking.id}
-                    className="my-booking-card"
-                  >
+                {bookings.map((booking) => {
 
-                    {/* TOP */}
+                  const confirmed =
+                    booking.status === "confirmed";
 
-                    <div className="my-booking-card-top">
+                  return (
+                    <article
+                      key={booking.id}
+                      className="my-booking-card"
+                    >
 
-                      <div>
+                      {/* CARD TOP */}
 
-                        <span className="my-booking-label">
-                          1:1 MENTORING
-                        </span>
+                      <div className="my-booking-card-top">
 
-                        <h3>
-                          {getDurationLabel(
-                            booking.duration_minutes
+                        <div className="my-booking-title-area">
+
+                          <div className="my-booking-label">
+                            1:1 MENTORING
+                          </div>
+
+                          <h3>
+                            {getDurationLabel(
+                              booking.duration_minutes
+                            )}
+                          </h3>
+
+                        </div>
+
+
+                        <div
+                          className={
+                            confirmed
+                              ? "my-booking-status confirmed"
+                              : "my-booking-status pending"
+                          }
+                        >
+                          <span className="status-dot"></span>
+
+                          {getStatusLabel(
+                            booking.status
                           )}
-                        </h3>
-
-                      </div>
-
-                      <span
-                        className={
-                          confirmed
-                            ? "my-booking-status confirmed"
-                            : "my-booking-status pending"
-                        }
-                      >
-                        {confirmed
-                          ? "Confirmed"
-                          : "Pending"}
-                      </span>
-
-                    </div>
-
-
-                    {/* DETAILS */}
-
-                    <div className="my-booking-details">
-
-                      <div className="my-booking-detail">
-
-                        <span>
-                          DATE
-                        </span>
-
-                        <strong>
-                          {formatDate(
-                            booking.booking_date
-                          )}
-                        </strong>
+                        </div>
 
                       </div>
 
 
-                      <div className="my-booking-detail">
+                      {/* DIVIDER */}
 
-                        <span>
-                          TIME
-                        </span>
-
-                        <strong>
-                          {formatTime(
-                            booking.booking_time
-                          )}
-                        </strong>
-
-                      </div>
+                      <div className="my-booking-divider"></div>
 
 
-                      <div className="my-booking-detail">
+                      {/* DETAILS */}
 
-                        <span>
-                          AMOUNT
-                        </span>
+                      <div className="my-booking-details">
 
-                        <strong>
-                          ₹{booking.price}
-                        </strong>
-
-                      </div>
-
-                    </div>
-
-
-                    {/* PAYMENT */}
-
-                    {confirmed &&
-                      booking.razorpay_payment_id && (
-                        <div className="my-booking-payment">
+                        <div className="my-booking-detail">
 
                           <span>
-                            PAYMENT ID
+                            DATE
                           </span>
 
                           <strong>
-                            {booking.razorpay_payment_id}
+                            {formatDate(
+                              booking.booking_date
+                            )}
                           </strong>
 
                         </div>
-                      )}
 
-                  </article>
-                );
-              })}
+
+                        <div className="my-booking-detail">
+
+                          <span>
+                            TIME
+                          </span>
+
+                          <strong>
+                            {formatTime(
+                              booking.booking_time
+                            )}
+                          </strong>
+
+                        </div>
+
+
+                        <div className="my-booking-detail">
+
+                          <span>
+                            AMOUNT
+                          </span>
+
+                          <strong>
+                            ₹{Number(
+                              booking.price
+                            ).toFixed(2)}
+                          </strong>
+
+                        </div>
+
+                      </div>
+
+
+                      {/* PAYMENT */}
+
+                      {confirmed &&
+                        booking.razorpay_payment_id && (
+
+                          <div className="my-booking-payment">
+
+                            <span>
+                              PAYMENT ID
+                            </span>
+
+                            <strong>
+                              {
+                                booking.razorpay_payment_id
+                              }
+                            </strong>
+
+                          </div>
+
+                        )}
+
+                    </article>
+                  );
+                })}
+
+              </div>
 
             </div>
 

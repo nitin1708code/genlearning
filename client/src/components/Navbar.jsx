@@ -1,4 +1,4 @@
- import React, {
+import React, {
   useEffect,
   useRef,
   useState,
@@ -13,7 +13,6 @@ import {
 
 
 const Navbar = () => {
-
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -159,39 +158,54 @@ const Navbar = () => {
 
 
   // ========================================
-  // ESC KEY
+  // SEARCH OUTSIDE CLICK
   // ========================================
 
-   useEffect(() => {
-  const handleSearchOutsideClick = (event) => {
-    if (!searchOpen) return;
+  useEffect(() => {
 
-    const searchBox = event.target.closest(
-      ".navbar-search-box"
-    );
+    const handleSearchOutsideClick = (event) => {
 
-    const searchButton = event.target.closest(
-      ".search-btn"
-    );
+      if (!searchOpen) return;
 
-    if (!searchBox && !searchButton) {
-      setSearchOpen(false);
-      setSearchQuery("");
-    }
-  };
 
-  document.addEventListener(
-    "mousedown",
-    handleSearchOutsideClick
-  );
+      const searchBox =
+        event.target.closest(
+          ".navbar-search-box"
+        );
 
-  return () => {
-    document.removeEventListener(
+
+      const searchButton =
+        event.target.closest(
+          ".search-btn"
+        );
+
+
+      if (!searchBox && !searchButton) {
+
+        setSearchOpen(false);
+        setSearchQuery("");
+
+      }
+
+    };
+
+
+    document.addEventListener(
       "mousedown",
       handleSearchOutsideClick
     );
-  };
-}, [searchOpen]);
+
+
+    return () => {
+
+      document.removeEventListener(
+        "mousedown",
+        handleSearchOutsideClick
+      );
+
+    };
+
+  }, [searchOpen]);
 
 
   // ========================================
@@ -272,9 +286,7 @@ const Navbar = () => {
         behavior: "instant",
       });
 
-
       document.documentElement.scrollTop = 0;
-
       document.body.scrollTop = 0;
 
     });
@@ -371,14 +383,13 @@ const Navbar = () => {
           onClick={handleNavClick}
         >
 
-           <img
-  src="/logo-optimized.webp"
-  alt="GEN Learning"
-  className="navbar-logo-image"
-  width="169"
-  height="55"
-/>
-
+          <img
+            src="/logo-optimized.webp"
+            alt="GEN Learning"
+            className="navbar-logo-image"
+            width="169"
+            height="55"
+          />
 
         </Link>
 
@@ -562,12 +573,17 @@ const Navbar = () => {
                     <div>
 
                       <strong>
+
                         {user.name ||
                           "User"}
+
                       </strong>
 
+
                       <span>
+
                         {user.email || ""}
+
                       </span>
 
                     </div>
@@ -585,7 +601,6 @@ const Navbar = () => {
                     onClick={() => {
 
                       setAccountOpen(false);
-
                       handleNavClick();
 
                     }}
@@ -599,21 +614,28 @@ const Navbar = () => {
 
                   </Link>
 
-                 {/* MY BOOKINGS */}
 
-<Link
-  to="/my-bookings"
-  onClick={() => {
-    setAccountOpen(false);
-    handleNavClick();
-  }}
->
-  <span>
-    02
-  </span>
+                  {/* MY BOOKINGS */}
 
-  My Bookings
-</Link>
+                  <Link
+                    to="/my-bookings"
+                    onClick={() => {
+
+                      setAccountOpen(false);
+                      handleNavClick();
+
+                    }}
+                  >
+
+                    <span>
+                      02
+                    </span>
+
+                    My Bookings
+
+                  </Link>
+
+
                   {/* PROFILE */}
 
                   <Link
@@ -621,7 +643,6 @@ const Navbar = () => {
                     onClick={() => {
 
                       setAccountOpen(false);
-
                       handleNavClick();
 
                     }}
@@ -650,6 +671,7 @@ const Navbar = () => {
                     Logout
 
                   </button>
+
 
                 </div>
 
@@ -687,6 +709,7 @@ const Navbar = () => {
 
           </button>
 
+
         </div>
 
       </div>
@@ -704,6 +727,7 @@ const Navbar = () => {
             : ""
         }`}
       >
+
 
         {navLinks.map((link) => (
 
@@ -737,7 +761,6 @@ const Navbar = () => {
             onClick={() => {
 
               setMenuOpen(false);
-
               handleNavClick();
 
             }}
@@ -766,15 +789,22 @@ const Navbar = () => {
 
             </Link>
 
-          <Link
-  to="/my-bookings"
-  className="mobile-link"
-  onClick={() =>
-    handleNavClick()
-  }
->
-  My Bookings
-</Link>
+
+            {/* MY BOOKINGS */}
+
+            <Link
+              to="/my-bookings"
+              className="mobile-link"
+              onClick={() =>
+                handleNavClick()
+              }
+            >
+
+              My Bookings
+
+            </Link>
+
+
             <Link
               to="/profile"
               className="mobile-link"
@@ -880,6 +910,7 @@ const Navbar = () => {
               {" "}to close
 
             </div>
+
 
           </div>
 

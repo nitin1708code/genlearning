@@ -1,5 +1,6 @@
 const express = require("express");
 const loginLimiter = require("../middleware/loginLimiter");
+const otpLimiter = require("../middleware/otpLimiter");
 
 const router = express.Router();
 
@@ -47,10 +48,7 @@ router.post("/google", googleLogin);
 
 
 // FORGOT PASSWORD
-router.post(
-  "/forgot-password",
-  forgotPassword
-);
+router.post("/forgot-password", otpLimiter, forgotPassword);
 
 // VERIFY RESET OTP
 router.post(

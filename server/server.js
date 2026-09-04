@@ -1,8 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 require("dotenv").config();
-
-const rateLimit = require("express-rate-limit");
+const helmet = require("helmet");
 const db = require("./config/db");
 const coursesRoutes = require("./routes/courses");
 const authRoutes = require("./routes/authRoutes");
@@ -13,17 +12,8 @@ const mentoringRoutes = require("./routes/mentoringRoutes");
 
 
 const app = express();
-
-const loginLimiter = rateLimit({
-  windowMs: 15 * 60 * 1000,
-  max: 10,
-  message: {
-    success: false,
-    message: "Too many login attempts. Please try again after 15 minutes."
-  },
-  standardHeaders: true,
-  legacyHeaders: false
-});
+app.use(helmet());
+ 
 
 
 // ========================================

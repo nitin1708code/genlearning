@@ -1,4 +1,5 @@
 const express = require("express");
+const loginLimiter = require("../middleware/loginLimiter");
 
 const router = express.Router();
 
@@ -40,11 +41,7 @@ router.post(
 // ========================================
 // LOGIN
 // ========================================
-
-router.post(
-  "/login",
-  loginUser
-);
+router.post("/login", loginLimiter, loginUser);
 
 router.post("/google", googleLogin);
 

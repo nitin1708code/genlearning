@@ -175,6 +175,17 @@ router.post("/verify-payment", protect, async (req, res) => {
       });
     }
 
+    const razorpayPayment = await razorpay.payments.fetch(
+  razorpay_payment_id
+);
+
+if (razorpayPayment.status !== "captured") {
+  return res.status(400).json({
+    success: false,
+    message: "Payment was not captured",
+  });
+}
+
     // Find payment record
     const [payments] = await db.query(
       `
@@ -200,6 +211,14 @@ router.post("/verify-payment", protect, async (req, res) => {
     }
 
     const payment = payments[0];
+    const expectedAmount = Math.round(Number(payment.amount) * 100);
+
+if (razorpayPayment.amount !== expectedAmount) {
+  return res.status(400).json({
+    success: false,
+    message: "Payment amount mismatch",
+  });
+}
 
     // Prevent duplicate verification
     if (payment.status === "paid") {

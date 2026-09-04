@@ -347,17 +347,17 @@ setTimeout(() => {
           "genlearningToken"
         );
 
-      if (!token) {
+     if (!token) {
+  setLoading(false);
 
-        setError(
-          "Please login before booking a mentoring session."
-        );
+  navigate("/login", {
+    state: {
+      from: "/mentoring",
+    },
+  });
 
-        setLoading(false);
-
-        return;
-      }
-
+  return;
+}
       // =================================================
       // DATE / TIME
       // =================================================

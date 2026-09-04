@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { GoogleLogin } from "@react-oauth/google";
 
 const Login = () => {
   const navigate = useNavigate();
+  const location = useLocation();
 
   const [formData, setFormData] = useState({
     email: "",
@@ -100,7 +101,7 @@ const Login = () => {
         JSON.stringify(data.user)
       );
 
-      navigate("/dashboard");
+      navigate(location.state?.from || "/dashboard");
 
     } catch (error) {
       console.error("Login error:", error);

@@ -221,7 +221,7 @@ const Dashboard = () => {
               </span>
 
               <strong>
-                03
+                0
               </strong>
             </div>
 

@@ -1,17 +1,65 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { InView } from "../components/motion-primitives/in-view";
 
 const Terms = () => {
   return (
     <main className="legal-page">
       <div className="legal-container">
 
-        <Link to="/" className="legal-back">
-          ← Back to website
-        </Link>
+        <InView
+          className="legal-back"
+          variants={{
+            hidden: {
+              opacity: 0,
+              x: -20,
+            },
+            visible: {
+              opacity: 1,
+              x: 0,
+            },
+          }}
+          transition={{
+            duration: 0.8,
+            ease: "easeInOut",
+          }}
+          viewOptions={{
+            margin: "0px 0px -60px 0px",
+          }}
+        >
+          <Link to="/">
+            ← Back to website
+          </Link>
+        </InView>
 
-        <header className="legal-header">
-          <span className="section-eyebrow">LEGAL</span>
+
+        {/* HEADER */}
+
+        <InView
+          className="legal-header"
+          variants={{
+            hidden: {
+              opacity: 0,
+              y: 35,
+              filter: "blur(4px)",
+            },
+            visible: {
+              opacity: 1,
+              y: 0,
+              filter: "blur(0px)",
+            },
+          }}
+          transition={{
+            duration: 1.1,
+            ease: "easeInOut",
+          }}
+          viewOptions={{
+            margin: "0px 0px -80px 0px",
+          }}
+        >
+          <span className="section-eyebrow">
+            LEGAL
+          </span>
 
           <h1>
             Terms & <span>Conditions.</span>
@@ -22,27 +70,82 @@ const Terms = () => {
             GEN Learning platform, educational content and digital services.
           </p>
 
-          <small>Last updated: August 23, 2026</small>
-        </header>
+          <small>
+            Last updated: August 23, 2026
+          </small>
+        </InView>
 
 
         <section className="legal-content">
 
-          <div className="legal-intro">
-            <strong>Welcome to GEN Learning.</strong>
+          {/* INTRO */}
+
+          <InView
+            className="legal-intro"
+            variants={{
+              hidden: {
+                opacity: 0,
+                y: 30,
+                filter: "blur(4px)",
+              },
+              visible: {
+                opacity: 1,
+                y: 0,
+                filter: "blur(0px)",
+              },
+            }}
+            transition={{
+              duration: 0.9,
+              ease: "easeInOut",
+            }}
+            viewOptions={{
+              margin: "0px 0px -70px 0px",
+            }}
+          >
+            <strong>
+              Welcome to GEN Learning.
+            </strong>
 
             <p>
               By accessing or using our website, courses or services,
               you agree to comply with these Terms & Conditions.
               Please read them carefully before using the platform.
             </p>
-          </div>
+          </InView>
 
 
-          <article className="legal-section">
-            <span className="legal-section-number">01</span>
+          {/* SECTION 01 */}
+
+          <InView
+            className="legal-section"
+            variants={{
+              hidden: {
+                opacity: 0,
+                y: 35,
+                filter: "blur(4px)",
+              },
+              visible: {
+                opacity: 1,
+                y: 0,
+                filter: "blur(0px)",
+              },
+            }}
+            transition={{
+              duration: 0.9,
+              ease: "easeInOut",
+            }}
+            viewOptions={{
+              margin: "0px 0px -70px 0px",
+            }}
+          >
+            <span className="legal-section-number">
+              01
+            </span>
+
             <div>
-              <h2>Acceptance of Terms</h2>
+              <h2>
+                Acceptance of Terms
+              </h2>
 
               <p>
                 By accessing or using GEN Learning, you acknowledge
@@ -55,13 +158,42 @@ const Terms = () => {
                 use of the website and its services.
               </p>
             </div>
-          </article>
+          </InView>
 
 
-          <article className="legal-section">
-            <span className="legal-section-number">02</span>
+          {/* SECTION 02 */}
+
+          <InView
+            className="legal-section"
+            variants={{
+              hidden: {
+                opacity: 0,
+                y: 35,
+                filter: "blur(4px)",
+              },
+              visible: {
+                opacity: 1,
+                y: 0,
+                filter: "blur(0px)",
+              },
+            }}
+            transition={{
+              duration: 0.9,
+              delay: 0.08,
+              ease: "easeInOut",
+            }}
+            viewOptions={{
+              margin: "0px 0px -70px 0px",
+            }}
+          >
+            <span className="legal-section-number">
+              02
+            </span>
+
             <div>
-              <h2>Account Registration</h2>
+              <h2>
+                Account Registration
+              </h2>
 
               <p>
                 Certain features may require you to create an account.
@@ -70,18 +202,55 @@ const Terms = () => {
               </p>
 
               <ul>
-                <li>Keep your account credentials confidential</li>
-                <li>Use your account only for legitimate purposes</li>
-                <li>Notify us of unauthorized account activity</li>
+                <li>
+                  Keep your account credentials confidential
+                </li>
+
+                <li>
+                  Use your account only for legitimate purposes
+                </li>
+
+                <li>
+                  Notify us of unauthorized account activity
+                </li>
               </ul>
             </div>
-          </article>
+          </InView>
 
 
-          <article className="legal-section">
-            <span className="legal-section-number">03</span>
+          {/* SECTION 03 */}
+
+          <InView
+            className="legal-section"
+            variants={{
+              hidden: {
+                opacity: 0,
+                y: 35,
+                filter: "blur(4px)",
+              },
+              visible: {
+                opacity: 1,
+                y: 0,
+                filter: "blur(0px)",
+              },
+            }}
+            transition={{
+              duration: 0.9,
+              delay: 0.1,
+              ease: "easeInOut",
+            }}
+            viewOptions={{
+              margin: "0px 0px -70px 0px",
+            }}
+          >
+            <span className="legal-section-number">
+              03
+            </span>
+
             <div>
-              <h2>Courses & Learning Content</h2>
+              <h2>
+                Courses & Learning Content
+              </h2>
 
               <p>
                 GEN Learning provides educational content, courses,
@@ -90,18 +259,55 @@ const Terms = () => {
               </p>
 
               <ul>
-                <li>Content must not be copied or redistributed without permission</li>
-                <li>Content must not be resold or commercially exploited</li>
-                <li>Content must not be republished as your own work</li>
+                <li>
+                  Content must not be copied or redistributed without permission
+                </li>
+
+                <li>
+                  Content must not be resold or commercially exploited
+                </li>
+
+                <li>
+                  Content must not be republished as your own work
+                </li>
               </ul>
             </div>
-          </article>
+          </InView>
 
 
-          <article className="legal-section">
-            <span className="legal-section-number">04</span>
+          {/* SECTION 04 */}
+
+          <InView
+            className="legal-section"
+            variants={{
+              hidden: {
+                opacity: 0,
+                y: 35,
+                filter: "blur(4px)",
+              },
+              visible: {
+                opacity: 1,
+                y: 0,
+                filter: "blur(0px)",
+              },
+            }}
+            transition={{
+              duration: 0.9,
+              delay: 0.12,
+              ease: "easeInOut",
+            }}
+            viewOptions={{
+              margin: "0px 0px -70px 0px",
+            }}
+          >
+            <span className="legal-section-number">
+              04
+            </span>
+
             <div>
-              <h2>IT Services & Client Projects</h2>
+              <h2>
+                IT Services & Client Projects
+              </h2>
 
               <p>
                 GEN Learning may provide website development, software
@@ -114,31 +320,105 @@ const Terms = () => {
                 with the client.
               </p>
             </div>
-          </article>
+          </InView>
 
 
-          <article className="legal-section">
-            <span className="legal-section-number">05</span>
+          {/* SECTION 05 */}
+
+          <InView
+            className="legal-section"
+            variants={{
+              hidden: {
+                opacity: 0,
+                y: 35,
+                filter: "blur(4px)",
+              },
+              visible: {
+                opacity: 1,
+                y: 0,
+                filter: "blur(0px)",
+              },
+            }}
+            transition={{
+              duration: 0.9,
+              delay: 0.14,
+              ease: "easeInOut",
+            }}
+            viewOptions={{
+              margin: "0px 0px -70px 0px",
+            }}
+          >
+            <span className="legal-section-number">
+              05
+            </span>
+
             <div>
-              <h2>Acceptable Use</h2>
+              <h2>
+                Acceptable Use
+              </h2>
 
-              <p>You agree not to:</p>
+              <p>
+                You agree not to:
+              </p>
 
               <ul>
-                <li>Attempt unauthorized access to the platform</li>
-                <li>Interfere with website functionality or security</li>
-                <li>Upload malicious or harmful content</li>
-                <li>Use the platform for unlawful activities</li>
-                <li>Abuse or misuse another user's account</li>
+                <li>
+                  Attempt unauthorized access to the platform
+                </li>
+
+                <li>
+                  Interfere with website functionality or security
+                </li>
+
+                <li>
+                  Upload malicious or harmful content
+                </li>
+
+                <li>
+                  Use the platform for unlawful activities
+                </li>
+
+                <li>
+                  Abuse or misuse another user's account
+                </li>
               </ul>
             </div>
-          </article>
+          </InView>
 
 
-          <article className="legal-section">
-            <span className="legal-section-number">06</span>
+          {/* SECTION 06 */}
+
+          <InView
+            className="legal-section"
+            variants={{
+              hidden: {
+                opacity: 0,
+                y: 35,
+                filter: "blur(4px)",
+              },
+              visible: {
+                opacity: 1,
+                y: 0,
+                filter: "blur(0px)",
+              },
+            }}
+            transition={{
+              duration: 0.9,
+              delay: 0.16,
+              ease: "easeInOut",
+            }}
+            viewOptions={{
+              margin: "0px 0px -70px 0px",
+            }}
+          >
+            <span className="legal-section-number">
+              06
+            </span>
+
             <div>
-              <h2>Intellectual Property</h2>
+              <h2>
+                Intellectual Property
+              </h2>
 
               <p>
                 The GEN Learning name, branding, website design,
@@ -152,13 +432,42 @@ const Terms = () => {
                 expressly agreed in writing.
               </p>
             </div>
-          </article>
+          </InView>
 
 
-          <article className="legal-section">
-            <span className="legal-section-number">07</span>
+          {/* SECTION 07 */}
+
+          <InView
+            className="legal-section"
+            variants={{
+              hidden: {
+                opacity: 0,
+                y: 35,
+                filter: "blur(4px)",
+              },
+              visible: {
+                opacity: 1,
+                y: 0,
+                filter: "blur(0px)",
+              },
+            }}
+            transition={{
+              duration: 0.9,
+              delay: 0.18,
+              ease: "easeInOut",
+            }}
+            viewOptions={{
+              margin: "0px 0px -70px 0px",
+            }}
+          >
+            <span className="legal-section-number">
+              07
+            </span>
+
             <div>
-              <h2>Third-Party Services</h2>
+              <h2>
+                Third-Party Services
+              </h2>
 
               <p>
                 Certain features may depend on third-party services,
@@ -171,13 +480,42 @@ const Terms = () => {
                 the terms and policies of those providers.
               </p>
             </div>
-          </article>
+          </InView>
 
 
-          <article className="legal-section">
-            <span className="legal-section-number">08</span>
+          {/* SECTION 08 */}
+
+          <InView
+            className="legal-section"
+            variants={{
+              hidden: {
+                opacity: 0,
+                y: 35,
+                filter: "blur(4px)",
+              },
+              visible: {
+                opacity: 1,
+                y: 0,
+                filter: "blur(0px)",
+              },
+            }}
+            transition={{
+              duration: 0.9,
+              delay: 0.2,
+              ease: "easeInOut",
+            }}
+            viewOptions={{
+              margin: "0px 0px -70px 0px",
+            }}
+          >
+            <span className="legal-section-number">
+              08
+            </span>
+
             <div>
-              <h2>Service Availability</h2>
+              <h2>
+                Service Availability
+              </h2>
 
               <p>
                 We aim to maintain a reliable and secure platform.
@@ -186,13 +524,42 @@ const Terms = () => {
                 or circumstances beyond our reasonable control.
               </p>
             </div>
-          </article>
+          </InView>
 
 
-          <article className="legal-section">
-            <span className="legal-section-number">09</span>
+          {/* SECTION 09 */}
+
+          <InView
+            className="legal-section"
+            variants={{
+              hidden: {
+                opacity: 0,
+                y: 35,
+                filter: "blur(4px)",
+              },
+              visible: {
+                opacity: 1,
+                y: 0,
+                filter: "blur(0px)",
+              },
+            }}
+            transition={{
+              duration: 0.9,
+              delay: 0.22,
+              ease: "easeInOut",
+            }}
+            viewOptions={{
+              margin: "0px 0px -70px 0px",
+            }}
+          >
+            <span className="legal-section-number">
+              09
+            </span>
+
             <div>
-              <h2>Disclaimer & Liability</h2>
+              <h2>
+                Disclaimer & Liability
+              </h2>
 
               <p>
                 Information and educational materials provided through
@@ -208,13 +575,42 @@ const Terms = () => {
                 provided through the website.
               </p>
             </div>
-          </article>
+          </InView>
 
 
-          <article className="legal-section">
-            <span className="legal-section-number">10</span>
+          {/* SECTION 10 */}
+
+          <InView
+            className="legal-section"
+            variants={{
+              hidden: {
+                opacity: 0,
+                y: 35,
+                filter: "blur(4px)",
+              },
+              visible: {
+                opacity: 1,
+                y: 0,
+                filter: "blur(0px)",
+              },
+            }}
+            transition={{
+              duration: 0.9,
+              delay: 0.24,
+              ease: "easeInOut",
+            }}
+            viewOptions={{
+              margin: "0px 0px -70px 0px",
+            }}
+          >
+            <span className="legal-section-number">
+              10
+            </span>
+
             <div>
-              <h2>Suspension & Termination</h2>
+              <h2>
+                Suspension & Termination
+              </h2>
 
               <p>
                 We may restrict or suspend access to an account or
@@ -223,13 +619,42 @@ const Terms = () => {
                 legitimate operational reason.
               </p>
             </div>
-          </article>
+          </InView>
 
 
-          <article className="legal-section">
-            <span className="legal-section-number">11</span>
+          {/* SECTION 11 */}
+
+          <InView
+            className="legal-section"
+            variants={{
+              hidden: {
+                opacity: 0,
+                y: 35,
+                filter: "blur(4px)",
+              },
+              visible: {
+                opacity: 1,
+                y: 0,
+                filter: "blur(0px)",
+              },
+            }}
+            transition={{
+              duration: 0.9,
+              delay: 0.26,
+              ease: "easeInOut",
+            }}
+            viewOptions={{
+              margin: "0px 0px -70px 0px",
+            }}
+          >
+            <span className="legal-section-number">
+              11
+            </span>
+
             <div>
-              <h2>Changes to These Terms</h2>
+              <h2>
+                Changes to These Terms
+              </h2>
 
               <p>
                 We may modify these Terms & Conditions when necessary
@@ -242,13 +667,42 @@ const Terms = () => {
                 a revised effective date.
               </p>
             </div>
-          </article>
+          </InView>
 
 
-          <article className="legal-contact">
-            <span className="section-eyebrow">CONTACT</span>
+          {/* CONTACT */}
 
-            <h2>Have a question?</h2>
+          <InView
+            className="legal-contact"
+            variants={{
+              hidden: {
+                opacity: 0,
+                y: 35,
+                scale: 0.98,
+                filter: "blur(4px)",
+              },
+              visible: {
+                opacity: 1,
+                y: 0,
+                scale: 1,
+                filter: "blur(0px)",
+              },
+            }}
+            transition={{
+              duration: 1,
+              ease: "easeInOut",
+            }}
+            viewOptions={{
+              margin: "0px 0px -80px 0px",
+            }}
+          >
+            <span className="section-eyebrow">
+              CONTACT
+            </span>
+
+            <h2>
+              Have a question?
+            </h2>
 
             <p>
               If you have questions regarding these Terms & Conditions,
@@ -261,12 +715,33 @@ const Terms = () => {
             >
               hello@genlearning.in →
             </a>
-          </article>
+          </InView>
 
         </section>
 
 
-        <footer className="legal-footer">
+        {/* FOOTER */}
+
+        <InView
+          className="legal-footer"
+          variants={{
+            hidden: {
+              opacity: 0,
+              y: 20,
+            },
+            visible: {
+              opacity: 1,
+              y: 0,
+            },
+          }}
+          transition={{
+            duration: 0.9,
+            ease: "easeInOut",
+          }}
+          viewOptions={{
+            margin: "0px 0px -60px 0px",
+          }}
+        >
           <Link to="/privacy">
             Privacy Policy
           </Link>
@@ -274,7 +749,7 @@ const Terms = () => {
           <Link to="/">
             GEN Learning
           </Link>
-        </footer>
+        </InView>
 
       </div>
     </main>

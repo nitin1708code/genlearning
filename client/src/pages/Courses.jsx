@@ -1,5 +1,6 @@
- import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { InView } from "../components/motion-primitives/in-view";
 
 const Courses = () => {
   const [courses, setCourses] = useState([]);
@@ -19,9 +20,9 @@ const Courses = () => {
   useEffect(() => {
     const fetchCourses = async () => {
       try {
-         const response = await fetch(
-  "https://genlearning-production.up.railway.app/api/courses"
-);
+        const response = await fetch(
+          "https://genlearning-production.up.railway.app/api/courses"
+        );
 
         const data = await response.json();
 
@@ -47,35 +48,79 @@ const Courses = () => {
     <main className="courses-page">
 
       {/* HERO */}
+
       <section className="courses-hero">
         <div className="courses-container">
 
-          <span className="section-eyebrow">
-            LEARN WITH GEN LEARNING
-          </span>
+          <InView
+            variants={{
+              hidden: {
+                opacity: 0,
+                y: 35,
+                filter: "blur(4px)",
+              },
+              visible: {
+                opacity: 1,
+                y: 0,
+                filter: "blur(0px)",
+              },
+            }}
+            transition={{
+              duration: 1.1,
+              ease: "easeInOut",
+            }}
+            viewOptions={{
+              margin: "0px 0px -80px 0px",
+            }}
+          >
+            <span className="section-eyebrow">
+              LEARN WITH GEN LEARNING
+            </span>
 
-          <h1>
-            Build skills.
-            <br />
-            <span>Build your future.</span>
-          </h1>
+            <h1>
+              Build skills.
+              <br />
+              <span>Build your future.</span>
+            </h1>
 
-          <p>
-            Explore practical IT courses designed to help you
-            understand technology, build projects and develop
-            useful skills.
-          </p>
+            <p>
+              Explore practical IT courses designed to help you
+              understand technology, build projects and develop
+              useful skills.
+            </p>
+          </InView>
 
         </div>
       </section>
 
 
       {/* COURSE LIST */}
+
       <section className="courses-list-section">
         <div className="courses-container">
 
-          <div className="courses-header">
-
+          <InView
+            className="courses-header"
+            variants={{
+              hidden: {
+                opacity: 0,
+                y: 30,
+                filter: "blur(4px)",
+              },
+              visible: {
+                opacity: 1,
+                y: 0,
+                filter: "blur(0px)",
+              },
+            }}
+            transition={{
+              duration: 1,
+              ease: "easeInOut",
+            }}
+            viewOptions={{
+              margin: "0px 0px -80px 0px",
+            }}
+          >
             <div>
               <span className="section-eyebrow">
                 OUR COURSES
@@ -91,11 +136,11 @@ const Courses = () => {
               Start with the fundamentals or move towards
               practical development.
             </p>
-
-          </div>
+          </InView>
 
 
           {/* LOADING */}
+
           {loading && (
             <div className="courses-status">
               Loading courses...
@@ -104,6 +149,7 @@ const Courses = () => {
 
 
           {/* ERROR */}
+
           {!loading && error && (
             <div className="courses-status">
               {error}
@@ -112,6 +158,7 @@ const Courses = () => {
 
 
           {/* EMPTY */}
+
           {!loading &&
             !error &&
             courses.length === 0 && (
@@ -122,97 +169,127 @@ const Courses = () => {
 
 
           {/* COURSES */}
-          {!loading && !error && courses.length > 0 && (
 
-            <div className="courses-grid">
+          {!loading &&
+            !error &&
+            courses.length > 0 && (
 
-              {courses.map((course, index) => (
+              <div className="courses-grid">
 
-                <article
-                  className="course-card"
-                  key={course.id}
-                >
+                {courses.map((course, index) => (
 
-                  {/* COURSE IMAGE */}
-                  <div className="course-card-image">
-
-                    <img
-                      src={
-                        course.image ||
-                        courseImages[index % courseImages.length]
-                      }
-                      alt={course.title}
-                      loading="lazy"
-                    />
-
-                    <div className="course-image-overlay" />
-
-                    <div className="course-card-top">
-
-                      <span className="course-number">
-                        {String(index + 1).padStart(2, "0")}
-                      </span>
-
-                      <span className="course-level">
-                        {course.level}
-                      </span>
-
-                    </div>
-
-                  </div>
-
-
-                  {/* CARD CONTENT */}
-                  <div className="course-card-body">
-
-                    <div className="course-icon">
-                      {"</>"}
-                    </div>
-
-                    <h3>
-                      {course.title}
-                    </h3>
-
-                    <p>
-                      {course.description}
-                    </p>
-
-
-                    <div className="course-tech">
-
-                      <span>
-                        {course.category}
-                      </span>
-
-                      <span>
-                        {course.duration}
-                      </span>
-
-                      <span>
-                        {course.lessons} Lessons
-                      </span>
-
-                    </div>
-
-                  </div>
-
-
-                  {/* CARD LINK */}
-                  <Link
-                    to={`/courses/${course.slug}`}
-                    className="course-link"
+                  <InView
+                    key={course.id}
+                    className="course-card"
+                    variants={{
+                      hidden: {
+                        opacity: 0,
+                        y: 40,
+                        scale: 0.97,
+                        filter: "blur(4px)",
+                      },
+                      visible: {
+                        opacity: 1,
+                        y: 0,
+                        scale: 1,
+                        filter: "blur(0px)",
+                      },
+                    }}
+                    transition={{
+                      duration: 0.9,
+                      delay: index * 0.1,
+                      ease: "easeInOut",
+                    }}
+                    viewOptions={{
+                      margin: "0px 0px -70px 0px",
+                    }}
                   >
-                    <span>View Course</span>
-                    <span>→</span>
-                  </Link>
 
-                </article>
+                    {/* COURSE IMAGE */}
 
-              ))}
+                    <div className="course-card-image">
 
-            </div>
+                      <img
+                        src={
+                          course.image ||
+                          courseImages[
+                            index % courseImages.length
+                          ]
+                        }
+                        alt={course.title}
+                        loading="lazy"
+                      />
 
-          )}
+                      <div className="course-image-overlay" />
+
+                      <div className="course-card-top">
+
+                        <span className="course-number">
+                          {String(index + 1).padStart(2, "0")}
+                        </span>
+
+                        <span className="course-level">
+                          {course.level}
+                        </span>
+
+                      </div>
+
+                    </div>
+
+
+                    {/* CARD CONTENT */}
+
+                    <div className="course-card-body">
+
+                      <div className="course-icon">
+                        {"</>"}
+                      </div>
+
+                      <h3>
+                        {course.title}
+                      </h3>
+
+                      <p>
+                        {course.description}
+                      </p>
+
+
+                      <div className="course-tech">
+
+                        <span>
+                          {course.category}
+                        </span>
+
+                        <span>
+                          {course.duration}
+                        </span>
+
+                        <span>
+                          {course.lessons} Lessons
+                        </span>
+
+                      </div>
+
+                    </div>
+
+
+                    {/* CARD LINK */}
+
+                    <Link
+                      to={`/courses/${course.slug}`}
+                      className="course-link"
+                    >
+                      <span>View Course</span>
+                      <span>→</span>
+                    </Link>
+
+                  </InView>
+
+                ))}
+
+              </div>
+
+            )}
 
         </div>
       </section>

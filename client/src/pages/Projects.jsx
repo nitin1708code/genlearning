@@ -1,5 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { InView } from "../components/motion-primitives/in-view";
+
 
 /* =========================================================
    GEN LEARNING SVG
@@ -15,31 +17,159 @@ const GenLearningSVG = () => (
     <rect x="35" y="30" width="530" height="280" rx="14" fill="#111827" />
 
     {/* Sidebar */}
-    <rect x="55" y="50" width="125" height="240" rx="10" fill="#171f38" />
-    <rect x="75" y="70" width="85" height="18" rx="5" fill="#6366f1" />
+    <rect
+      x="55"
+      y="50"
+      width="125"
+      height="240"
+      rx="10"
+      fill="#171f38"
+    />
 
-    <rect x="75" y="115" width="70" height="8" rx="4" fill="#475569" />
-    <rect x="75" y="140" width="80" height="8" rx="4" fill="#475569" />
-    <rect x="75" y="165" width="65" height="8" rx="4" fill="#475569" />
-    <rect x="75" y="190" width="75" height="8" rx="4" fill="#475569" />
+    <rect
+      x="75"
+      y="70"
+      width="85"
+      height="18"
+      rx="5"
+      fill="#6366f1"
+    />
+
+    <rect
+      x="75"
+      y="115"
+      width="70"
+      height="8"
+      rx="4"
+      fill="#475569"
+    />
+
+    <rect
+      x="75"
+      y="140"
+      width="80"
+      height="8"
+      rx="4"
+      fill="#475569"
+    />
+
+    <rect
+      x="75"
+      y="165"
+      width="65"
+      height="8"
+      rx="4"
+      fill="#475569"
+    />
+
+    <rect
+      x="75"
+      y="190"
+      width="75"
+      height="8"
+      rx="4"
+      fill="#475569"
+    />
 
     {/* Main */}
-    <rect x="205" y="55" width="335" height="38" rx="8" fill="#1e293b" />
-    <circle cx="225" cy="74" r="8" fill="#6366f1" />
+    <rect
+      x="205"
+      y="55"
+      width="335"
+      height="38"
+      rx="8"
+      fill="#1e293b"
+    />
+
+    <circle
+      cx="225"
+      cy="74"
+      r="8"
+      fill="#6366f1"
+    />
 
     {/* Cards */}
-    <rect x="205" y="115" width="100" height="75" rx="10" fill="#18213a" />
-    <rect x="320" y="115" width="100" height="75" rx="10" fill="#18213a" />
-    <rect x="435" y="115" width="105" height="75" rx="10" fill="#18213a" />
+    <rect
+      x="205"
+      y="115"
+      width="100"
+      height="75"
+      rx="10"
+      fill="#18213a"
+    />
 
-    <rect x="220" y="135" width="35" height="35" rx="8" fill="#6366f1" />
-    <rect x="335" y="135" width="35" height="35" rx="8" fill="#22c55e" />
-    <rect x="450" y="135" width="35" height="35" rx="8" fill="#38bdf8" />
+    <rect
+      x="320"
+      y="115"
+      width="100"
+      height="75"
+      rx="10"
+      fill="#18213a"
+    />
+
+    <rect
+      x="435"
+      y="115"
+      width="105"
+      height="75"
+      rx="10"
+      fill="#18213a"
+    />
+
+    <rect
+      x="220"
+      y="135"
+      width="35"
+      height="35"
+      rx="8"
+      fill="#6366f1"
+    />
+
+    <rect
+      x="335"
+      y="135"
+      width="35"
+      height="35"
+      rx="8"
+      fill="#22c55e"
+    />
+
+    <rect
+      x="450"
+      y="135"
+      width="35"
+      height="35"
+      rx="8"
+      fill="#38bdf8"
+    />
 
     {/* Progress */}
-    <rect x="205" y="210" width="335" height="65" rx="10" fill="#18213a" />
-    <rect x="225" y="230" width="170" height="8" rx="4" fill="#64748b" />
-    <rect x="225" y="250" width="230" height="8" rx="4" fill="#334155" />
+    <rect
+      x="205"
+      y="210"
+      width="335"
+      height="65"
+      rx="10"
+      fill="#18213a"
+    />
+
+    <rect
+      x="225"
+      y="230"
+      width="170"
+      height="8"
+      rx="4"
+      fill="#64748b"
+    />
+
+    <rect
+      x="225"
+      y="250"
+      width="230"
+      height="8"
+      rx="4"
+      fill="#334155"
+    />
 
     <text
       x="300"
@@ -66,18 +196,65 @@ const BusReservationSVG = () => (
     xmlns="http://www.w3.org/2000/svg"
   >
     <rect width="600" height="340" rx="20" fill="#0b1220" />
-    <rect x="35" y="30" width="530" height="280" rx="14" fill="#111827" />
+
+    <rect
+      x="35"
+      y="30"
+      width="530"
+      height="280"
+      rx="14"
+      fill="#111827"
+    />
 
     {/* Header */}
-    <rect x="60" y="55" width="480" height="42" rx="8" fill="#1e293b" />
-    <circle cx="85" cy="76" r="11" fill="#38bdf8" />
-    <rect x="110" y="69" width="100" height="12" rx="5" fill="#64748b" />
+    <rect
+      x="60"
+      y="55"
+      width="480"
+      height="42"
+      rx="8"
+      fill="#1e293b"
+    />
+
+    <circle
+      cx="85"
+      cy="76"
+      r="11"
+      fill="#38bdf8"
+    />
+
+    <rect
+      x="110"
+      y="69"
+      width="100"
+      height="12"
+      rx="5"
+      fill="#64748b"
+    />
 
     {/* Route */}
-    <rect x="60" y="120" width="480" height="70" rx="10" fill="#172033" />
+    <rect
+      x="60"
+      y="120"
+      width="480"
+      height="70"
+      rx="10"
+      fill="#172033"
+    />
 
-    <circle cx="105" cy="155" r="14" fill="#38bdf8" />
-    <circle cx="495" cy="155" r="14" fill="#22c55e" />
+    <circle
+      cx="105"
+      cy="155"
+      r="14"
+      fill="#38bdf8"
+    />
+
+    <circle
+      cx="495"
+      cy="155"
+      r="14"
+      fill="#22c55e"
+    />
 
     <line
       x1="125"
@@ -112,16 +289,77 @@ const BusReservationSVG = () => (
     </text>
 
     {/* Seats */}
-    <rect x="60" y="210" width="220" height="65" rx="10" fill="#172033" />
-    <rect x="300" y="210" width="240" height="65" rx="10" fill="#172033" />
+    <rect
+      x="60"
+      y="210"
+      width="220"
+      height="65"
+      rx="10"
+      fill="#172033"
+    />
 
-    <rect x="80" y="230" width="28" height="28" rx="5" fill="#38bdf8" />
-    <rect x="120" y="230" width="28" height="28" rx="5" fill="#334155" />
-    <rect x="160" y="230" width="28" height="28" rx="5" fill="#334155" />
-    <rect x="200" y="230" width="28" height="28" rx="5" fill="#22c55e" />
+    <rect
+      x="300"
+      y="210"
+      width="240"
+      height="65"
+      rx="10"
+      fill="#172033"
+    />
 
-    <rect x="325" y="230" width="120" height="9" rx="4" fill="#64748b" />
-    <rect x="325" y="250" width="80" height="9" rx="4" fill="#334155" />
+    <rect
+      x="80"
+      y="230"
+      width="28"
+      height="28"
+      rx="5"
+      fill="#38bdf8"
+    />
+
+    <rect
+      x="120"
+      y="230"
+      width="28"
+      height="28"
+      rx="5"
+      fill="#334155"
+    />
+
+    <rect
+      x="160"
+      y="230"
+      width="28"
+      height="28"
+      rx="5"
+      fill="#334155"
+    />
+
+    <rect
+      x="200"
+      y="230"
+      width="28"
+      height="28"
+      rx="5"
+      fill="#22c55e"
+    />
+
+    <rect
+      x="325"
+      y="230"
+      width="120"
+      height="9"
+      rx="4"
+      fill="#64748b"
+    />
+
+    <rect
+      x="325"
+      y="250"
+      width="80"
+      height="9"
+      rx="4"
+      fill="#334155"
+    />
 
     <text
       x="300"
@@ -152,21 +390,43 @@ const Projects = () => {
       <section className="projects-page-hero">
         <div className="projects-page-container">
 
-          <span className="section-eyebrow">
-            OUR WORK
-          </span>
+          <InView
+            variants={{
+              hidden: {
+                opacity: 0,
+                y: 35,
+                filter: "blur(4px)",
+              },
+              visible: {
+                opacity: 1,
+                y: 0,
+                filter: "blur(0px)",
+              },
+            }}
+            transition={{
+              duration: 1.1,
+              ease: "easeInOut",
+            }}
+            viewOptions={{
+              margin: "0px 0px -80px 0px",
+            }}
+          >
+            <span className="section-eyebrow">
+              OUR WORK
+            </span>
 
-          <h1>
-            Projects built
-            <br />
-            <span>with purpose.</span>
-          </h1>
+            <h1>
+              Projects built
+              <br />
+              <span>with purpose.</span>
+            </h1>
 
-          <p>
-            A collection of practical projects focused on
-            learning, real-world problems and modern web
-            technologies.
-          </p>
+            <p>
+              A collection of practical projects focused on
+              learning, real-world problems and modern web
+              technologies.
+            </p>
+          </InView>
 
         </div>
       </section>
@@ -179,8 +439,28 @@ const Projects = () => {
       <section className="all-projects-section">
         <div className="projects-page-container">
 
-          <div className="projects-showcase-header">
-
+          <InView
+            className="projects-showcase-header"
+            variants={{
+              hidden: {
+                opacity: 0,
+                y: 30,
+                filter: "blur(4px)",
+              },
+              visible: {
+                opacity: 1,
+                y: 0,
+                filter: "blur(0px)",
+              },
+            }}
+            transition={{
+              duration: 1,
+              ease: "easeInOut",
+            }}
+            viewOptions={{
+              margin: "0px 0px -80px 0px",
+            }}
+          >
             <span className="section-eyebrow">
               PROJECT SHOWCASE
             </span>
@@ -194,8 +474,7 @@ const Projects = () => {
               Explore some of our projects and experiments
               developed using modern technologies.
             </p>
-
-          </div>
+          </InView>
 
 
           {/* PROJECT GRID */}
@@ -206,7 +485,30 @@ const Projects = () => {
                 GEN LEARNING
             ================================================= */}
 
-            <article className="project-card">
+            <InView
+              className="project-card"
+              variants={{
+                hidden: {
+                  opacity: 0,
+                  y: 40,
+                  scale: 0.97,
+                  filter: "blur(4px)",
+                },
+                visible: {
+                  opacity: 1,
+                  y: 0,
+                  scale: 1,
+                  filter: "blur(0px)",
+                },
+              }}
+              transition={{
+                duration: 1,
+                ease: "easeInOut",
+              }}
+              viewOptions={{
+                margin: "0px 0px -80px 0px",
+              }}
+            >
 
               <div className="project-card-image">
 
@@ -253,14 +555,38 @@ const Projects = () => {
 
               </div>
 
-            </article>
+            </InView>
 
 
             {/* =================================================
                 BUS RESERVATION
             ================================================= */}
 
-            <article className="project-card">
+            <InView
+              className="project-card"
+              variants={{
+                hidden: {
+                  opacity: 0,
+                  y: 40,
+                  scale: 0.97,
+                  filter: "blur(4px)",
+                },
+                visible: {
+                  opacity: 1,
+                  y: 0,
+                  scale: 1,
+                  filter: "blur(0px)",
+                },
+              }}
+              transition={{
+                duration: 1,
+                delay: 0.15,
+                ease: "easeInOut",
+              }}
+              viewOptions={{
+                margin: "0px 0px -80px 0px",
+              }}
+            >
 
               <div className="project-card-image">
 
@@ -310,7 +636,7 @@ const Projects = () => {
 
               </div>
 
-            </article>
+            </InView>
 
           </div>
 
@@ -319,7 +645,28 @@ const Projects = () => {
               UPCOMING PROJECTS
           ================================================= */}
 
-          <div className="upcoming-projects">
+          <InView
+            className="upcoming-projects"
+            variants={{
+              hidden: {
+                opacity: 0,
+                y: 35,
+                filter: "blur(4px)",
+              },
+              visible: {
+                opacity: 1,
+                y: 0,
+                filter: "blur(0px)",
+              },
+            }}
+            transition={{
+              duration: 1,
+              ease: "easeInOut",
+            }}
+            viewOptions={{
+              margin: "0px 0px -80px 0px",
+            }}
+          >
 
             <div className="upcoming-projects-header">
 
@@ -336,7 +683,26 @@ const Projects = () => {
 
             <div className="upcoming-projects-list">
 
-              <div className="upcoming-project-item">
+              <InView
+                className="upcoming-project-item"
+                variants={{
+                  hidden: {
+                    opacity: 0,
+                    x: 30,
+                  },
+                  visible: {
+                    opacity: 1,
+                    x: 0,
+                  },
+                }}
+                transition={{
+                  duration: 0.8,
+                  ease: "easeInOut",
+                }}
+                viewOptions={{
+                  margin: "0px 0px -60px 0px",
+                }}
+              >
                 <span className="upcoming-number">
                   01
                 </span>
@@ -348,10 +714,30 @@ const Projects = () => {
                 <span className="upcoming-arrow">
                   ↗
                 </span>
-              </div>
+              </InView>
 
 
-              <div className="upcoming-project-item">
+              <InView
+                className="upcoming-project-item"
+                variants={{
+                  hidden: {
+                    opacity: 0,
+                    x: 30,
+                  },
+                  visible: {
+                    opacity: 1,
+                    x: 0,
+                  },
+                }}
+                transition={{
+                  duration: 0.8,
+                  delay: 0.08,
+                  ease: "easeInOut",
+                }}
+                viewOptions={{
+                  margin: "0px 0px -60px 0px",
+                }}
+              >
                 <span className="upcoming-number">
                   02
                 </span>
@@ -363,10 +749,30 @@ const Projects = () => {
                 <span className="upcoming-arrow">
                   ↗
                 </span>
-              </div>
+              </InView>
 
 
-              <div className="upcoming-project-item">
+              <InView
+                className="upcoming-project-item"
+                variants={{
+                  hidden: {
+                    opacity: 0,
+                    x: 30,
+                  },
+                  visible: {
+                    opacity: 1,
+                    x: 0,
+                  },
+                }}
+                transition={{
+                  duration: 0.8,
+                  delay: 0.16,
+                  ease: "easeInOut",
+                }}
+                viewOptions={{
+                  margin: "0px 0px -60px 0px",
+                }}
+              >
                 <span className="upcoming-number">
                   03
                 </span>
@@ -378,10 +784,30 @@ const Projects = () => {
                 <span className="upcoming-arrow">
                   ↗
                 </span>
-              </div>
+              </InView>
 
 
-              <div className="upcoming-project-item">
+              <InView
+                className="upcoming-project-item"
+                variants={{
+                  hidden: {
+                    opacity: 0,
+                    x: 30,
+                  },
+                  visible: {
+                    opacity: 1,
+                    x: 0,
+                  },
+                }}
+                transition={{
+                  duration: 0.8,
+                  delay: 0.24,
+                  ease: "easeInOut",
+                }}
+                viewOptions={{
+                  margin: "0px 0px -60px 0px",
+                }}
+              >
                 <span className="upcoming-number">
                   04
                 </span>
@@ -393,11 +819,11 @@ const Projects = () => {
                 <span className="upcoming-arrow">
                   ↗
                 </span>
-              </div>
+              </InView>
 
             </div>
 
-          </div>
+          </InView>
 
         </div>
       </section>
@@ -411,7 +837,30 @@ const Projects = () => {
 
         <div className="projects-page-container">
 
-          <div className="projects-page-cta-box">
+          <InView
+            className="projects-page-cta-box"
+            variants={{
+              hidden: {
+                opacity: 0,
+                y: 35,
+                scale: 0.98,
+                filter: "blur(4px)",
+              },
+              visible: {
+                opacity: 1,
+                y: 0,
+                scale: 1,
+                filter: "blur(0px)",
+              },
+            }}
+            transition={{
+              duration: 1,
+              ease: "easeInOut",
+            }}
+            viewOptions={{
+              margin: "0px 0px -80px 0px",
+            }}
+          >
 
             <div>
 
@@ -440,7 +889,7 @@ const Projects = () => {
               <span>→</span>
             </Link>
 
-          </div>
+          </InView>
 
         </div>
 

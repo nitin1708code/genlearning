@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { InView } from "../components/motion-primitives/in-view";
 
 const WhatWeOffer = () => {
   const offerings = [
@@ -36,8 +37,29 @@ const WhatWeOffer = () => {
       <div className="offer-container">
 
         {/* Section Heading */}
-        <div className="offer-heading">
 
+        <InView
+          className="offer-heading"
+          variants={{
+            hidden: {
+              opacity: 0,
+              y: 30,
+              filter: "blur(4px)",
+            },
+            visible: {
+              opacity: 1,
+              y: 0,
+              filter: "blur(0px)",
+            },
+          }}
+          transition={{
+            duration: 1.1,
+            ease: "easeInOut",
+          }}
+          viewOptions={{
+            margin: "0px 0px -100px 0px",
+          }}
+        >
           <div>
             <span className="section-eyebrow">
               WHAT WE OFFER
@@ -55,17 +77,39 @@ const WhatWeOffer = () => {
             digital solution, GEN Learning brings both together
             under one platform.
           </p>
-
-        </div>
+        </InView>
 
 
         {/* Offer Cards */}
+
         <div className="offer-grid">
 
-          {offerings.map((offer) => (
-            <article
-              className="offer-card"
+          {offerings.map((offer, index) => (
+            <InView
               key={offer.number}
+              className="offer-card"
+              variants={{
+                hidden: {
+                  opacity: 0,
+                  y: 40,
+                  scale: 0.97,
+                  filter: "blur(4px)",
+                },
+                visible: {
+                  opacity: 1,
+                  y: 0,
+                  scale: 1,
+                  filter: "blur(0px)",
+                },
+              }}
+              transition={{
+                duration: 1,
+                delay: index * 0.15,
+                ease: "easeInOut",
+              }}
+              viewOptions={{
+                margin: "0px 0px -80px 0px",
+              }}
             >
 
               <div className="offer-card-top">
@@ -115,7 +159,7 @@ const WhatWeOffer = () => {
                 <span>→</span>
               </Link>
 
-            </article>
+            </InView>
           ))}
 
         </div>

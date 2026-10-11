@@ -1,4 +1,5 @@
 import React from "react";
+import { InView } from "../components/motion-primitives/in-view";
 
 const WhyChooseUs = () => {
   const reasons = [
@@ -33,7 +34,29 @@ const WhyChooseUs = () => {
       <div className="why-container">
 
         {/* Heading */}
-        <div className="why-heading">
+
+        <InView
+          className="why-heading"
+          variants={{
+            hidden: {
+              opacity: 0,
+              y: 30,
+              filter: "blur(4px)",
+            },
+            visible: {
+              opacity: 1,
+              y: 0,
+              filter: "blur(0px)",
+            },
+          }}
+          transition={{
+            duration: 1.1,
+            ease: "easeInOut",
+          }}
+          viewOptions={{
+            margin: "0px 0px -100px 0px",
+          }}
+        >
           <span className="section-eyebrow">
             WHY GEN LEARNING
           </span>
@@ -47,15 +70,37 @@ const WhyChooseUs = () => {
             We focus on practical skills, real projects and useful
             digital solutions that create value beyond the classroom.
           </p>
-        </div>
+        </InView>
 
 
         {/* Main Content */}
+
         <div className="why-content">
 
           {/* Left Statement */}
-          <div className="why-statement">
 
+          <InView
+            className="why-statement"
+            variants={{
+              hidden: {
+                opacity: 0,
+                x: -40,
+                filter: "blur(4px)",
+              },
+              visible: {
+                opacity: 1,
+                x: 0,
+                filter: "blur(0px)",
+              },
+            }}
+            transition={{
+              duration: 1,
+              ease: "easeInOut",
+            }}
+            viewOptions={{
+              margin: "0px 0px -80px 0px",
+            }}
+          >
             <div className="why-statement-number">
               04
             </div>
@@ -72,25 +117,43 @@ const WhyChooseUs = () => {
               A simple approach to technology: learn the right
               skills, apply them through projects and keep growing.
             </p>
-
-          </div>
+          </InView>
 
 
           {/* Reasons */}
+
           <div className="why-list">
 
-            {reasons.map((reason) => (
-              <div
-                className="why-item"
+            {reasons.map((reason, index) => (
+              <InView
                 key={reason.number}
+                className="why-item"
+                variants={{
+                  hidden: {
+                    opacity: 0,
+                    x: 40,
+                    filter: "blur(4px)",
+                  },
+                  visible: {
+                    opacity: 1,
+                    x: 0,
+                    filter: "blur(0px)",
+                  },
+                }}
+                transition={{
+                  duration: 0.9,
+                  delay: index * 0.12,
+                  ease: "easeInOut",
+                }}
+                viewOptions={{
+                  margin: "0px 0px -70px 0px",
+                }}
               >
-
                 <span className="why-number">
                   {reason.number}
                 </span>
 
                 <div className="why-item-content">
-
                   <h3>
                     {reason.title}
                   </h3>
@@ -98,14 +161,12 @@ const WhyChooseUs = () => {
                   <p>
                     {reason.description}
                   </p>
-
                 </div>
 
                 <span className="why-arrow">
                   ↗
                 </span>
-
-              </div>
+              </InView>
             ))}
 
           </div>

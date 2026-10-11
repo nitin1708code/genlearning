@@ -1,17 +1,65 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { InView } from "../components/motion-primitives/in-view";
 
 const PrivacyPolicy = () => {
   return (
     <main className="legal-page">
       <div className="legal-container">
 
-        <Link to="/" className="legal-back">
-          ← Back to website
-        </Link>
+        <InView
+          className="legal-back"
+          variants={{
+            hidden: {
+              opacity: 0,
+              x: -20,
+            },
+            visible: {
+              opacity: 1,
+              x: 0,
+            },
+          }}
+          transition={{
+            duration: 0.8,
+            ease: "easeInOut",
+          }}
+          viewOptions={{
+            margin: "0px 0px -60px 0px",
+          }}
+        >
+          <Link to="/">
+            ← Back to website
+          </Link>
+        </InView>
 
-        <header className="legal-header">
-          <span className="section-eyebrow">PRIVACY</span>
+
+        {/* HEADER */}
+
+        <InView
+          className="legal-header"
+          variants={{
+            hidden: {
+              opacity: 0,
+              y: 35,
+              filter: "blur(4px)",
+            },
+            visible: {
+              opacity: 1,
+              y: 0,
+              filter: "blur(0px)",
+            },
+          }}
+          transition={{
+            duration: 1.1,
+            ease: "easeInOut",
+          }}
+          viewOptions={{
+            margin: "0px 0px -80px 0px",
+          }}
+        >
+          <span className="section-eyebrow">
+            PRIVACY
+          </span>
 
           <h1>
             Privacy <span>Policy.</span>
@@ -23,46 +71,141 @@ const PrivacyPolicy = () => {
             and services.
           </p>
 
-          <small>Last updated: August 23, 2026</small>
-        </header>
+          <small>
+            Last updated: August 23, 2026
+          </small>
+        </InView>
 
 
         <section className="legal-content">
 
-          <div className="legal-intro">
-            <strong>Your privacy matters.</strong>
+          {/* INTRO */}
+
+          <InView
+            className="legal-intro"
+            variants={{
+              hidden: {
+                opacity: 0,
+                y: 30,
+                filter: "blur(4px)",
+              },
+              visible: {
+                opacity: 1,
+                y: 0,
+                filter: "blur(0px)",
+              },
+            }}
+            transition={{
+              duration: 0.9,
+              ease: "easeInOut",
+            }}
+            viewOptions={{
+              margin: "0px 0px -70px 0px",
+            }}
+          >
+            <strong>
+              Your privacy matters.
+            </strong>
+
             <p>
               This Privacy Policy explains how GEN Learning handles
               information when you create an account, use our learning
               platform, access our services or contact us.
             </p>
-          </div>
+          </InView>
 
 
-          <article className="legal-section">
-            <span className="legal-section-number">01</span>
+          {/* SECTION 01 */}
+
+          <InView
+            className="legal-section"
+            variants={{
+              hidden: {
+                opacity: 0,
+                y: 35,
+                filter: "blur(4px)",
+              },
+              visible: {
+                opacity: 1,
+                y: 0,
+                filter: "blur(0px)",
+              },
+            }}
+            transition={{
+              duration: 0.9,
+              ease: "easeInOut",
+            }}
+            viewOptions={{
+              margin: "0px 0px -70px 0px",
+            }}
+          >
+            <span className="legal-section-number">
+              01
+            </span>
+
             <div>
-              <h2>Information We Collect</h2>
+              <h2>
+                Information We Collect
+              </h2>
 
               <p>
                 Depending on how you use GEN Learning, we may collect:
               </p>
 
               <ul>
-                <li>Name and basic profile information</li>
-                <li>Email address and account information</li>
-                <li>Information submitted through forms or enquiries</li>
-                <li>Information required to provide courses and services</li>
-                <li>Technical information required for website operation</li>
+                <li>
+                  Name and basic profile information
+                </li>
+                <li>
+                  Email address and account information
+                </li>
+                <li>
+                  Information submitted through forms or enquiries
+                </li>
+                <li>
+                  Information required to provide courses and services
+                </li>
+                <li>
+                  Technical information required for website operation
+                </li>
               </ul>
             </div>
-          </article>
+          </InView>
 
 
-          <article className="legal-section">
-            <span className="legal-section-number">02</span>
+          {/* SECTION 02 */}
+
+          <InView
+            className="legal-section"
+            variants={{
+              hidden: {
+                opacity: 0,
+                y: 35,
+                filter: "blur(4px)",
+              },
+              visible: {
+                opacity: 1,
+                y: 0,
+                filter: "blur(0px)",
+              },
+            }}
+            transition={{
+              duration: 0.9,
+              delay: 0.08,
+              ease: "easeInOut",
+            }}
+            viewOptions={{
+              margin: "0px 0px -70px 0px",
+            }}
+          >
+            <span className="legal-section-number">
+              02
+            </span>
+
             <div>
-              <h2>Google Sign-In</h2>
+              <h2>
+                Google Sign-In
+              </h2>
 
               <p>
                 If you choose to sign in with Google, Google may provide
@@ -72,38 +215,111 @@ const PrivacyPolicy = () => {
               </p>
 
               <div className="legal-note">
-                <strong>Authentication</strong>
+                <strong>
+                  Authentication
+                </strong>
+
                 <span>
                   Google is used to securely authenticate your account.
                   We do not receive your Google password.
                 </span>
               </div>
             </div>
-          </article>
+          </InView>
 
 
-          <article className="legal-section">
-            <span className="legal-section-number">03</span>
+          {/* SECTION 03 */}
+
+          <InView
+            className="legal-section"
+            variants={{
+              hidden: {
+                opacity: 0,
+                y: 35,
+                filter: "blur(4px)",
+              },
+              visible: {
+                opacity: 1,
+                y: 0,
+                filter: "blur(0px)",
+              },
+            }}
+            transition={{
+              duration: 0.9,
+              delay: 0.1,
+              ease: "easeInOut",
+            }}
+            viewOptions={{
+              margin: "0px 0px -70px 0px",
+            }}
+          >
+            <span className="legal-section-number">
+              03
+            </span>
+
             <div>
-              <h2>How We Use Information</h2>
+              <h2>
+                How We Use Information
+              </h2>
 
-              <p>Your information may be used to:</p>
+              <p>
+                Your information may be used to:
+              </p>
 
               <ul>
-                <li>Create and manage your GEN Learning account</li>
-                <li>Provide courses and learning resources</li>
-                <li>Process enquiries and service requests</li>
-                <li>Improve website functionality and user experience</li>
-                <li>Maintain platform security and prevent misuse</li>
+                <li>
+                  Create and manage your GEN Learning account
+                </li>
+                <li>
+                  Provide courses and learning resources
+                </li>
+                <li>
+                  Process enquiries and service requests
+                </li>
+                <li>
+                  Improve website functionality and user experience
+                </li>
+                <li>
+                  Maintain platform security and prevent misuse
+                </li>
               </ul>
             </div>
-          </article>
+          </InView>
 
 
-          <article className="legal-section">
-            <span className="legal-section-number">04</span>
+          {/* SECTION 04 */}
+
+          <InView
+            className="legal-section"
+            variants={{
+              hidden: {
+                opacity: 0,
+                y: 35,
+                filter: "blur(4px)",
+              },
+              visible: {
+                opacity: 1,
+                y: 0,
+                filter: "blur(0px)",
+              },
+            }}
+            transition={{
+              duration: 0.9,
+              delay: 0.12,
+              ease: "easeInOut",
+            }}
+            viewOptions={{
+              margin: "0px 0px -70px 0px",
+            }}
+          >
+            <span className="legal-section-number">
+              04
+            </span>
+
             <div>
-              <h2>Account Information</h2>
+              <h2>
+                Account Information
+              </h2>
 
               <p>
                 You are responsible for keeping your login credentials
@@ -116,13 +332,42 @@ const PrivacyPolicy = () => {
                 authorization, please contact us as soon as possible.
               </p>
             </div>
-          </article>
+          </InView>
 
 
-          <article className="legal-section">
-            <span className="legal-section-number">05</span>
+          {/* SECTION 05 */}
+
+          <InView
+            className="legal-section"
+            variants={{
+              hidden: {
+                opacity: 0,
+                y: 35,
+                filter: "blur(4px)",
+              },
+              visible: {
+                opacity: 1,
+                y: 0,
+                filter: "blur(0px)",
+              },
+            }}
+            transition={{
+              duration: 0.9,
+              delay: 0.14,
+              ease: "easeInOut",
+            }}
+            viewOptions={{
+              margin: "0px 0px -70px 0px",
+            }}
+          >
+            <span className="legal-section-number">
+              05
+            </span>
+
             <div>
-              <h2>Data Security</h2>
+              <h2>
+                Data Security
+              </h2>
 
               <p>
                 We use reasonable technical and organizational measures
@@ -134,13 +379,42 @@ const PrivacyPolicy = () => {
                 security of information transmitted or stored online.
               </p>
             </div>
-          </article>
+          </InView>
 
 
-          <article className="legal-section">
-            <span className="legal-section-number">06</span>
+          {/* SECTION 06 */}
+
+          <InView
+            className="legal-section"
+            variants={{
+              hidden: {
+                opacity: 0,
+                y: 35,
+                filter: "blur(4px)",
+              },
+              visible: {
+                opacity: 1,
+                y: 0,
+                filter: "blur(0px)",
+              },
+            }}
+            transition={{
+              duration: 0.9,
+              delay: 0.16,
+              ease: "easeInOut",
+            }}
+            viewOptions={{
+              margin: "0px 0px -70px 0px",
+            }}
+          >
+            <span className="legal-section-number">
+              06
+            </span>
+
             <div>
-              <h2>Third-Party Services</h2>
+              <h2>
+                Third-Party Services
+              </h2>
 
               <p>
                 GEN Learning may rely on selected third-party technologies
@@ -148,10 +422,18 @@ const PrivacyPolicy = () => {
               </p>
 
               <ul>
-                <li>Google authentication</li>
-                <li>Hosting and infrastructure providers</li>
-                <li>Analytics or performance services</li>
-                <li>Other services required for website functionality</li>
+                <li>
+                  Google authentication
+                </li>
+                <li>
+                  Hosting and infrastructure providers
+                </li>
+                <li>
+                  Analytics or performance services
+                </li>
+                <li>
+                  Other services required for website functionality
+                </li>
               </ul>
 
               <p>
@@ -159,13 +441,42 @@ const PrivacyPolicy = () => {
                 their own privacy policies.
               </p>
             </div>
-          </article>
+          </InView>
 
 
-          <article className="legal-section">
-            <span className="legal-section-number">07</span>
+          {/* SECTION 07 */}
+
+          <InView
+            className="legal-section"
+            variants={{
+              hidden: {
+                opacity: 0,
+                y: 35,
+                filter: "blur(4px)",
+              },
+              visible: {
+                opacity: 1,
+                y: 0,
+                filter: "blur(0px)",
+              },
+            }}
+            transition={{
+              duration: 0.9,
+              delay: 0.18,
+              ease: "easeInOut",
+            }}
+            viewOptions={{
+              margin: "0px 0px -70px 0px",
+            }}
+          >
+            <span className="legal-section-number">
+              07
+            </span>
+
             <div>
-              <h2>Cookies & Local Storage</h2>
+              <h2>
+                Cookies & Local Storage
+              </h2>
 
               <p>
                 Our website may use cookies, local storage or similar
@@ -173,13 +484,42 @@ const PrivacyPolicy = () => {
                 account-related information and improve usability.
               </p>
             </div>
-          </article>
+          </InView>
 
 
-          <article className="legal-section">
-            <span className="legal-section-number">08</span>
+          {/* SECTION 08 */}
+
+          <InView
+            className="legal-section"
+            variants={{
+              hidden: {
+                opacity: 0,
+                y: 35,
+                filter: "blur(4px)",
+              },
+              visible: {
+                opacity: 1,
+                y: 0,
+                filter: "blur(0px)",
+              },
+            }}
+            transition={{
+              duration: 0.9,
+              delay: 0.2,
+              ease: "easeInOut",
+            }}
+            viewOptions={{
+              margin: "0px 0px -70px 0px",
+            }}
+          >
+            <span className="legal-section-number">
+              08
+            </span>
+
             <div>
-              <h2>Your Choices</h2>
+              <h2>
+                Your Choices
+              </h2>
 
               <p>
                 You may contact GEN Learning regarding your account
@@ -187,13 +527,42 @@ const PrivacyPolicy = () => {
                 assistance.
               </p>
             </div>
-          </article>
+          </InView>
 
 
-          <article className="legal-section">
-            <span className="legal-section-number">09</span>
+          {/* SECTION 09 */}
+
+          <InView
+            className="legal-section"
+            variants={{
+              hidden: {
+                opacity: 0,
+                y: 35,
+                filter: "blur(4px)",
+              },
+              visible: {
+                opacity: 1,
+                y: 0,
+                filter: "blur(0px)",
+              },
+            }}
+            transition={{
+              duration: 0.9,
+              delay: 0.22,
+              ease: "easeInOut",
+            }}
+            viewOptions={{
+              margin: "0px 0px -70px 0px",
+            }}
+          >
+            <span className="legal-section-number">
+              09
+            </span>
+
             <div>
-              <h2>Changes to This Policy</h2>
+              <h2>
+                Changes to This Policy
+              </h2>
 
               <p>
                 We may update this Privacy Policy from time to time
@@ -206,13 +575,42 @@ const PrivacyPolicy = () => {
                 together with a revised effective date.
               </p>
             </div>
-          </article>
+          </InView>
 
 
-          <article className="legal-contact">
-            <span className="section-eyebrow">QUESTIONS?</span>
+          {/* CONTACT */}
 
-            <h2>Need more information?</h2>
+          <InView
+            className="legal-contact"
+            variants={{
+              hidden: {
+                opacity: 0,
+                y: 35,
+                scale: 0.98,
+                filter: "blur(4px)",
+              },
+              visible: {
+                opacity: 1,
+                y: 0,
+                scale: 1,
+                filter: "blur(0px)",
+              },
+            }}
+            transition={{
+              duration: 1,
+              ease: "easeInOut",
+            }}
+            viewOptions={{
+              margin: "0px 0px -80px 0px",
+            }}
+          >
+            <span className="section-eyebrow">
+              QUESTIONS?
+            </span>
+
+            <h2>
+              Need more information?
+            </h2>
 
             <p>
               For privacy-related questions or account assistance,
@@ -225,12 +623,33 @@ const PrivacyPolicy = () => {
             >
               hello@genlearning.in →
             </a>
-          </article>
+          </InView>
 
         </section>
 
 
-        <footer className="legal-footer">
+        {/* FOOTER */}
+
+        <InView
+          className="legal-footer"
+          variants={{
+            hidden: {
+              opacity: 0,
+              y: 20,
+            },
+            visible: {
+              opacity: 1,
+              y: 0,
+            },
+          }}
+          transition={{
+            duration: 0.9,
+            ease: "easeInOut",
+          }}
+          viewOptions={{
+            margin: "0px 0px -60px 0px",
+          }}
+        >
           <Link to="/terms">
             Terms & Conditions
           </Link>
@@ -238,7 +657,7 @@ const PrivacyPolicy = () => {
           <Link to="/">
             GEN Learning
           </Link>
-        </footer>
+        </InView>
 
       </div>
     </main>

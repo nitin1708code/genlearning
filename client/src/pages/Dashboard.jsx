@@ -1,5 +1,6 @@
- import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
+import { InView } from "../components/motion-primitives/in-view";
 
 const Dashboard = () => {
   const [user, setUser] = useState({
@@ -56,14 +57,14 @@ const Dashboard = () => {
       }
 
       const response = await fetch(
-  "https://api.genlearning.in/api/enrollments/my",
-  {
-    cache: "no-store",
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  }
-);
+        "https://api.genlearning.in/api/enrollments/my",
+        {
+          cache: "no-store",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
       const data = await response.json();
 
@@ -75,9 +76,7 @@ const Dashboard = () => {
       }
 
       setCourses(data.courses || []);
-
     } catch (error) {
-
       console.error(
         "Dashboard courses error:",
         error
@@ -87,7 +86,6 @@ const Dashboard = () => {
         error.message ||
           "Unable to load your courses."
       );
-
     } finally {
       setLoadingCourses(false);
     }
@@ -99,7 +97,6 @@ const Dashboard = () => {
   // ========================================
 
   const stats = useMemo(() => {
-
     const enrolled = courses.length;
 
     const completed =
@@ -119,7 +116,6 @@ const Dashboard = () => {
       completed,
       inProgress,
     };
-
   }, [courses]);
 
 
@@ -134,8 +130,27 @@ const Dashboard = () => {
 
         <div className="dashboard-container">
 
-          <div>
-
+          <InView
+            variants={{
+              hidden: {
+                opacity: 0,
+                y: 30,
+                filter: "blur(4px)",
+              },
+              visible: {
+                opacity: 1,
+                y: 0,
+                filter: "blur(0px)",
+              },
+            }}
+            transition={{
+              duration: 1,
+              ease: "easeInOut",
+            }}
+            viewOptions={{
+              margin: "0px 0px -80px 0px",
+            }}
+          >
             <span className="section-eyebrow">
               MY DASHBOARD
             </span>
@@ -149,17 +164,39 @@ const Dashboard = () => {
               Continue learning and keep
               building your skills.
             </p>
+          </InView>
 
-          </div>
 
-
-          <Link
-            to="/courses"
-            className="dashboard-primary-btn"
+          <InView
+            variants={{
+              hidden: {
+                opacity: 0,
+                x: 30,
+                scale: 0.97,
+              },
+              visible: {
+                opacity: 1,
+                x: 0,
+                scale: 1,
+              },
+            }}
+            transition={{
+              duration: 0.9,
+              delay: 0.15,
+              ease: "easeInOut",
+            }}
+            viewOptions={{
+              margin: "0px 0px -80px 0px",
+            }}
           >
-            Explore Courses
-            <span>→</span>
-          </Link>
+            <Link
+              to="/courses"
+              className="dashboard-primary-btn"
+            >
+              Explore Courses
+              <span>→</span>
+            </Link>
+          </InView>
 
         </div>
 
@@ -176,7 +213,28 @@ const Dashboard = () => {
 
           <div className="dashboard-stats">
 
-            <div>
+            <InView
+              variants={{
+                hidden: {
+                  opacity: 0,
+                  y: 25,
+                  scale: 0.97,
+                },
+                visible: {
+                  opacity: 1,
+                  y: 0,
+                  scale: 1,
+                },
+              }}
+              transition={{
+                duration: 0.8,
+                delay: 0,
+                ease: "easeInOut",
+              }}
+              viewOptions={{
+                margin: "0px 0px -60px 0px",
+              }}
+            >
               <span>
                 ENROLLED COURSES
               </span>
@@ -186,10 +244,31 @@ const Dashboard = () => {
                   stats.enrolled
                 ).padStart(2, "0")}
               </strong>
-            </div>
+            </InView>
 
 
-            <div>
+            <InView
+              variants={{
+                hidden: {
+                  opacity: 0,
+                  y: 25,
+                  scale: 0.97,
+                },
+                visible: {
+                  opacity: 1,
+                  y: 0,
+                  scale: 1,
+                },
+              }}
+              transition={{
+                duration: 0.8,
+                delay: 0.1,
+                ease: "easeInOut",
+              }}
+              viewOptions={{
+                margin: "0px 0px -60px 0px",
+              }}
+            >
               <span>
                 COMPLETED
               </span>
@@ -199,10 +278,31 @@ const Dashboard = () => {
                   stats.completed
                 ).padStart(2, "0")}
               </strong>
-            </div>
+            </InView>
 
 
-            <div>
+            <InView
+              variants={{
+                hidden: {
+                  opacity: 0,
+                  y: 25,
+                  scale: 0.97,
+                },
+                visible: {
+                  opacity: 1,
+                  y: 0,
+                  scale: 1,
+                },
+              }}
+              transition={{
+                duration: 0.8,
+                delay: 0.2,
+                ease: "easeInOut",
+              }}
+              viewOptions={{
+                margin: "0px 0px -60px 0px",
+              }}
+            >
               <span>
                 IN PROGRESS
               </span>
@@ -212,10 +312,31 @@ const Dashboard = () => {
                   stats.inProgress
                 ).padStart(2, "0")}
               </strong>
-            </div>
+            </InView>
 
 
-            <div>
+            <InView
+              variants={{
+                hidden: {
+                  opacity: 0,
+                  y: 25,
+                  scale: 0.97,
+                },
+                visible: {
+                  opacity: 1,
+                  y: 0,
+                  scale: 1,
+                },
+              }}
+              transition={{
+                duration: 0.8,
+                delay: 0.3,
+                ease: "easeInOut",
+              }}
+              viewOptions={{
+                margin: "0px 0px -60px 0px",
+              }}
+            >
               <span>
                 PROJECTS
               </span>
@@ -223,7 +344,7 @@ const Dashboard = () => {
               <strong>
                 0
               </strong>
-            </div>
+            </InView>
 
           </div>
 
@@ -249,8 +370,28 @@ const Dashboard = () => {
 
             <div className="dashboard-courses">
 
-              <div className="dashboard-section-heading">
-
+              <InView
+                className="dashboard-section-heading"
+                variants={{
+                  hidden: {
+                    opacity: 0,
+                    y: 25,
+                    filter: "blur(4px)",
+                  },
+                  visible: {
+                    opacity: 1,
+                    y: 0,
+                    filter: "blur(0px)",
+                  },
+                }}
+                transition={{
+                  duration: 0.9,
+                  ease: "easeInOut",
+                }}
+                viewOptions={{
+                  margin: "0px 0px -70px 0px",
+                }}
+              >
                 <div>
 
                   <span className="section-eyebrow">
@@ -267,15 +408,34 @@ const Dashboard = () => {
                   View all →
                 </Link>
 
-              </div>
+              </InView>
 
 
               {/* LOADING */}
 
               {loadingCourses && (
-                <p>
-                  Loading your courses...
-                </p>
+                <InView
+                  variants={{
+                    hidden: {
+                      opacity: 0,
+                      y: 20,
+                    },
+                    visible: {
+                      opacity: 1,
+                      y: 0,
+                    },
+                  }}
+                  transition={{
+                    duration: 0.8,
+                  }}
+                  viewOptions={{
+                    margin: "0px 0px -60px 0px",
+                  }}
+                >
+                  <p>
+                    Loading your courses...
+                  </p>
+                </InView>
               )}
 
 
@@ -283,9 +443,28 @@ const Dashboard = () => {
 
               {!loadingCourses &&
                 error && (
-                  <p className="dashboard-error">
-                    {error}
-                  </p>
+                  <InView
+                    variants={{
+                      hidden: {
+                        opacity: 0,
+                        y: 20,
+                      },
+                      visible: {
+                        opacity: 1,
+                        y: 0,
+                      },
+                    }}
+                    transition={{
+                      duration: 0.8,
+                    }}
+                    viewOptions={{
+                      margin: "0px 0px -60px 0px",
+                    }}
+                  >
+                    <p className="dashboard-error">
+                      {error}
+                    </p>
+                  </InView>
                 )}
 
 
@@ -295,8 +474,30 @@ const Dashboard = () => {
                 !error &&
                 courses.length === 0 && (
 
-                  <div className="dashboard-empty">
-
+                  <InView
+                    className="dashboard-empty"
+                    variants={{
+                      hidden: {
+                        opacity: 0,
+                        y: 30,
+                        scale: 0.97,
+                        filter: "blur(4px)",
+                      },
+                      visible: {
+                        opacity: 1,
+                        y: 0,
+                        scale: 1,
+                        filter: "blur(0px)",
+                      },
+                    }}
+                    transition={{
+                      duration: 0.9,
+                      ease: "easeInOut",
+                    }}
+                    viewOptions={{
+                      margin: "0px 0px -70px 0px",
+                    }}
+                  >
                     <h3>
                       No courses yet.
                     </h3>
@@ -309,8 +510,7 @@ const Dashboard = () => {
                     <Link to="/courses">
                       Explore Courses →
                     </Link>
-
-                  </div>
+                  </InView>
 
                 )}
 
@@ -324,7 +524,7 @@ const Dashboard = () => {
                   <div className="dashboard-course-list">
 
                     {courses.map(
-                      (course) => {
+                      (course, index) => {
 
                         const progress =
                           Number(
@@ -336,9 +536,31 @@ const Dashboard = () => {
 
                         return (
 
-                          <div
+                          <InView
                             className="dashboard-course-card"
                             key={course.id}
+                            variants={{
+                              hidden: {
+                                opacity: 0,
+                                y: 35,
+                                scale: 0.97,
+                                filter: "blur(4px)",
+                              },
+                              visible: {
+                                opacity: 1,
+                                y: 0,
+                                scale: 1,
+                                filter: "blur(0px)",
+                              },
+                            }}
+                            transition={{
+                              duration: 0.9,
+                              delay: index * 0.12,
+                              ease: "easeInOut",
+                            }}
+                            viewOptions={{
+                              margin: "0px 0px -70px 0px",
+                            }}
                           >
 
                             <div className="dashboard-course-top">
@@ -400,7 +622,7 @@ const Dashboard = () => {
 
                             </Link>
 
-                          </div>
+                          </InView>
 
                         );
 
@@ -423,7 +645,30 @@ const Dashboard = () => {
 
               {/* QUICK ACTIONS */}
 
-              <div className="dashboard-side-card">
+              <InView
+                className="dashboard-side-card"
+                variants={{
+                  hidden: {
+                    opacity: 0,
+                    x: 30,
+                    scale: 0.97,
+                    filter: "blur(4px)",
+                  },
+                  visible: {
+                    opacity: 1,
+                    x: 0,
+                    scale: 1,
+                    filter: "blur(0px)",
+                  },
+                }}
+                transition={{
+                  duration: 1,
+                  ease: "easeInOut",
+                }}
+                viewOptions={{
+                  margin: "0px 0px -70px 0px",
+                }}
+              >
 
                 <span className="section-eyebrow">
                   QUICK ACTIONS
@@ -498,16 +743,40 @@ const Dashboard = () => {
 
                 </div>
 
-              </div>
+              </InView>
 
 
               {/* HELP */}
 
-              <div
+              <InView
                 className="
                   dashboard-side-card
                   dashboard-help-card
                 "
+                variants={{
+                  hidden: {
+                    opacity: 0,
+                    x: 30,
+                    y: 20,
+                    scale: 0.97,
+                    filter: "blur(4px)",
+                  },
+                  visible: {
+                    opacity: 1,
+                    x: 0,
+                    y: 0,
+                    scale: 1,
+                    filter: "blur(0px)",
+                  },
+                }}
+                transition={{
+                  duration: 1,
+                  delay: 0.15,
+                  ease: "easeInOut",
+                }}
+                viewOptions={{
+                  margin: "0px 0px -70px 0px",
+                }}
               >
 
                 <span className="section-eyebrow">
@@ -528,7 +797,7 @@ const Dashboard = () => {
                   Contact Support →
                 </Link>
 
-              </div>
+              </InView>
 
             </aside>
 

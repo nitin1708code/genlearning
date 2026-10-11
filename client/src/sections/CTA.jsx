@@ -1,12 +1,34 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { InView } from "../components/motion-primitives/in-view";
 
 const CTA = () => {
   return (
     <section className="cta-section">
       <div className="cta-container">
 
-        <div className="cta-content">
+        <InView
+          className="cta-content"
+          variants={{
+            hidden: {
+              opacity: 0,
+              y: 35,
+              filter: "blur(4px)",
+            },
+            visible: {
+              opacity: 1,
+              y: 0,
+              filter: "blur(0px)",
+            },
+          }}
+          transition={{
+            duration: 1.1,
+            ease: "easeInOut",
+          }}
+          viewOptions={{
+            margin: "0px 0px -100px 0px",
+          }}
+        >
           <span className="section-eyebrow">
             HAVE A PROJECT IN MIND?
           </span>
@@ -38,11 +60,36 @@ const CTA = () => {
               Explore Services
             </Link>
           </div>
-        </div>
+        </InView>
 
-        <div className="cta-mark">
+
+        <InView
+          className="cta-mark"
+          variants={{
+            hidden: {
+              opacity: 0,
+              x: 40,
+              scale: 0.9,
+              filter: "blur(5px)",
+            },
+            visible: {
+              opacity: 1,
+              x: 0,
+              scale: 1,
+              filter: "blur(0px)",
+            },
+          }}
+          transition={{
+            duration: 1.2,
+            delay: 0.15,
+            ease: "easeInOut",
+          }}
+          viewOptions={{
+            margin: "0px 0px -100px 0px",
+          }}
+        >
           <span>G</span>
-        </div>
+        </InView>
 
       </div>
     </section>

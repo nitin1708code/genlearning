@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { InView } from "../components/motion-primitives/in-view";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -15,8 +16,29 @@ const Footer = () => {
         <div className="footer-main">
 
           {/* BRAND */}
-          <div className="footer-brand">
 
+          <InView
+            className="footer-brand"
+            variants={{
+              hidden: {
+                opacity: 0,
+                y: 30,
+                filter: "blur(4px)",
+              },
+              visible: {
+                opacity: 1,
+                y: 0,
+                filter: "blur(0px)",
+              },
+            }}
+            transition={{
+              duration: 1,
+              ease: "easeInOut",
+            }}
+            viewOptions={{
+              margin: "0px 0px -80px 0px",
+            }}
+          >
             <Link to="/" className="footer-logo">
 
               <img
@@ -44,6 +66,7 @@ const Footer = () => {
             <div className="footer-socials">
 
               {/* LinkedIn */}
+
               <a
                 href="#"
                 aria-label="GEN Learning on LinkedIn"
@@ -61,6 +84,7 @@ const Footer = () => {
 
 
               {/* Instagram */}
+
               <a
                 href="#"
                 aria-label="GEN Learning on Instagram"
@@ -96,6 +120,7 @@ const Footer = () => {
 
 
               {/* YouTube */}
+
               <a
                 href="#"
                 aria-label="GEN Learning on YouTube"
@@ -113,6 +138,7 @@ const Footer = () => {
 
 
               {/* GitHub */}
+
               <a
                 href="#"
                 aria-label="GEN Learning on GitHub"
@@ -130,15 +156,36 @@ const Footer = () => {
 
             </div>
 
-          </div>
+          </InView>
 
 
           {/* ========================================
               EXPLORE
           ======================================== */}
 
-          <div className="footer-column">
-
+          <InView
+            className="footer-column"
+            variants={{
+              hidden: {
+                opacity: 0,
+                y: 30,
+                filter: "blur(4px)",
+              },
+              visible: {
+                opacity: 1,
+                y: 0,
+                filter: "blur(0px)",
+              },
+            }}
+            transition={{
+              duration: 1,
+              delay: 0.1,
+              ease: "easeInOut",
+            }}
+            viewOptions={{
+              margin: "0px 0px -80px 0px",
+            }}
+          >
             <h3>Explore</h3>
 
             <Link to="/">
@@ -152,16 +199,36 @@ const Footer = () => {
             <Link to="/services">
               IT Services
             </Link>
-
-          </div>
+          </InView>
 
 
           {/* ========================================
               COMPANY
           ======================================== */}
 
-          <div className="footer-column">
-
+          <InView
+            className="footer-column"
+            variants={{
+              hidden: {
+                opacity: 0,
+                y: 30,
+                filter: "blur(4px)",
+              },
+              visible: {
+                opacity: 1,
+                y: 0,
+                filter: "blur(0px)",
+              },
+            }}
+            transition={{
+              duration: 1,
+              delay: 0.2,
+              ease: "easeInOut",
+            }}
+            viewOptions={{
+              margin: "0px 0px -80px 0px",
+            }}
+          >
             <h3>Company</h3>
 
             <Link to="/about">
@@ -179,16 +246,36 @@ const Footer = () => {
             <Link to="/login">
               Login
             </Link>
-
-          </div>
+          </InView>
 
 
           {/* ========================================
               CONTACT
           ======================================== */}
 
-          <div className="footer-column footer-contact">
-
+          <InView
+            className="footer-column footer-contact"
+            variants={{
+              hidden: {
+                opacity: 0,
+                y: 30,
+                filter: "blur(4px)",
+              },
+              visible: {
+                opacity: 1,
+                y: 0,
+                filter: "blur(0px)",
+              },
+            }}
+            transition={{
+              duration: 1,
+              delay: 0.3,
+              ease: "easeInOut",
+            }}
+            viewOptions={{
+              margin: "0px 0px -80px 0px",
+            }}
+          >
             <h3>Let's Talk</h3>
 
             <a href="mailto:nitinchess17@gmail.com">
@@ -205,8 +292,7 @@ const Footer = () => {
             >
               Start a conversation →
             </Link>
-
-          </div>
+          </InView>
 
         </div>
 
@@ -215,8 +301,26 @@ const Footer = () => {
             FOOTER BOTTOM
         ======================================== */}
 
-        <div className="footer-bottom">
-
+        <InView
+          className="footer-bottom"
+          variants={{
+            hidden: {
+              opacity: 0,
+              y: 20,
+            },
+            visible: {
+              opacity: 1,
+              y: 0,
+            },
+          }}
+          transition={{
+            duration: 0.9,
+            ease: "easeInOut",
+          }}
+          viewOptions={{
+            margin: "0px 0px -60px 0px",
+          }}
+        >
           <p>
             © {currentYear} GEN Learning. All rights reserved.
           </p>
@@ -232,8 +336,7 @@ const Footer = () => {
             </Link>
 
           </div>
-
-        </div>
+        </InView>
 
       </div>
     </footer>

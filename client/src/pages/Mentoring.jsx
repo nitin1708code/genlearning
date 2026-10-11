@@ -654,7 +654,7 @@ setTimeout(() => {
                       ₹349
                     </strong>
                   </button>
-                  <button
+                  {/* <button
   type="button"
   className={
     duration === 2
@@ -668,7 +668,7 @@ setTimeout(() => {
 >
   <span>2 Minutes</span>
   <strong>₹10</strong>
-</button>
+</button> */}
 
                 </div>
 

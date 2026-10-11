@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { InView } from "../components/motion-primitives/in-view";
 
 const Services = () => {
   const services = [
@@ -91,29 +92,51 @@ const Services = () => {
       <section className="services-hero">
         <div className="services-container">
 
-          <span className="section-eyebrow">
-            IT SERVICES
-          </span>
-
-          <h1>
-            Turn your idea
-            <br />
-            <span>into a digital product.</span>
-          </h1>
-
-          <p>
-            We design and develop websites, web applications and
-            custom digital solutions for individuals, startups
-            and businesses.
-          </p>
-
-          <Link
-            to="/contact"
-            className="services-hero-btn"
+          <InView
+            variants={{
+              hidden: {
+                opacity: 0,
+                y: 35,
+                filter: "blur(4px)",
+              },
+              visible: {
+                opacity: 1,
+                y: 0,
+                filter: "blur(0px)",
+              },
+            }}
+            transition={{
+              duration: 1.1,
+              ease: "easeInOut",
+            }}
+            viewOptions={{
+              margin: "0px 0px -80px 0px",
+            }}
           >
-            Start Your Project
-            <span>→</span>
-          </Link>
+            <span className="section-eyebrow">
+              IT SERVICES
+            </span>
+
+            <h1>
+              Turn your idea
+              <br />
+              <span>into a digital product.</span>
+            </h1>
+
+            <p>
+              We design and develop websites, web applications and
+              custom digital solutions for individuals, startups
+              and businesses.
+            </p>
+
+            <Link
+              to="/contact"
+              className="services-hero-btn"
+            >
+              Start Your Project
+              <span>→</span>
+            </Link>
+          </InView>
 
         </div>
       </section>
@@ -122,9 +145,31 @@ const Services = () => {
       {/* SERVICES */}
 
       <section className="services-list-section">
+
         <div className="services-container">
 
-          <div className="services-heading">
+          <InView
+            className="services-heading"
+            variants={{
+              hidden: {
+                opacity: 0,
+                y: 30,
+                filter: "blur(4px)",
+              },
+              visible: {
+                opacity: 1,
+                y: 0,
+                filter: "blur(0px)",
+              },
+            }}
+            transition={{
+              duration: 1,
+              ease: "easeInOut",
+            }}
+            viewOptions={{
+              margin: "0px 0px -80px 0px",
+            }}
+          >
 
             <div>
 
@@ -145,16 +190,38 @@ const Services = () => {
               practical digital solution.
             </p>
 
-          </div>
+          </InView>
 
 
           <div className="services-grid">
 
-            {services.map((service) => (
+            {services.map((service, index) => (
 
-              <article
+              <InView
                 className="service-card"
                 key={service.slug}
+                variants={{
+                  hidden: {
+                    opacity: 0,
+                    y: 40,
+                    scale: 0.97,
+                    filter: "blur(4px)",
+                  },
+                  visible: {
+                    opacity: 1,
+                    y: 0,
+                    scale: 1,
+                    filter: "blur(0px)",
+                  },
+                }}
+                transition={{
+                  duration: 0.9,
+                  delay: index * 0.1,
+                  ease: "easeInOut",
+                }}
+                viewOptions={{
+                  margin: "0px 0px -70px 0px",
+                }}
               >
 
                 <div className="service-card-top">
@@ -177,7 +244,7 @@ const Services = () => {
                   <img
                     src={service.image}
                     alt={service.title}
-                     loading="lazy"
+                    loading="lazy"
                     decoding="async"
                   />
 
@@ -196,17 +263,19 @@ const Services = () => {
 
                   <ul>
 
-                    {service.features.map((feature) => (
+                    {service.features.map(
+                      (feature) => (
 
-                      <li key={feature}>
+                        <li key={feature}>
 
-                        <span>✓</span>
+                          <span>✓</span>
 
-                        {feature}
+                          {feature}
 
-                      </li>
+                        </li>
 
-                    ))}
+                      )
+                    )}
 
                   </ul>
 
@@ -221,13 +290,14 @@ const Services = () => {
                   <span>→</span>
                 </Link>
 
-              </article>
+              </InView>
 
             ))}
 
           </div>
 
         </div>
+
       </section>
 
 
@@ -237,7 +307,28 @@ const Services = () => {
 
         <div className="services-container">
 
-          <div className="process-heading">
+          <InView
+            className="process-heading"
+            variants={{
+              hidden: {
+                opacity: 0,
+                y: 30,
+                filter: "blur(4px)",
+              },
+              visible: {
+                opacity: 1,
+                y: 0,
+                filter: "blur(0px)",
+              },
+            }}
+            transition={{
+              duration: 1,
+              ease: "easeInOut",
+            }}
+            viewOptions={{
+              margin: "0px 0px -80px 0px",
+            }}
+          >
 
             <span className="section-eyebrow">
               OUR PROCESS
@@ -253,18 +344,42 @@ const Services = () => {
               project from an initial idea to a working product.
             </p>
 
-          </div>
+          </InView>
 
 
           <div className="process-grid">
 
             {/* 01 */}
 
-            <div className="process-item">
+            <InView
+              className="process-item"
+              variants={{
+                hidden: {
+                  opacity: 0,
+                  y: 35,
+                  scale: 0.97,
+                  filter: "blur(4px)",
+                },
+                visible: {
+                  opacity: 1,
+                  y: 0,
+                  scale: 1,
+                  filter: "blur(0px)",
+                },
+              }}
+              transition={{
+                duration: 0.85,
+                ease: "easeInOut",
+              }}
+              viewOptions={{
+                margin: "0px 0px -70px 0px",
+              }}
+            >
 
               <span>01</span>
 
               <div className="process-icon">
+
                 <svg
                   width="42"
                   height="42"
@@ -280,6 +395,7 @@ const Services = () => {
                   <path d="M12 11h.01" />
                   <path d="M16 11h.01" />
                 </svg>
+
               </div>
 
               <h3>
@@ -290,16 +406,41 @@ const Services = () => {
                 Understand your idea, requirements and goals.
               </p>
 
-            </div>
+            </InView>
 
 
             {/* 02 */}
 
-            <div className="process-item">
+            <InView
+              className="process-item"
+              variants={{
+                hidden: {
+                  opacity: 0,
+                  y: 35,
+                  scale: 0.97,
+                  filter: "blur(4px)",
+                },
+                visible: {
+                  opacity: 1,
+                  y: 0,
+                  scale: 1,
+                  filter: "blur(0px)",
+                },
+              }}
+              transition={{
+                duration: 0.85,
+                delay: 0.1,
+                ease: "easeInOut",
+              }}
+              viewOptions={{
+                margin: "0px 0px -70px 0px",
+              }}
+            >
 
               <span>02</span>
 
               <div className="process-icon">
+
                 <svg
                   width="42"
                   height="42"
@@ -317,12 +458,14 @@ const Services = () => {
                     height="17"
                     rx="2"
                   />
+
                   <path d="M9 4V3h6v1" />
                   <path d="m8 10 1 1 2-2" />
                   <path d="M13 10h3" />
                   <path d="m8 15 1 1 2-2" />
                   <path d="M13 15h3" />
                 </svg>
+
               </div>
 
               <h3>
@@ -333,16 +476,41 @@ const Services = () => {
                 Define the features, structure and project scope.
               </p>
 
-            </div>
+            </InView>
 
 
             {/* 03 */}
 
-            <div className="process-item">
+            <InView
+              className="process-item"
+              variants={{
+                hidden: {
+                  opacity: 0,
+                  y: 35,
+                  scale: 0.97,
+                  filter: "blur(4px)",
+                },
+                visible: {
+                  opacity: 1,
+                  y: 0,
+                  scale: 1,
+                  filter: "blur(0px)",
+                },
+              }}
+              transition={{
+                duration: 0.85,
+                delay: 0.2,
+                ease: "easeInOut",
+              }}
+              viewOptions={{
+                margin: "0px 0px -70px 0px",
+              }}
+            >
 
               <span>03</span>
 
               <div className="process-icon">
+
                 <svg
                   width="42"
                   height="42"
@@ -357,6 +525,7 @@ const Services = () => {
                   <path d="m16 8 4 4-4 4" />
                   <path d="m14 4-4 16" />
                 </svg>
+
               </div>
 
               <h3>
@@ -367,16 +536,41 @@ const Services = () => {
                 Design and develop the solution step by step.
               </p>
 
-            </div>
+            </InView>
 
 
             {/* 04 */}
 
-            <div className="process-item">
+            <InView
+              className="process-item"
+              variants={{
+                hidden: {
+                  opacity: 0,
+                  y: 35,
+                  scale: 0.97,
+                  filter: "blur(4px)",
+                },
+                visible: {
+                  opacity: 1,
+                  y: 0,
+                  scale: 1,
+                  filter: "blur(0px)",
+                },
+              }}
+              transition={{
+                duration: 0.85,
+                delay: 0.3,
+                ease: "easeInOut",
+              }}
+              viewOptions={{
+                margin: "0px 0px -70px 0px",
+              }}
+            >
 
               <span>04</span>
 
               <div className="process-icon">
+
                 <svg
                   width="42"
                   height="42"
@@ -396,6 +590,7 @@ const Services = () => {
                     r="1.2"
                   />
                 </svg>
+
               </div>
 
               <h3>
@@ -406,7 +601,7 @@ const Services = () => {
                 Test, deploy and hand over the completed product.
               </p>
 
-            </div>
+            </InView>
 
           </div>
 
@@ -421,7 +616,30 @@ const Services = () => {
 
         <div className="services-container">
 
-          <div className="services-cta-box">
+          <InView
+            className="services-cta-box"
+            variants={{
+              hidden: {
+                opacity: 0,
+                y: 35,
+                scale: 0.98,
+                filter: "blur(4px)",
+              },
+              visible: {
+                opacity: 1,
+                y: 0,
+                scale: 1,
+                filter: "blur(0px)",
+              },
+            }}
+            transition={{
+              duration: 1,
+              ease: "easeInOut",
+            }}
+            viewOptions={{
+              margin: "0px 0px -80px 0px",
+            }}
+          >
 
             <img
               src="/services/cta-project.webp"
@@ -430,6 +648,7 @@ const Services = () => {
               loading="lazy"
               decoding="async"
             />
+
 
             <div className="services-cta-content">
 
@@ -457,7 +676,7 @@ const Services = () => {
 
             </div>
 
-          </div>
+          </InView>
 
         </div>
 

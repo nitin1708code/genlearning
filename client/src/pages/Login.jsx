@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { GoogleLogin } from "@react-oauth/google";
+import { InView } from "../components/motion-primitives/in-view";
+import { BorderTrail } from "../components/motion-primitives/border-trail";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -101,10 +103,16 @@ const Login = () => {
         JSON.stringify(data.user)
       );
 
-      navigate(location.state?.from || "/dashboard");
+      navigate(
+        location.state?.from ||
+        "/dashboard"
+      );
 
     } catch (error) {
-      console.error("Login error:", error);
+      console.error(
+        "Login error:",
+        error
+      );
 
       setError(
         "Unable to connect to the server. Please try again."
@@ -149,6 +157,7 @@ const Login = () => {
           data.message ||
           "Google login failed."
         );
+
         return;
       }
 
@@ -200,23 +209,73 @@ const Login = () => {
 
         {/* BRAND */}
 
-        <Link
-          to="/"
+        <InView
           className="login-logo"
+          variants={{
+            hidden: {
+              opacity: 0,
+              y: -15,
+            },
+            visible: {
+              opacity: 1,
+              y: 0,
+            },
+          }}
+          transition={{
+            duration: 0.8,
+            ease: "easeInOut",
+          }}
+          viewOptions={{
+            once: true,
+          }}
         >
-          <span className="login-logo-mark">
-            G
-          </span>
+          <Link to="/">
+            <span className="login-logo-mark">
+              G
+            </span>
 
-          <span>
-            GEN Learning
-          </span>
-        </Link>
+            <span>
+              GEN Learning
+            </span>
+          </Link>
+        </InView>
 
 
         {/* LOGIN CARD */}
 
-        <div className="login-card">
+        <InView
+          className="login-card"
+          variants={{
+            hidden: {
+              opacity: 0,
+              y: 35,
+              scale: 0.98,
+              filter: "blur(4px)",
+            },
+            visible: {
+              opacity: 1,
+              y: 0,
+              scale: 1,
+              filter: "blur(0px)",
+            },
+          }}
+          transition={{
+            duration: 1,
+            ease: "easeInOut",
+          }}
+          viewOptions={{
+            once: true,
+            margin: "0px 0px -80px 0px",
+          }}
+        >
+
+          {/* BORDER TRAIL */}
+
+          <BorderTrail
+            size={100}
+            duration={2.5}
+          />
+
 
           {/* HEADING */}
 
@@ -364,8 +423,11 @@ const Login = () => {
                 : "Sign In"}
 
               {!loading && (
-                <span>→</span>
+                <span>
+                  →
+                </span>
               )}
+
             </button>
 
 
@@ -381,8 +443,12 @@ const Login = () => {
             <div className="google-login">
 
               <GoogleLogin
-                onSuccess={handleGoogleLogin}
-                onError={handleGoogleError}
+                onSuccess={
+                  handleGoogleLogin
+                }
+                onError={
+                  handleGoogleError
+                }
                 useOneTap={false}
                 theme="outline"
                 size="large"
@@ -410,17 +476,36 @@ const Login = () => {
 
           </div>
 
-        </div>
+        </InView>
 
 
         {/* BACK */}
 
-        <Link
-          to="/"
+        <InView
           className="login-back"
+          variants={{
+            hidden: {
+              opacity: 0,
+              y: 15,
+            },
+            visible: {
+              opacity: 1,
+              y: 0,
+            },
+          }}
+          transition={{
+            duration: 0.8,
+            delay: 0.15,
+            ease: "easeInOut",
+          }}
+          viewOptions={{
+            once: true,
+          }}
         >
-          ← Back to website
-        </Link>
+          <Link to="/">
+            ← Back to website
+          </Link>
+        </InView>
 
       </div>
 

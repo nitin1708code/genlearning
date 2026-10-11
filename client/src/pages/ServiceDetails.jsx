@@ -1,5 +1,6 @@
 import React from "react";
 import { Link, useParams } from "react-router-dom";
+import { InView } from "../components/motion-primitives/in-view";
 
 const ServiceDetails = () => {
   const { serviceSlug } = useParams();
@@ -95,23 +96,46 @@ const ServiceDetails = () => {
   if (!service) {
     return (
       <main className="service-not-found">
-        <span className="section-eyebrow">
-          SERVICE NOT FOUND
-        </span>
 
-        <h1>We couldn't find this service.</h1>
-
-        <p>
-          The service you're looking for may not exist or may
-          have been moved.
-        </p>
-
-        <Link
-          to="/services"
-          className="service-back-btn"
+        <InView
+          variants={{
+            hidden: {
+              opacity: 0,
+              y: 30,
+              filter: "blur(4px)",
+            },
+            visible: {
+              opacity: 1,
+              y: 0,
+              filter: "blur(0px)",
+            },
+          }}
+          transition={{
+            duration: 1,
+            ease: "easeInOut",
+          }}
         >
-          ← Back to Services
-        </Link>
+          <span className="section-eyebrow">
+            SERVICE NOT FOUND
+          </span>
+
+          <h1>
+            We couldn't find this service.
+          </h1>
+
+          <p>
+            The service you're looking for may not exist or may
+            have been moved.
+          </p>
+
+          <Link
+            to="/services"
+            className="service-back-btn"
+          >
+            ← Back to Services
+          </Link>
+        </InView>
+
       </main>
     );
   }
@@ -120,19 +144,65 @@ const ServiceDetails = () => {
     <main className="service-details-page">
 
       {/* HERO */}
+
       <section className="service-details-hero">
+
         <div className="service-details-container">
 
-          <Link
-            to="/services"
-            className="service-back-link"
+          <InView
+            variants={{
+              hidden: {
+                opacity: 0,
+                x: -20,
+              },
+              visible: {
+                opacity: 1,
+                x: 0,
+              },
+            }}
+            transition={{
+              duration: 0.8,
+              ease: "easeInOut",
+            }}
+            viewOptions={{
+              margin: "0px 0px -60px 0px",
+            }}
           >
-            ← All Services
-          </Link>
+            <Link
+              to="/services"
+              className="service-back-link"
+            >
+              ← All Services
+            </Link>
+          </InView>
+
 
           <div className="service-details-grid">
 
-            <div className="service-details-content">
+            {/* LEFT */}
+
+            <InView
+              className="service-details-content"
+              variants={{
+                hidden: {
+                  opacity: 0,
+                  x: -40,
+                  filter: "blur(4px)",
+                },
+                visible: {
+                  opacity: 1,
+                  x: 0,
+                  filter: "blur(0px)",
+                },
+              }}
+              transition={{
+                duration: 1.1,
+                ease: "easeInOut",
+              }}
+              viewOptions={{
+                margin: "0px 0px -80px 0px",
+              }}
+            >
 
               <span className="section-eyebrow">
                 {service.category}
@@ -165,12 +235,36 @@ const ServiceDetails = () => {
 
               </div>
 
-            </div>
+            </InView>
 
 
             {/* VISUAL */}
 
-            <div className="service-details-visual">
+            <InView
+              className="service-details-visual"
+              variants={{
+                hidden: {
+                  opacity: 0,
+                  x: 40,
+                  scale: 0.97,
+                  filter: "blur(4px)",
+                },
+                visible: {
+                  opacity: 1,
+                  x: 0,
+                  scale: 1,
+                  filter: "blur(0px)",
+                },
+              }}
+              transition={{
+                duration: 1.1,
+                delay: 0.15,
+                ease: "easeInOut",
+              }}
+              viewOptions={{
+                margin: "0px 0px -80px 0px",
+              }}
+            >
 
               <div className="service-visual-card">
 
@@ -194,11 +288,12 @@ const ServiceDetails = () => {
 
               </div>
 
-            </div>
+            </InView>
 
           </div>
 
         </div>
+
       </section>
 
 
@@ -208,9 +303,31 @@ const ServiceDetails = () => {
         className="service-features-section"
         id="features"
       >
+
         <div className="service-details-container">
 
-          <div className="service-features-heading">
+          <InView
+            className="service-features-heading"
+            variants={{
+              hidden: {
+                opacity: 0,
+                y: 30,
+                filter: "blur(4px)",
+              },
+              visible: {
+                opacity: 1,
+                y: 0,
+                filter: "blur(0px)",
+              },
+            }}
+            transition={{
+              duration: 1,
+              ease: "easeInOut",
+            }}
+            viewOptions={{
+              margin: "0px 0px -80px 0px",
+            }}
+          >
 
             <span className="section-eyebrow">
               WHAT YOU GET
@@ -226,45 +343,98 @@ const ServiceDetails = () => {
               requirements, goals and budget.
             </p>
 
-          </div>
+          </InView>
 
 
           <div className="service-features-grid">
 
-            {service.features.map((feature, index) => (
-              <div
-                className="service-feature"
-                key={feature}
-              >
+            {service.features.map(
+              (feature, index) => (
 
-                <span>
-                  {String(index + 1).padStart(2, "0")}
-                </span>
+                <InView
+                  className="service-feature"
+                  key={feature}
+                  variants={{
+                    hidden: {
+                      opacity: 0,
+                      y: 35,
+                      scale: 0.97,
+                      filter: "blur(4px)",
+                    },
+                    visible: {
+                      opacity: 1,
+                      y: 0,
+                      scale: 1,
+                      filter: "blur(0px)",
+                    },
+                  }}
+                  transition={{
+                    duration: 0.85,
+                    delay: index * 0.1,
+                    ease: "easeInOut",
+                  }}
+                  viewOptions={{
+                    margin: "0px 0px -70px 0px",
+                  }}
+                >
 
-                <div>
-                  <h3>{feature}</h3>
+                  <span>
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
 
-                  <p>
-                    Designed and implemented according to
-                    the requirements of your project.
-                  </p>
-                </div>
+                  <div>
 
-              </div>
-            ))}
+                    <h3>
+                      {feature}
+                    </h3>
+
+                    <p>
+                      Designed and implemented according to
+                      the requirements of your project.
+                    </p>
+
+                  </div>
+
+                </InView>
+
+              )
+            )}
 
           </div>
 
         </div>
+
       </section>
 
 
       {/* PROCESS */}
 
       <section className="service-process-section">
+
         <div className="service-details-container">
 
-          <div className="service-process-heading">
+          <InView
+            className="service-process-heading"
+            variants={{
+              hidden: {
+                opacity: 0,
+                y: 30,
+                filter: "blur(4px)",
+              },
+              visible: {
+                opacity: 1,
+                y: 0,
+                filter: "blur(0px)",
+              },
+            }}
+            transition={{
+              duration: 1,
+              ease: "easeInOut",
+            }}
+            viewOptions={{
+              margin: "0px 0px -80px 0px",
+            }}
+          >
 
             <span className="section-eyebrow">
               HOW IT WORKS
@@ -275,57 +445,185 @@ const ServiceDetails = () => {
               <span> Clear communication.</span>
             </h2>
 
-          </div>
+          </InView>
 
 
           <div className="service-process-list">
 
-            <div>
+            <InView
+              variants={{
+                hidden: {
+                  opacity: 0,
+                  x: -30,
+                  filter: "blur(4px)",
+                },
+                visible: {
+                  opacity: 1,
+                  x: 0,
+                  filter: "blur(0px)",
+                },
+              }}
+              transition={{
+                duration: 0.85,
+                ease: "easeInOut",
+              }}
+              viewOptions={{
+                margin: "0px 0px -70px 0px",
+              }}
+            >
               <span>01</span>
-              <h3>Discuss</h3>
+
+              <h3>
+                Discuss
+              </h3>
+
               <p>
                 We understand your idea and requirements.
               </p>
-            </div>
+            </InView>
 
-            <div>
+
+            <InView
+              variants={{
+                hidden: {
+                  opacity: 0,
+                  x: 30,
+                  filter: "blur(4px)",
+                },
+                visible: {
+                  opacity: 1,
+                  x: 0,
+                  filter: "blur(0px)",
+                },
+              }}
+              transition={{
+                duration: 0.85,
+                delay: 0.1,
+                ease: "easeInOut",
+              }}
+              viewOptions={{
+                margin: "0px 0px -70px 0px",
+              }}
+            >
               <span>02</span>
-              <h3>Plan</h3>
+
+              <h3>
+                Plan
+              </h3>
+
               <p>
                 We define scope, features and project direction.
               </p>
-            </div>
+            </InView>
 
-            <div>
+
+            <InView
+              variants={{
+                hidden: {
+                  opacity: 0,
+                  x: -30,
+                  filter: "blur(4px)",
+                },
+                visible: {
+                  opacity: 1,
+                  x: 0,
+                  filter: "blur(0px)",
+                },
+              }}
+              transition={{
+                duration: 0.85,
+                delay: 0.2,
+                ease: "easeInOut",
+              }}
+              viewOptions={{
+                margin: "0px 0px -70px 0px",
+              }}
+            >
               <span>03</span>
-              <h3>Develop</h3>
+
+              <h3>
+                Develop
+              </h3>
+
               <p>
                 We design and build the solution.
               </p>
-            </div>
+            </InView>
 
-            <div>
+
+            <InView
+              variants={{
+                hidden: {
+                  opacity: 0,
+                  x: 30,
+                  filter: "blur(4px)",
+                },
+                visible: {
+                  opacity: 1,
+                  x: 0,
+                  filter: "blur(0px)",
+                },
+              }}
+              transition={{
+                duration: 0.85,
+                delay: 0.3,
+                ease: "easeInOut",
+              }}
+              viewOptions={{
+                margin: "0px 0px -70px 0px",
+              }}
+            >
               <span>04</span>
-              <h3>Deliver</h3>
+
+              <h3>
+                Deliver
+              </h3>
+
               <p>
                 We test, deploy and hand over the project.
               </p>
-            </div>
+            </InView>
 
           </div>
 
         </div>
+
       </section>
 
 
       {/* CTA */}
 
       <section className="service-details-cta">
+
         <div className="service-details-container">
 
-          <div className="service-details-cta-box">
+          <InView
+            className="service-details-cta-box"
+            variants={{
+              hidden: {
+                opacity: 0,
+                y: 35,
+                scale: 0.98,
+                filter: "blur(4px)",
+              },
+              visible: {
+                opacity: 1,
+                y: 0,
+                scale: 1,
+                filter: "blur(0px)",
+              },
+            }}
+            transition={{
+              duration: 1,
+              ease: "easeInOut",
+            }}
+            viewOptions={{
+              margin: "0px 0px -80px 0px",
+            }}
+          >
 
             <div>
+
               <span className="section-eyebrow">
                 READY TO START?
               </span>
@@ -339,6 +637,7 @@ const ServiceDetails = () => {
                 Tell us what you need and we'll discuss the
                 best approach for your project.
               </p>
+
             </div>
 
             <Link
@@ -349,9 +648,10 @@ const ServiceDetails = () => {
               <span>→</span>
             </Link>
 
-          </div>
+          </InView>
 
         </div>
+
       </section>
 
     </main>

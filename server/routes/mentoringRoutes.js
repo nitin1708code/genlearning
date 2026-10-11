@@ -325,11 +325,11 @@ router.get("/options", (req, res) => {
         price: 349,
       },
 
-      {
-        duration: 2,
-        durationLabel: "2 Minutes",
-        price: 10,
-      },
+      // {
+      //   duration: 2,
+      //   durationLabel: "2 Minutes",
+      //   price: 10,
+      // },
     ],
   });
 });

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { InView } from "../components/motion-primitives/in-view";
 
 const MyBookings = () => {
   const [bookings, setBookings] = useState([]);
@@ -11,7 +12,9 @@ const MyBookings = () => {
       setLoading(true);
       setError("");
 
-      const token = localStorage.getItem("genlearningToken");
+      const token = localStorage.getItem(
+        "genlearningToken"
+      );
 
       if (!token) {
         setError("Please login to view your bookings.");
@@ -55,6 +58,7 @@ const MyBookings = () => {
     fetchBookings();
   }, []);
 
+
   // =====================================================
   // DURATION
   // =====================================================
@@ -68,6 +72,7 @@ const MyBookings = () => {
 
     return `${value} Minutes`;
   };
+
 
   // =====================================================
   // DATE
@@ -88,6 +93,7 @@ const MyBookings = () => {
       year: "numeric",
     });
   };
+
 
   // =====================================================
   // TIME
@@ -123,6 +129,7 @@ const MyBookings = () => {
     });
   };
 
+
   // =====================================================
   // STATUS
   // =====================================================
@@ -139,6 +146,7 @@ const MyBookings = () => {
     return status || "Pending";
   };
 
+
   return (
     <main className="my-bookings-page">
 
@@ -150,27 +158,49 @@ const MyBookings = () => {
 
         <div className="my-bookings-container">
 
-          <div className="my-bookings-eyebrow">
-            MY BOOKINGS
-          </div>
-
-          <h1>
-            Your mentoring
-            <span> sessions.</span>
-          </h1>
-
-          <p>
-            View your upcoming and previous
-            1:1 mentoring sessions in one place.
-          </p>
-
-          <Link
-            to="/mentoring"
-            className="my-bookings-hero-btn"
+          <InView
+            variants={{
+              hidden: {
+                opacity: 0,
+                y: 35,
+                filter: "blur(4px)",
+              },
+              visible: {
+                opacity: 1,
+                y: 0,
+                filter: "blur(0px)",
+              },
+            }}
+            transition={{
+              duration: 1.1,
+              ease: "easeInOut",
+            }}
+            viewOptions={{
+              margin: "0px 0px -80px 0px",
+            }}
           >
-            Book New Session
-            <span>↗</span>
-          </Link>
+            <div className="my-bookings-eyebrow">
+              MY BOOKINGS
+            </div>
+
+            <h1>
+              Your mentoring
+              <span> sessions.</span>
+            </h1>
+
+            <p>
+              View your upcoming and previous
+              1:1 mentoring sessions in one place.
+            </p>
+
+            <Link
+              to="/mentoring"
+              className="my-bookings-hero-btn"
+            >
+              Book New Session
+              <span>↗</span>
+            </Link>
+          </InView>
 
         </div>
 
@@ -188,7 +218,28 @@ const MyBookings = () => {
           {/* ERROR */}
 
           {error && (
-            <div className="my-bookings-alert">
+            <InView
+              className="my-bookings-alert"
+              variants={{
+                hidden: {
+                  opacity: 0,
+                  y: 25,
+                  filter: "blur(4px)",
+                },
+                visible: {
+                  opacity: 1,
+                  y: 0,
+                  filter: "blur(0px)",
+                },
+              }}
+              transition={{
+                duration: 0.9,
+                ease: "easeInOut",
+              }}
+              viewOptions={{
+                margin: "0px 0px -60px 0px",
+              }}
+            >
               <div className="my-bookings-alert-icon">
                 !
               </div>
@@ -202,7 +253,7 @@ const MyBookings = () => {
                   {error}
                 </p>
               </div>
-            </div>
+            </InView>
           )}
 
 
@@ -212,15 +263,33 @@ const MyBookings = () => {
 
           {loading ? (
 
-            <div className="my-bookings-loading">
-
+            <InView
+              className="my-bookings-loading"
+              variants={{
+                hidden: {
+                  opacity: 0,
+                  y: 25,
+                },
+                visible: {
+                  opacity: 1,
+                  y: 0,
+                },
+              }}
+              transition={{
+                duration: 0.9,
+                ease: "easeInOut",
+              }}
+              viewOptions={{
+                margin: "0px 0px -60px 0px",
+              }}
+            >
               <div className="my-bookings-spinner"></div>
 
               <p>
                 Loading your bookings...
               </p>
 
-            </div>
+            </InView>
 
           ) : bookings.length === 0 ? (
 
@@ -228,8 +297,30 @@ const MyBookings = () => {
                 EMPTY STATE
             ================================================= */
 
-            <div className="my-bookings-empty">
-
+            <InView
+              className="my-bookings-empty"
+              variants={{
+                hidden: {
+                  opacity: 0,
+                  y: 35,
+                  scale: 0.97,
+                  filter: "blur(4px)",
+                },
+                visible: {
+                  opacity: 1,
+                  y: 0,
+                  scale: 1,
+                  filter: "blur(0px)",
+                },
+              }}
+              transition={{
+                duration: 1,
+                ease: "easeInOut",
+              }}
+              viewOptions={{
+                margin: "0px 0px -80px 0px",
+              }}
+            >
               <div className="my-bookings-empty-icon">
                 ◷
               </div>
@@ -256,7 +347,7 @@ const MyBookings = () => {
                 <span>→</span>
               </Link>
 
-            </div>
+            </InView>
 
           ) : (
 
@@ -268,8 +359,28 @@ const MyBookings = () => {
 
               {/* HEADER */}
 
-              <div className="my-bookings-list-header">
-
+              <InView
+                className="my-bookings-list-header"
+                variants={{
+                  hidden: {
+                    opacity: 0,
+                    y: 25,
+                    filter: "blur(4px)",
+                  },
+                  visible: {
+                    opacity: 1,
+                    y: 0,
+                    filter: "blur(0px)",
+                  },
+                }}
+                transition={{
+                  duration: 0.9,
+                  ease: "easeInOut",
+                }}
+                viewOptions={{
+                  margin: "0px 0px -70px 0px",
+                }}
+              >
                 <div>
 
                   <div className="my-bookings-eyebrow">
@@ -298,22 +409,45 @@ const MyBookings = () => {
                   <span>↗</span>
                 </Link>
 
-              </div>
+              </InView>
 
 
               {/* CARDS */}
 
               <div className="my-bookings-list">
 
-                {bookings.map((booking) => {
+                {bookings.map((booking, index) => {
 
                   const confirmed =
                     booking.status === "confirmed";
 
                   return (
-                    <article
+
+                    <InView
                       key={booking.id}
                       className="my-booking-card"
+                      variants={{
+                        hidden: {
+                          opacity: 0,
+                          y: 35,
+                          scale: 0.97,
+                          filter: "blur(4px)",
+                        },
+                        visible: {
+                          opacity: 1,
+                          y: 0,
+                          scale: 1,
+                          filter: "blur(0px)",
+                        },
+                      }}
+                      transition={{
+                        duration: 0.9,
+                        delay: index * 0.12,
+                        ease: "easeInOut",
+                      }}
+                      viewOptions={{
+                        margin: "0px 0px -70px 0px",
+                      }}
                     >
 
                       {/* CARD TOP */}
@@ -398,7 +532,8 @@ const MyBookings = () => {
                           </span>
 
                           <strong>
-                            ₹{Number(
+                            ₹
+                            {Number(
                               booking.price
                             ).toFixed(2)}
                           </strong>
@@ -429,8 +564,10 @@ const MyBookings = () => {
 
                         )}
 
-                    </article>
+                    </InView>
+
                   );
+
                 })}
 
               </div>

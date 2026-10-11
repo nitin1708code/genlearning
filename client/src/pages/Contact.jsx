@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { InView } from "../components/motion-primitives/in-view";
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -55,7 +56,6 @@ const Contact = () => {
       );
 
       setSubmitted(true);
-
     } catch (error) {
       console.error(
         "Contact form error:",
@@ -78,20 +78,42 @@ const Contact = () => {
       <section className="contact-hero">
         <div className="contact-container">
 
-          <span className="section-eyebrow">
-            GET IN TOUCH
-          </span>
+          <InView
+            variants={{
+              hidden: {
+                opacity: 0,
+                y: 30,
+                filter: "blur(4px)",
+              },
+              visible: {
+                opacity: 1,
+                y: 0,
+                filter: "blur(0px)",
+              },
+            }}
+            transition={{
+              duration: 1.1,
+              ease: "easeInOut",
+            }}
+            viewOptions={{
+              margin: "0px 0px -80px 0px",
+            }}
+          >
+            <span className="section-eyebrow">
+              GET IN TOUCH
+            </span>
 
-          <h1>
-            Let's talk about
-            <br />
-            <span>your project.</span>
-          </h1>
+            <h1>
+              Let's talk about
+              <br />
+              <span>your project.</span>
+            </h1>
 
-          <p>
-            Have an idea, need a website or want to discuss
-            a digital solution? Tell us what you need.
-          </p>
+            <p>
+              Have an idea, need a website or want to discuss
+              a digital solution? Tell us what you need.
+            </p>
+          </InView>
 
         </div>
       </section>
@@ -109,8 +131,28 @@ const Contact = () => {
 
             {/* LEFT SIDE */}
 
-            <div className="contact-info">
-
+            <InView
+              className="contact-info"
+              variants={{
+                hidden: {
+                  opacity: 0,
+                  x: -35,
+                  filter: "blur(4px)",
+                },
+                visible: {
+                  opacity: 1,
+                  x: 0,
+                  filter: "blur(0px)",
+                },
+              }}
+              transition={{
+                duration: 1,
+                ease: "easeInOut",
+              }}
+              viewOptions={{
+                margin: "0px 0px -80px 0px",
+              }}
+            >
               <span className="section-eyebrow">
                 CONTACT
               </span>
@@ -129,42 +171,35 @@ const Contact = () => {
               <div className="contact-info-list">
 
                 <div className="contact-info-item">
-
                   <span>EMAIL</span>
 
                   <a href="mailto:nitinchess17@gmail.com">
                     nitinchess17@gmail.com
                   </a>
-
                 </div>
 
 
                 <div className="contact-info-item">
-
                   <span>LOCATION</span>
 
                   <p>
                     Lucknow, Uttar Pradesh
                   </p>
-
                 </div>
 
 
                 <div className="contact-info-item">
-
                   <span>AVAILABILITY</span>
 
                   <p>
                     Open for project enquiries
                   </p>
-
                 </div>
 
               </div>
 
 
               <div className="contact-note">
-
                 <span>?</span>
 
                 <p>
@@ -172,13 +207,10 @@ const Contact = () => {
                   No problem. Just describe your idea
                   in the message.
                 </p>
-
               </div>
 
 
-              {/* ========================================
-                  LOCATION MAP
-              ======================================== */}
+              {/* LOCATION MAP */}
 
               <div className="contact-map">
 
@@ -192,13 +224,34 @@ const Contact = () => {
 
               </div>
 
-            </div>
+            </InView>
 
 
             {/* FORM */}
 
-            <div className="contact-form-wrapper">
-
+            <InView
+              className="contact-form-wrapper"
+              variants={{
+                hidden: {
+                  opacity: 0,
+                  x: 35,
+                  filter: "blur(4px)",
+                },
+                visible: {
+                  opacity: 1,
+                  x: 0,
+                  filter: "blur(0px)",
+                },
+              }}
+              transition={{
+                duration: 1,
+                delay: 0.15,
+                ease: "easeInOut",
+              }}
+              viewOptions={{
+                margin: "0px 0px -80px 0px",
+              }}
+            >
               {!submitted ? (
 
                 <form
@@ -299,7 +352,6 @@ const Contact = () => {
                       onChange={handleChange}
                       required
                     >
-
                       <option value="">
                         Select a service
                       </option>
@@ -331,7 +383,6 @@ const Contact = () => {
                       <option value="other">
                         Something Else
                       </option>
-
                     </select>
 
                   </div>
@@ -351,7 +402,6 @@ const Contact = () => {
                       value={formData.budget}
                       onChange={handleChange}
                     >
-
                       <option value="">
                         Select budget
                       </option>
@@ -379,7 +429,6 @@ const Contact = () => {
                       <option value="not-sure">
                         Not Sure Yet
                       </option>
-
                     </select>
 
                   </div>
@@ -467,7 +516,7 @@ const Contact = () => {
 
               )}
 
-            </div>
+            </InView>
 
           </div>
 
@@ -484,8 +533,28 @@ const Contact = () => {
 
         <div className="contact-container">
 
-          <div className="contact-process-heading">
-
+          <InView
+            className="contact-process-heading"
+            variants={{
+              hidden: {
+                opacity: 0,
+                y: 30,
+                filter: "blur(4px)",
+              },
+              visible: {
+                opacity: 1,
+                y: 0,
+                filter: "blur(0px)",
+              },
+            }}
+            transition={{
+              duration: 1,
+              ease: "easeInOut",
+            }}
+            viewOptions={{
+              margin: "0px 0px -80px 0px",
+            }}
+          >
             <span className="section-eyebrow">
               WHAT HAPPENS NEXT
             </span>
@@ -494,14 +563,30 @@ const Contact = () => {
               Simple from
               <span> here.</span>
             </h2>
-
-          </div>
+          </InView>
 
 
           <div className="contact-process-grid">
 
-            <div>
-
+            <InView
+              variants={{
+                hidden: {
+                  opacity: 0,
+                  y: 30,
+                },
+                visible: {
+                  opacity: 1,
+                  y: 0,
+                },
+              }}
+              transition={{
+                duration: 0.8,
+                ease: "easeInOut",
+              }}
+              viewOptions={{
+                margin: "0px 0px -60px 0px",
+              }}
+            >
               <span>01</span>
 
               <h3>
@@ -512,12 +597,29 @@ const Contact = () => {
                 We go through your project requirements
                 and understand what you're looking for.
               </p>
+            </InView>
 
-            </div>
 
-
-            <div>
-
+            <InView
+              variants={{
+                hidden: {
+                  opacity: 0,
+                  y: 30,
+                },
+                visible: {
+                  opacity: 1,
+                  y: 0,
+                },
+              }}
+              transition={{
+                duration: 0.8,
+                delay: 0.1,
+                ease: "easeInOut",
+              }}
+              viewOptions={{
+                margin: "0px 0px -60px 0px",
+              }}
+            >
               <span>02</span>
 
               <h3>
@@ -528,12 +630,29 @@ const Contact = () => {
                 We'll discuss your requirements and
                 clarify any important details.
               </p>
+            </InView>
 
-            </div>
 
-
-            <div>
-
+            <InView
+              variants={{
+                hidden: {
+                  opacity: 0,
+                  y: 30,
+                },
+                visible: {
+                  opacity: 1,
+                  y: 0,
+                },
+              }}
+              transition={{
+                duration: 0.8,
+                delay: 0.2,
+                ease: "easeInOut",
+              }}
+              viewOptions={{
+                margin: "0px 0px -60px 0px",
+              }}
+            >
               <span>03</span>
 
               <h3>
@@ -544,12 +663,29 @@ const Contact = () => {
                 We suggest a suitable approach, scope
                 and project direction.
               </p>
+            </InView>
 
-            </div>
 
-
-            <div>
-
+            <InView
+              variants={{
+                hidden: {
+                  opacity: 0,
+                  y: 30,
+                },
+                visible: {
+                  opacity: 1,
+                  y: 0,
+                },
+              }}
+              transition={{
+                duration: 0.8,
+                delay: 0.3,
+                ease: "easeInOut",
+              }}
+              viewOptions={{
+                margin: "0px 0px -60px 0px",
+              }}
+            >
               <span>04</span>
 
               <h3>
@@ -560,8 +696,7 @@ const Contact = () => {
                 Once everything is agreed, development
                 can begin.
               </p>
-
-            </div>
+            </InView>
 
           </div>
 

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { InView } from "../components/motion-primitives/in-view";
 
 const Profile = () => {
   const [user, setUser] = useState(null);
@@ -21,6 +22,7 @@ const Profile = () => {
   const [saving, setSaving] = useState(false);
   const [changingPassword, setChangingPassword] =
     useState(false);
+
 
   // ========================================
   // LOAD PROFILE
@@ -163,7 +165,6 @@ const Profile = () => {
       );
 
     } catch (error) {
-
       console.error(
         "Profile update error:",
         error
@@ -212,7 +213,6 @@ const Profile = () => {
     }
 
     try {
-
       setChangingPassword(true);
 
       const token =
@@ -256,7 +256,6 @@ const Profile = () => {
       );
 
     } catch (error) {
-
       console.error(
         "Password change error:",
         error
@@ -291,50 +290,142 @@ const Profile = () => {
   return (
     <main className="profile-page">
 
+      {/* ========================================
+          HEADER
+      ======================================== */}
+
       <section className="profile-header">
 
         <div className="profile-container">
 
-          <span className="section-eyebrow">
-            ACCOUNT
-          </span>
+          <InView
+            variants={{
+              hidden: {
+                opacity: 0,
+                y: 30,
+                filter: "blur(4px)",
+              },
+              visible: {
+                opacity: 1,
+                y: 0,
+                filter: "blur(0px)",
+              },
+            }}
+            transition={{
+              duration: 1,
+              ease: "easeInOut",
+            }}
+            viewOptions={{
+              margin: "0px 0px -80px 0px",
+            }}
+          >
+            <span className="section-eyebrow">
+              ACCOUNT
+            </span>
 
-          <h1>
-            Your <span>profile.</span>
-          </h1>
+            <h1>
+              Your <span>profile.</span>
+            </h1>
 
-          <p>
-            Manage your account information and
-            password.
-          </p>
+            <p>
+              Manage your account information and
+              password.
+            </p>
+          </InView>
 
         </div>
 
       </section>
 
 
+      {/* ========================================
+          MAIN
+      ======================================== */}
+
       <section className="profile-main">
 
         <div className="profile-container">
 
+          {/* SUCCESS */}
+
           {message && (
-            <div className="profile-success">
+            <InView
+              className="profile-success"
+              variants={{
+                hidden: {
+                  opacity: 0,
+                  y: 20,
+                },
+                visible: {
+                  opacity: 1,
+                  y: 0,
+                },
+              }}
+              transition={{
+                duration: 0.7,
+                ease: "easeInOut",
+              }}
+            >
               {message}
-            </div>
+            </InView>
           )}
 
+
+          {/* ERROR */}
+
           {error && (
-            <div className="profile-error">
+            <InView
+              className="profile-error"
+              variants={{
+                hidden: {
+                  opacity: 0,
+                  y: 20,
+                },
+                visible: {
+                  opacity: 1,
+                  y: 0,
+                },
+              }}
+              transition={{
+                duration: 0.7,
+                ease: "easeInOut",
+              }}
+            >
               {error}
-            </div>
+            </InView>
           )}
 
 
           <div className="profile-grid">
 
-            {/* PROFILE INFORMATION */}
+            {/* ========================================
+                PROFILE INFORMATION
+            ======================================== */}
 
-            <div className="profile-card">
+            <InView
+              className="profile-card"
+              variants={{
+                hidden: {
+                  opacity: 0,
+                  x: -35,
+                  scale: 0.97,
+                  filter: "blur(4px)",
+                },
+                visible: {
+                  opacity: 1,
+                  x: 0,
+                  scale: 1,
+                  filter: "blur(0px)",
+                },
+              }}
+              transition={{
+                duration: 1,
+                ease: "easeInOut",
+              }}
+              viewOptions={{
+                margin: "0px 0px -80px 0px",
+              }}
+            >
 
               <div className="profile-card-heading">
 
@@ -351,9 +442,7 @@ const Profile = () => {
 
               <form
                 className="profile-form"
-                onSubmit={
-                  handleProfileSubmit
-                }
+                onSubmit={handleProfileSubmit}
               >
 
                 <div className="profile-form-group">
@@ -426,12 +515,38 @@ const Profile = () => {
 
               </form>
 
-            </div>
+            </InView>
 
 
-            {/* PASSWORD */}
+            {/* ========================================
+                PASSWORD
+            ======================================== */}
 
-            <div className="profile-card">
+            <InView
+              className="profile-card"
+              variants={{
+                hidden: {
+                  opacity: 0,
+                  x: 35,
+                  scale: 0.97,
+                  filter: "blur(4px)",
+                },
+                visible: {
+                  opacity: 1,
+                  x: 0,
+                  scale: 1,
+                  filter: "blur(0px)",
+                },
+              }}
+              transition={{
+                duration: 1,
+                delay: 0.15,
+                ease: "easeInOut",
+              }}
+              viewOptions={{
+                margin: "0px 0px -80px 0px",
+              }}
+            >
 
               <div className="profile-card-heading">
 
@@ -448,9 +563,7 @@ const Profile = () => {
 
               <form
                 className="profile-form"
-                onSubmit={
-                  handlePasswordSubmit
-                }
+                onSubmit={handlePasswordSubmit}
               >
 
                 <div className="profile-form-group">
@@ -522,9 +635,7 @@ const Profile = () => {
                 <button
                   type="submit"
                   className="profile-submit"
-                  disabled={
-                    changingPassword
-                  }
+                  disabled={changingPassword}
                 >
                   {changingPassword
                     ? "Changing..."
@@ -535,17 +646,39 @@ const Profile = () => {
 
               </form>
 
-            </div>
+            </InView>
 
           </div>
 
 
-          <Link
-            to="/dashboard"
-            className="profile-back"
+          {/* BACK */}
+
+          <InView
+            variants={{
+              hidden: {
+                opacity: 0,
+                y: 20,
+              },
+              visible: {
+                opacity: 1,
+                y: 0,
+              },
+            }}
+            transition={{
+              duration: 0.8,
+              ease: "easeInOut",
+            }}
+            viewOptions={{
+              margin: "0px 0px -60px 0px",
+            }}
           >
-            ← Back to Dashboard
-          </Link>
+            <Link
+              to="/dashboard"
+              className="profile-back"
+            >
+              ← Back to Dashboard
+            </Link>
+          </InView>
 
         </div>
 

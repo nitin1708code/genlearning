@@ -1,5 +1,6 @@
 import React from "react";
 import { Link, useParams } from "react-router-dom";
+import { InView } from "../components/motion-primitives/in-view";
 
 const ProjectDetails = () => {
   const { projectSlug } = useParams();
@@ -63,25 +64,44 @@ const ProjectDetails = () => {
     return (
       <main className="project-not-found">
 
-        <span className="section-eyebrow">
-          PROJECT NOT FOUND
-        </span>
-
-        <h1>
-          We couldn't find this project.
-        </h1>
-
-        <p>
-          The project you're looking for may not exist
-          or may have been moved.
-        </p>
-
-        <Link
-          to="/projects"
-          className="project-back-btn"
+        <InView
+          variants={{
+            hidden: {
+              opacity: 0,
+              y: 30,
+              filter: "blur(4px)",
+            },
+            visible: {
+              opacity: 1,
+              y: 0,
+              filter: "blur(0px)",
+            },
+          }}
+          transition={{
+            duration: 1,
+            ease: "easeInOut",
+          }}
         >
-          ← Back to Projects
-        </Link>
+          <span className="section-eyebrow">
+            PROJECT NOT FOUND
+          </span>
+
+          <h1>
+            We couldn't find this project.
+          </h1>
+
+          <p>
+            The project you're looking for may not exist
+            or may have been moved.
+          </p>
+
+          <Link
+            to="/projects"
+            className="project-back-btn"
+          >
+            ← Back to Projects
+          </Link>
+        </InView>
 
       </main>
     );
@@ -98,19 +118,60 @@ const ProjectDetails = () => {
 
         <div className="project-details-container">
 
-          <Link
-            to="/projects"
-            className="project-back-link"
+          <InView
+            variants={{
+              hidden: {
+                opacity: 0,
+                x: -20,
+              },
+              visible: {
+                opacity: 1,
+                x: 0,
+              },
+            }}
+            transition={{
+              duration: 0.8,
+              ease: "easeInOut",
+            }}
+            viewOptions={{
+              margin: "0px 0px -60px 0px",
+            }}
           >
-            ← All Projects
-          </Link>
+            <Link
+              to="/projects"
+              className="project-back-link"
+            >
+              ← All Projects
+            </Link>
+          </InView>
 
 
           <div className="project-details-grid">
 
             {/* LEFT */}
 
-            <div className="project-details-content">
+            <InView
+              className="project-details-content"
+              variants={{
+                hidden: {
+                  opacity: 0,
+                  x: -40,
+                  filter: "blur(4px)",
+                },
+                visible: {
+                  opacity: 1,
+                  x: 0,
+                  filter: "blur(0px)",
+                },
+              }}
+              transition={{
+                duration: 1.1,
+                ease: "easeInOut",
+              }}
+              viewOptions={{
+                margin: "0px 0px -80px 0px",
+              }}
+            >
 
               <span className="section-eyebrow">
                 {project.category}
@@ -129,12 +190,16 @@ const ProjectDetails = () => {
 
                 <div>
                   <span>STATUS</span>
-                  <strong>{project.status}</strong>
+                  <strong>
+                    {project.status}
+                  </strong>
                 </div>
 
                 <div>
                   <span>YEAR</span>
-                  <strong>{project.year}</strong>
+                  <strong>
+                    {project.year}
+                  </strong>
                 </div>
 
               </div>
@@ -159,12 +224,36 @@ const ProjectDetails = () => {
 
               </div>
 
-            </div>
+            </InView>
 
 
             {/* RIGHT VISUAL */}
 
-            <div className="project-details-visual">
+            <InView
+              className="project-details-visual"
+              variants={{
+                hidden: {
+                  opacity: 0,
+                  x: 40,
+                  scale: 0.97,
+                  filter: "blur(4px)",
+                },
+                visible: {
+                  opacity: 1,
+                  x: 0,
+                  scale: 1,
+                  filter: "blur(0px)",
+                },
+              }}
+              transition={{
+                duration: 1.2,
+                delay: 0.15,
+                ease: "easeInOut",
+              }}
+              viewOptions={{
+                margin: "0px 0px -80px 0px",
+              }}
+            >
 
               <div className="project-large-mockup">
 
@@ -210,7 +299,7 @@ const ProjectDetails = () => {
 
               </div>
 
-            </div>
+            </InView>
 
           </div>
 
@@ -227,7 +316,28 @@ const ProjectDetails = () => {
 
         <div className="project-details-container">
 
-          <div className="project-overview-grid">
+          <InView
+            className="project-overview-grid"
+            variants={{
+              hidden: {
+                opacity: 0,
+                y: 35,
+                filter: "blur(4px)",
+              },
+              visible: {
+                opacity: 1,
+                y: 0,
+                filter: "blur(0px)",
+              },
+            }}
+            transition={{
+              duration: 1,
+              ease: "easeInOut",
+            }}
+            viewOptions={{
+              margin: "0px 0px -80px 0px",
+            }}
+          >
 
             <div>
 
@@ -248,7 +358,7 @@ const ProjectDetails = () => {
               the underlying system organized and scalable.
             </p>
 
-          </div>
+          </InView>
 
         </div>
 
@@ -266,7 +376,28 @@ const ProjectDetails = () => {
 
         <div className="project-details-container">
 
-          <div className="project-features-heading">
+          <InView
+            className="project-features-heading"
+            variants={{
+              hidden: {
+                opacity: 0,
+                y: 30,
+                filter: "blur(4px)",
+              },
+              visible: {
+                opacity: 1,
+                y: 0,
+                filter: "blur(0px)",
+              },
+            }}
+            transition={{
+              duration: 0.9,
+              ease: "easeInOut",
+            }}
+            viewOptions={{
+              margin: "0px 0px -70px 0px",
+            }}
+          >
 
             <span className="section-eyebrow">
               KEY FEATURES
@@ -277,16 +408,39 @@ const ProjectDetails = () => {
               <span> includes.</span>
             </h2>
 
-          </div>
+          </InView>
 
 
           <div className="project-features-grid">
 
             {project.features.map(
               (feature, index) => (
-                <div
+
+                <InView
                   className="project-feature-card"
                   key={feature}
+                  variants={{
+                    hidden: {
+                      opacity: 0,
+                      y: 35,
+                      scale: 0.97,
+                      filter: "blur(4px)",
+                    },
+                    visible: {
+                      opacity: 1,
+                      y: 0,
+                      scale: 1,
+                      filter: "blur(0px)",
+                    },
+                  }}
+                  transition={{
+                    duration: 0.85,
+                    delay: index * 0.1,
+                    ease: "easeInOut",
+                  }}
+                  viewOptions={{
+                    margin: "0px 0px -70px 0px",
+                  }}
                 >
 
                   <span>
@@ -302,7 +456,8 @@ const ProjectDetails = () => {
                     the requirements of the project.
                   </p>
 
-                </div>
+                </InView>
+
               )
             )}
 
@@ -321,7 +476,28 @@ const ProjectDetails = () => {
 
         <div className="project-details-container">
 
-          <div className="project-stack-content">
+          <InView
+            className="project-stack-content"
+            variants={{
+              hidden: {
+                opacity: 0,
+                y: 35,
+                filter: "blur(4px)",
+              },
+              visible: {
+                opacity: 1,
+                y: 0,
+                filter: "blur(0px)",
+              },
+            }}
+            transition={{
+              duration: 1,
+              ease: "easeInOut",
+            }}
+            viewOptions={{
+              margin: "0px 0px -80px 0px",
+            }}
+          >
 
             <div>
 
@@ -341,9 +517,28 @@ const ProjectDetails = () => {
 
               {project.technologies.map(
                 (technology, index) => (
-                  <div
+
+                  <InView
                     key={technology}
                     className="project-stack-item"
+                    variants={{
+                      hidden: {
+                        opacity: 0,
+                        x: 30,
+                      },
+                      visible: {
+                        opacity: 1,
+                        x: 0,
+                      },
+                    }}
+                    transition={{
+                      duration: 0.8,
+                      delay: index * 0.1,
+                      ease: "easeInOut",
+                    }}
+                    viewOptions={{
+                      margin: "0px 0px -60px 0px",
+                    }}
                   >
 
                     <span>
@@ -354,13 +549,14 @@ const ProjectDetails = () => {
                       {technology}
                     </strong>
 
-                  </div>
+                  </InView>
+
                 )
               )}
 
             </div>
 
-          </div>
+          </InView>
 
         </div>
 
@@ -375,7 +571,30 @@ const ProjectDetails = () => {
 
         <div className="project-details-container">
 
-          <div className="project-details-cta-box">
+          <InView
+            className="project-details-cta-box"
+            variants={{
+              hidden: {
+                opacity: 0,
+                y: 35,
+                scale: 0.98,
+                filter: "blur(4px)",
+              },
+              visible: {
+                opacity: 1,
+                y: 0,
+                scale: 1,
+                filter: "blur(0px)",
+              },
+            }}
+            transition={{
+              duration: 1,
+              ease: "easeInOut",
+            }}
+            viewOptions={{
+              margin: "0px 0px -80px 0px",
+            }}
+          >
 
             <div>
 
@@ -403,7 +622,7 @@ const ProjectDetails = () => {
               <span>→</span>
             </Link>
 
-          </div>
+          </InView>
 
         </div>
 

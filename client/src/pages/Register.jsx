@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { GoogleLogin } from "@react-oauth/google";
+import { InView } from "../components/motion-primitives/in-view";
+import { BorderTrail } from "../components/motion-primitives/border-trail";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -403,7 +405,39 @@ const Register = () => {
 
         {step === "register" && (
 
-          <div className="register-card">
+          <InView
+            className="register-card"
+            variants={{
+              hidden: {
+                opacity: 0,
+                y: 35,
+                scale: 0.98,
+                filter: "blur(4px)",
+              },
+
+              visible: {
+                opacity: 1,
+                y: 0,
+                scale: 1,
+                filter: "blur(0px)",
+              },
+            }}
+            transition={{
+              duration: 1,
+              ease: "easeInOut",
+            }}
+            viewOptions={{
+              once: true,
+              margin: "0px 0px -80px 0px",
+            }}
+          >
+
+            {/* BORDER TRAIL */}
+
+            <BorderTrail
+              size={120}
+              duration={4}
+            />
 
 
             {/* HEADING */}
@@ -549,26 +583,28 @@ const Register = () => {
 
               {/* TERMS */}
 
-<label className="register-terms">
-  <input
-    type="checkbox"
-    name="agree"
-    checked={formData.agree}
-    onChange={handleChange}
-  />
+              <label className="register-terms">
 
-  <span>
-    I agree to the{" "}
-    <Link to="/terms">
-      Terms & Conditions
-    </Link>{" "}
-    and{" "}
-    <Link to="/privacy">
-      Privacy Policy
-    </Link>
-    .
-  </span>
-</label>
+                <input
+                  type="checkbox"
+                  name="agree"
+                  checked={formData.agree}
+                  onChange={handleChange}
+                />
+
+                <span>
+                  I agree to the{" "}
+                  <Link to="/terms">
+                    Terms & Conditions
+                  </Link>{" "}
+                  and{" "}
+                  <Link to="/privacy">
+                    Privacy Policy
+                  </Link>
+                  .
+                </span>
+
+              </label>
 
 
               {/* ERROR */}
@@ -622,9 +658,11 @@ const Register = () => {
                   onSuccess={
                     handleGoogleRegister
                   }
+
                   onError={
                     handleGoogleError
                   }
+
                   useOneTap={false}
                   theme="outline"
                   size="large"
@@ -652,7 +690,7 @@ const Register = () => {
 
             </div>
 
-          </div>
+          </InView>
 
         )}
 
@@ -663,7 +701,39 @@ const Register = () => {
 
         {step === "otp" && (
 
-          <div className="register-card">
+          <InView
+            className="register-card"
+            variants={{
+              hidden: {
+                opacity: 0,
+                y: 35,
+                scale: 0.98,
+                filter: "blur(4px)",
+              },
+
+              visible: {
+                opacity: 1,
+                y: 0,
+                scale: 1,
+                filter: "blur(0px)",
+              },
+            }}
+            transition={{
+              duration: 1,
+              ease: "easeInOut",
+            }}
+            viewOptions={{
+              once: true,
+              margin: "0px 0px -80px 0px",
+            }}
+          >
+
+            {/* BORDER TRAIL */}
+
+            <BorderTrail
+              size={120}
+              duration={4}
+            />
 
 
             {/* OTP HEADING */}
@@ -782,7 +852,7 @@ const Register = () => {
 
             </form>
 
-          </div>
+          </InView>
 
         )}
 

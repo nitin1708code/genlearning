@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { InView } from "../components/motion-primitives/in-view";
 
 const About = () => {
   return (
@@ -16,8 +17,28 @@ const About = () => {
 
             {/* LEFT CONTENT */}
 
-            <div className="about-hero-content">
-
+            <InView
+              className="about-hero-content"
+              variants={{
+                hidden: {
+                  opacity: 0,
+                  x: -35,
+                  filter: "blur(4px)",
+                },
+                visible: {
+                  opacity: 1,
+                  x: 0,
+                  filter: "blur(0px)",
+                },
+              }}
+              transition={{
+                duration: 1.1,
+                ease: "easeInOut",
+              }}
+              viewOptions={{
+                margin: "0px 0px -80px 0px",
+              }}
+            >
               <span className="section-eyebrow">
                 ABOUT GEN LEARNING
               </span>
@@ -33,14 +54,36 @@ const About = () => {
                 platform focused on practical skills, real projects
                 and useful digital products.
               </p>
-
-            </div>
+            </InView>
 
 
             {/* RIGHT CODE VISUAL */}
 
-            <div className="about-hero-code">
-
+            <InView
+              className="about-hero-code"
+              variants={{
+                hidden: {
+                  opacity: 0,
+                  x: 35,
+                  scale: 0.97,
+                  filter: "blur(4px)",
+                },
+                visible: {
+                  opacity: 1,
+                  x: 0,
+                  scale: 1,
+                  filter: "blur(0px)",
+                },
+              }}
+              transition={{
+                duration: 1.2,
+                delay: 0.15,
+                ease: "easeInOut",
+              }}
+              viewOptions={{
+                margin: "0px 0px -80px 0px",
+              }}
+            >
               <div className="code-window">
 
                 <div className="code-window-top">
@@ -109,11 +152,9 @@ const About = () => {
                 </div>
 
               </div>
-
-            </div>
+            </InView>
 
           </div>
-
         </div>
       </section>
 
@@ -127,8 +168,27 @@ const About = () => {
 
           <div className="about-intro-grid">
 
-            <div>
-
+            <InView
+              variants={{
+                hidden: {
+                  opacity: 0,
+                  y: 30,
+                  filter: "blur(4px)",
+                },
+                visible: {
+                  opacity: 1,
+                  y: 0,
+                  filter: "blur(0px)",
+                },
+              }}
+              transition={{
+                duration: 1,
+                ease: "easeInOut",
+              }}
+              viewOptions={{
+                margin: "0px 0px -80px 0px",
+              }}
+            >
               <span className="section-eyebrow">
                 WHO WE ARE
               </span>
@@ -137,12 +197,32 @@ const About = () => {
                 More than just
                 <span> learning.</span>
               </h2>
+            </InView>
 
-            </div>
 
-
-            <div className="about-intro-text">
-
+            <InView
+              className="about-intro-text"
+              variants={{
+                hidden: {
+                  opacity: 0,
+                  x: 35,
+                  filter: "blur(4px)",
+                },
+                visible: {
+                  opacity: 1,
+                  x: 0,
+                  filter: "blur(0px)",
+                },
+              }}
+              transition={{
+                duration: 1,
+                delay: 0.15,
+                ease: "easeInOut",
+              }}
+              viewOptions={{
+                margin: "0px 0px -80px 0px",
+              }}
+            >
               <p>
                 GEN Learning combines technology education with
                 digital development services. Our goal is to make
@@ -154,8 +234,7 @@ const About = () => {
                 projects and real-world applications rather than
                 only theoretical knowledge.
               </p>
-
-            </div>
+            </InView>
 
           </div>
 
@@ -170,8 +249,28 @@ const About = () => {
       <section className="about-work-section">
         <div className="about-container">
 
-          <div className="about-section-heading">
-
+          <InView
+            className="about-section-heading"
+            variants={{
+              hidden: {
+                opacity: 0,
+                y: 30,
+                filter: "blur(4px)",
+              },
+              visible: {
+                opacity: 1,
+                y: 0,
+                filter: "blur(0px)",
+              },
+            }}
+            transition={{
+              duration: 1,
+              ease: "easeInOut",
+            }}
+            viewOptions={{
+              margin: "0px 0px -80px 0px",
+            }}
+          >
             <span className="section-eyebrow">
               WHAT WE DO
             </span>
@@ -180,16 +279,37 @@ const About = () => {
               Two things.
               <span> One direction.</span>
             </h2>
-
-          </div>
+          </InView>
 
 
           <div className="about-work-grid">
 
             {/* LEARN */}
 
-            <div className="about-work-card">
-
+            <InView
+              className="about-work-card"
+              variants={{
+                hidden: {
+                  opacity: 0,
+                  y: 35,
+                  scale: 0.97,
+                  filter: "blur(4px)",
+                },
+                visible: {
+                  opacity: 1,
+                  y: 0,
+                  scale: 1,
+                  filter: "blur(0px)",
+                },
+              }}
+              transition={{
+                duration: 1,
+                ease: "easeInOut",
+              }}
+              viewOptions={{
+                margin: "0px 0px -80px 0px",
+              }}
+            >
               <span className="about-work-number">
                 01
               </span>
@@ -211,14 +331,36 @@ const About = () => {
               <Link to="/courses">
                 Explore Courses →
               </Link>
-
-            </div>
+            </InView>
 
 
             {/* BUILD */}
 
-            <div className="about-work-card">
-
+            <InView
+              className="about-work-card"
+              variants={{
+                hidden: {
+                  opacity: 0,
+                  y: 35,
+                  scale: 0.97,
+                  filter: "blur(4px)",
+                },
+                visible: {
+                  opacity: 1,
+                  y: 0,
+                  scale: 1,
+                  filter: "blur(0px)",
+                },
+              }}
+              transition={{
+                duration: 1,
+                delay: 0.15,
+                ease: "easeInOut",
+              }}
+              viewOptions={{
+                margin: "0px 0px -80px 0px",
+              }}
+            >
               <span className="about-work-number">
                 02
               </span>
@@ -240,8 +382,7 @@ const About = () => {
               <Link to="/services">
                 Explore Services →
               </Link>
-
-            </div>
+            </InView>
 
           </div>
 
@@ -260,8 +401,28 @@ const About = () => {
 
             {/* LEFT */}
 
-            <div className="about-approach-title">
-
+            <InView
+              className="about-approach-title"
+              variants={{
+                hidden: {
+                  opacity: 0,
+                  x: -35,
+                  filter: "blur(4px)",
+                },
+                visible: {
+                  opacity: 1,
+                  x: 0,
+                  filter: "blur(0px)",
+                },
+              }}
+              transition={{
+                duration: 1.1,
+                ease: "easeInOut",
+              }}
+              viewOptions={{
+                margin: "0px 0px -80px 0px",
+              }}
+            >
               <span className="section-eyebrow">
                 OUR APPROACH
               </span>
@@ -302,8 +463,7 @@ const About = () => {
                 </div>
 
               </div>
-
-            </div>
+            </InView>
 
 
             {/* RIGHT */}
@@ -312,12 +472,31 @@ const About = () => {
 
               {/* 01 */}
 
-              <div className="about-principle">
-
+              <InView
+                className="about-principle"
+                variants={{
+                  hidden: {
+                    opacity: 0,
+                    x: 35,
+                    filter: "blur(4px)",
+                  },
+                  visible: {
+                    opacity: 1,
+                    x: 0,
+                    filter: "blur(0px)",
+                  },
+                }}
+                transition={{
+                  duration: 0.9,
+                  ease: "easeInOut",
+                }}
+                viewOptions={{
+                  margin: "0px 0px -70px 0px",
+                }}
+              >
                 <span>01</span>
 
                 <div>
-
                   <h3>
                     Practical First
                   </h3>
@@ -326,20 +505,38 @@ const About = () => {
                     Focus on concepts that can actually be
                     applied to projects and real situations.
                   </p>
-
                 </div>
-
-              </div>
+              </InView>
 
 
               {/* 02 */}
 
-              <div className="about-principle">
-
+              <InView
+                className="about-principle"
+                variants={{
+                  hidden: {
+                    opacity: 0,
+                    x: 35,
+                    filter: "blur(4px)",
+                  },
+                  visible: {
+                    opacity: 1,
+                    x: 0,
+                    filter: "blur(0px)",
+                  },
+                }}
+                transition={{
+                  duration: 0.9,
+                  delay: 0.1,
+                  ease: "easeInOut",
+                }}
+                viewOptions={{
+                  margin: "0px 0px -70px 0px",
+                }}
+              >
                 <span>02</span>
 
                 <div>
-
                   <h3>
                     Simple Experience
                   </h3>
@@ -348,20 +545,38 @@ const About = () => {
                     Keep products and learning experiences
                     clear, focused and easy to understand.
                   </p>
-
                 </div>
-
-              </div>
+              </InView>
 
 
               {/* 03 */}
 
-              <div className="about-principle">
-
+              <InView
+                className="about-principle"
+                variants={{
+                  hidden: {
+                    opacity: 0,
+                    x: 35,
+                    filter: "blur(4px)",
+                  },
+                  visible: {
+                    opacity: 1,
+                    x: 0,
+                    filter: "blur(0px)",
+                  },
+                }}
+                transition={{
+                  duration: 0.9,
+                  delay: 0.2,
+                  ease: "easeInOut",
+                }}
+                viewOptions={{
+                  margin: "0px 0px -70px 0px",
+                }}
+              >
                 <span>03</span>
 
                 <div>
-
                   <h3>
                     Continuous Growth
                   </h3>
@@ -370,20 +585,38 @@ const About = () => {
                     Improve skills, products and services
                     through continuous learning and iteration.
                   </p>
-
                 </div>
-
-              </div>
+              </InView>
 
 
               {/* 04 */}
 
-              <div className="about-principle">
-
+              <InView
+                className="about-principle"
+                variants={{
+                  hidden: {
+                    opacity: 0,
+                    x: 35,
+                    filter: "blur(4px)",
+                  },
+                  visible: {
+                    opacity: 1,
+                    x: 0,
+                    filter: "blur(0px)",
+                  },
+                }}
+                transition={{
+                  duration: 0.9,
+                  delay: 0.3,
+                  ease: "easeInOut",
+                }}
+                viewOptions={{
+                  margin: "0px 0px -70px 0px",
+                }}
+              >
                 <span>04</span>
 
                 <div>
-
                   <h3>
                     Real Projects
                   </h3>
@@ -392,10 +625,8 @@ const About = () => {
                     Use practical projects to turn knowledge
                     into demonstrable skills.
                   </p>
-
                 </div>
-
-              </div>
+              </InView>
 
             </div>
 
@@ -412,8 +643,30 @@ const About = () => {
       <section className="about-mission-section">
         <div className="about-container">
 
-          <div className="about-mission-box">
-
+          <InView
+            className="about-mission-box"
+            variants={{
+              hidden: {
+                opacity: 0,
+                y: 35,
+                scale: 0.98,
+                filter: "blur(4px)",
+              },
+              visible: {
+                opacity: 1,
+                y: 0,
+                scale: 1,
+                filter: "blur(0px)",
+              },
+            }}
+            transition={{
+              duration: 1.1,
+              ease: "easeInOut",
+            }}
+            viewOptions={{
+              margin: "0px 0px -100px 0px",
+            }}
+          >
             <span className="section-eyebrow">
               OUR MISSION
             </span>
@@ -430,8 +683,7 @@ const About = () => {
               get practical digital solutions — all through a
               simple and modern experience.
             </p>
-
-          </div>
+          </InView>
 
         </div>
       </section>
@@ -444,8 +696,28 @@ const About = () => {
       <section className="about-cta-section">
         <div className="about-container">
 
-          <div className="about-cta-box">
-
+          <InView
+            className="about-cta-box"
+            variants={{
+              hidden: {
+                opacity: 0,
+                y: 30,
+                filter: "blur(4px)",
+              },
+              visible: {
+                opacity: 1,
+                y: 0,
+                filter: "blur(0px)",
+              },
+            }}
+            transition={{
+              duration: 1,
+              ease: "easeInOut",
+            }}
+            viewOptions={{
+              margin: "0px 0px -80px 0px",
+            }}
+          >
             <div>
 
               <span className="section-eyebrow">
@@ -467,7 +739,7 @@ const About = () => {
               <span>→</span>
             </Link>
 
-          </div>
+          </InView>
 
         </div>
       </section>

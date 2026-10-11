@@ -8,7 +8,11 @@ import React, {
 const ThemeContext = createContext();
 
 export const ThemeProvider = ({ children }) => {
-  const [darkMode, setDarkMode] = useState(true);
+  const [darkMode, setDarkMode] = useState(() => {
+    const savedTheme = localStorage.getItem("genlearning-theme");
+
+    return savedTheme !== "light";
+  });
 
   useEffect(() => {
     document.documentElement.setAttribute(
@@ -18,7 +22,17 @@ export const ThemeProvider = ({ children }) => {
   }, [darkMode]);
 
   const toggleTheme = () => {
-    setDarkMode((previous) => !previous);
+    setDarkMode((previous) => {
+      const newDarkMode = !previous;
+
+      // Save immediately
+      localStorage.setItem(
+        "genlearning-theme",
+        newDarkMode ? "dark" : "light"
+      );
+
+      return newDarkMode;
+    });
   };
 
   return (

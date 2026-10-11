@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
+import { InView } from "../components/motion-primitives/in-view";
 
 const CourseDetail = () => {
   const { courseId } = useParams();
@@ -22,11 +23,11 @@ const CourseDetail = () => {
         setError("");
 
         const response = await fetch(
-  `https://api.genlearning.in/api/courses/${courseId}`,
-  {
-    cache: "no-store",
-  }
-);
+          `https://api.genlearning.in/api/courses/${courseId}`,
+          {
+            cache: "no-store",
+          }
+        );
 
         const data = await response.json();
 
@@ -37,7 +38,6 @@ const CourseDetail = () => {
         }
 
         setCourse(data.course);
-
       } catch (error) {
         console.error("Course fetch error:", error);
         setError("Course could not be loaded.");
@@ -77,14 +77,12 @@ const CourseDetail = () => {
         const data = await response.json();
 
         if (response.ok && data.success) {
-
           const enrolled = data.courses.some(
             (item) => item.id === course?.id
           );
 
           setIsEnrolled(enrolled);
         }
-
       } catch (error) {
         console.error(
           "Enrollment check error:",
@@ -96,7 +94,6 @@ const CourseDetail = () => {
     if (course) {
       checkEnrollment();
     }
-
   }, [course]);
 
 
@@ -104,142 +101,154 @@ const CourseDetail = () => {
   // ENROLL
   // ========================================
 
-   const handleEnroll = async () => {
-  const token = localStorage.getItem("genlearningToken");
-
-  // User is not logged in
-  if (!token) {
-    navigate("/login");
-    return;
-  }
-
-  // Already enrolled
-  if (isEnrolled) {
-    navigate("/dashboard");
-    return;
-  }
-
-  try {
-    setEnrolling(true);
-    setError("");
-
-    // ========================================
-    // CREATE RAZORPAY ORDER
-    // ========================================
-
-    const orderResponse = await fetch(
-       "https://api.genlearning.in/api/payments/create-order",
-      {
-        method: "POST",
-
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-
-        body: JSON.stringify({
-          courseId: course.id,
-        }),
-      }
+  const handleEnroll = async () => {
+    const token = localStorage.getItem(
+      "genlearningToken"
     );
 
-    const orderData = await orderResponse.json();
-
-    if (!orderResponse.ok) {
-      throw new Error(
-        orderData.message || "Failed to create payment order"
-      );
+    // User is not logged in
+    if (!token) {
+      navigate("/login");
+      return;
     }
 
-    // ========================================
-    // OPEN RAZORPAY CHECKOUT
-    // ========================================
+    // Already enrolled
+    if (isEnrolled) {
+      navigate("/dashboard");
+      return;
+    }
 
-    const options = {
-      key: orderData.keyId,
+    try {
+      setEnrolling(true);
+      setError("");
 
-      amount: orderData.order.amount,
+      // ========================================
+      // CREATE RAZORPAY ORDER
+      // ========================================
 
-      currency: orderData.order.currency,
+      const orderResponse = await fetch(
+        "https://api.genlearning.in/api/payments/create-order",
+        {
+          method: "POST",
 
-      name: "GEN Learning",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
 
-      description: course.title,
-
-      order_id: orderData.order.id,
-
-      handler: async function (response) {
-
-        // ========================================
-        // VERIFY PAYMENT
-        // ========================================
-
-        const verifyResponse = await fetch(
-          "https://api.genlearning.in/api/payments/verify-payment",
-          {
-            method: "POST",
-
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
-            },
-
-            body: JSON.stringify({
-              courseId: course.id,
-              razorpay_order_id: response.razorpay_order_id,
-              razorpay_payment_id: response.razorpay_payment_id,
-              razorpay_signature: response.razorpay_signature,
-            }),
-          }
-        );
-
-        const verifyData = await verifyResponse.json();
-
-        if (!verifyResponse.ok) {
-          throw new Error(
-            verifyData.message || "Payment verification failed"
-          );
+          body: JSON.stringify({
+            courseId: course.id,
+          }),
         }
+      );
 
-        setIsEnrolled(true);
+      const orderData = await orderResponse.json();
 
-        navigate("/dashboard");
-      },
+      if (!orderResponse.ok) {
+        throw new Error(
+          orderData.message ||
+            "Failed to create payment order"
+        );
+      }
 
-      prefill: {
-        name: "",
-        email: "",
-      },
+      // ========================================
+      // OPEN RAZORPAY CHECKOUT
+      // ========================================
 
-      theme: {
-        color: "#000000",
-      },
-    };
+      const options = {
+        key: orderData.keyId,
 
-    const razorpay = new window.Razorpay(options);
+        amount: orderData.order.amount,
 
-    razorpay.open();
+        currency: orderData.order.currency,
 
-    razorpay.on("payment.failed", function () {
-      setError("Payment failed. Please try again.");
+        name: "GEN Learning",
+
+        description: course.title,
+
+        order_id: orderData.order.id,
+
+        handler: async function (response) {
+          // ========================================
+          // VERIFY PAYMENT
+          // ========================================
+
+          const verifyResponse = await fetch(
+            "https://api.genlearning.in/api/payments/verify-payment",
+            {
+              method: "POST",
+
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+              },
+
+              body: JSON.stringify({
+                courseId: course.id,
+                razorpay_order_id:
+                  response.razorpay_order_id,
+                razorpay_payment_id:
+                  response.razorpay_payment_id,
+                razorpay_signature:
+                  response.razorpay_signature,
+              }),
+            }
+          );
+
+          const verifyData =
+            await verifyResponse.json();
+
+          if (!verifyResponse.ok) {
+            throw new Error(
+              verifyData.message ||
+                "Payment verification failed"
+            );
+          }
+
+          setIsEnrolled(true);
+
+          navigate("/dashboard");
+        },
+
+        prefill: {
+          name: "",
+          email: "",
+        },
+
+        theme: {
+          color: "#000000",
+        },
+      };
+
+      const razorpay =
+        new window.Razorpay(options);
+
+      razorpay.open();
+
+      razorpay.on(
+        "payment.failed",
+        function () {
+          setError(
+            "Payment failed. Please try again."
+          );
+          setEnrolling(false);
+        }
+      );
+    } catch (error) {
+      console.error(
+        "Payment error:",
+        error
+      );
+
+      setError(
+        error.message ||
+          "Unable to start payment."
+      );
+
       setEnrolling(false);
-    });
+    }
+  };
 
-  } catch (error) {
-
-    console.error(
-      "Payment error:",
-      error
-    );
-
-    setError(
-      error.message ||
-      "Unable to start payment."
-    );
-
-    setEnrolling(false);
-  }
-};
 
   // ========================================
   // LOADING
@@ -273,7 +282,6 @@ const CourseDetail = () => {
   if (!course) {
     return (
       <main className="course-not-found">
-
         <div>
 
           <span className="section-eyebrow">
@@ -295,7 +303,6 @@ const CourseDetail = () => {
           </Link>
 
         </div>
-
       </main>
     );
   }
@@ -314,8 +321,28 @@ const CourseDetail = () => {
 
           {/* BREADCRUMB */}
 
-          <div className="course-detail-breadcrumb">
-
+          <InView
+            className="course-detail-breadcrumb"
+            variants={{
+              hidden: {
+                opacity: 0,
+                y: 20,
+                filter: "blur(4px)",
+              },
+              visible: {
+                opacity: 1,
+                y: 0,
+                filter: "blur(0px)",
+              },
+            }}
+            transition={{
+              duration: 0.8,
+              ease: "easeInOut",
+            }}
+            viewOptions={{
+              margin: "0px 0px -60px 0px",
+            }}
+          >
             <Link to="/">
               Home
             </Link>
@@ -331,8 +358,7 @@ const CourseDetail = () => {
             <span>
               {course.title}
             </span>
-
-          </div>
+          </InView>
 
 
           <div className="course-detail-grid">
@@ -341,8 +367,28 @@ const CourseDetail = () => {
                 LEFT CONTENT
             ======================================== */}
 
-            <div className="course-detail-content">
-
+            <InView
+              className="course-detail-content"
+              variants={{
+                hidden: {
+                  opacity: 0,
+                  x: -35,
+                  filter: "blur(4px)",
+                },
+                visible: {
+                  opacity: 1,
+                  x: 0,
+                  filter: "blur(0px)",
+                },
+              }}
+              transition={{
+                duration: 1.1,
+                ease: "easeInOut",
+              }}
+              viewOptions={{
+                margin: "0px 0px -80px 0px",
+              }}
+            >
               <span className="section-eyebrow">
                 {course.category}
               </span>
@@ -405,14 +451,38 @@ const CourseDetail = () => {
 
               </div>
 
-            </div>
+            </InView>
 
 
             {/* ========================================
                 PRICE CARD
             ======================================== */}
 
-            <aside className="course-detail-price-card">
+            <InView
+              className="course-detail-price-card"
+              variants={{
+                hidden: {
+                  opacity: 0,
+                  x: 35,
+                  scale: 0.97,
+                  filter: "blur(4px)",
+                },
+                visible: {
+                  opacity: 1,
+                  x: 0,
+                  scale: 1,
+                  filter: "blur(0px)",
+                },
+              }}
+              transition={{
+                duration: 1.1,
+                delay: 0.15,
+                ease: "easeInOut",
+              }}
+              viewOptions={{
+                margin: "0px 0px -80px 0px",
+              }}
+            >
 
               <div className="course-detail-course-icon">
                 {"</>"}
@@ -427,12 +497,18 @@ const CourseDetail = () => {
               <div className="course-price">
 
                 <strong>
-                  ₹{Number(course.price).toLocaleString("en-IN")}
+                  ₹
+                  {Number(course.price).toLocaleString(
+                    "en-IN"
+                  )}
                 </strong>
 
                 {course.old_price && (
                   <del>
-                    ₹{Number(course.old_price).toLocaleString("en-IN")}
+                    ₹
+                    {Number(
+                      course.old_price
+                    ).toLocaleString("en-IN")}
                   </del>
                 )}
 
@@ -446,26 +522,26 @@ const CourseDetail = () => {
 
               {/* ENROLL BUTTON */}
 
-               {!isEnrolled ? (
-  <button
-    type="button"
-    className="course-enroll-btn"
-    onClick={handleEnroll}
-    disabled={enrolling}
-  >
-    {enrolling ? "Enrolling..." : "Enroll Now"}
-    <span>→</span>
-  </button>
-) : (
-  <span className="course-secure-text">
-    You are already enrolled in this course
-  </span>
-)}
+              {!isEnrolled ? (
+                <button
+                  type="button"
+                  className="course-enroll-btn"
+                  onClick={handleEnroll}
+                  disabled={enrolling}
+                >
+                  {enrolling
+                    ? "Enrolling..."
+                    : "Enroll Now"}
 
+                  <span>→</span>
+                </button>
+              ) : (
+                <span className="course-secure-text">
+                  You are already enrolled in this course
+                </span>
+              )}
 
-               
-
-            </aside>
+            </InView>
 
           </div>
 
@@ -486,8 +562,27 @@ const CourseDetail = () => {
 
             {/* COURSE OVERVIEW */}
 
-            <div>
-
+            <InView
+              variants={{
+                hidden: {
+                  opacity: 0,
+                  x: -30,
+                  filter: "blur(4px)",
+                },
+                visible: {
+                  opacity: 1,
+                  x: 0,
+                  filter: "blur(0px)",
+                },
+              }}
+              transition={{
+                duration: 1,
+                ease: "easeInOut",
+              }}
+              viewOptions={{
+                margin: "0px 0px -80px 0px",
+              }}
+            >
               <span className="section-eyebrow">
                 COURSE OVERVIEW
               </span>
@@ -506,6 +601,7 @@ const CourseDetail = () => {
 
                 <div className="course-skill">
                   <span>01</span>
+
                   <strong>
                     Practical Learning
                   </strong>
@@ -513,6 +609,7 @@ const CourseDetail = () => {
 
                 <div className="course-skill">
                   <span>02</span>
+
                   <strong>
                     Project-Based Development
                   </strong>
@@ -520,6 +617,7 @@ const CourseDetail = () => {
 
                 <div className="course-skill">
                   <span>03</span>
+
                   <strong>
                     Industry Relevant Skills
                   </strong>
@@ -527,6 +625,7 @@ const CourseDetail = () => {
 
                 <div className="course-skill">
                   <span>04</span>
+
                   <strong>
                     Hands-on Practice
                   </strong>
@@ -534,13 +633,36 @@ const CourseDetail = () => {
 
               </div>
 
-            </div>
+            </InView>
 
 
             {/* COURSE CONTENT */}
 
-            <div className="course-modules-card">
-
+            <InView
+              className="course-modules-card"
+              variants={{
+                hidden: {
+                  opacity: 0,
+                  x: 30,
+                  scale: 0.97,
+                  filter: "blur(4px)",
+                },
+                visible: {
+                  opacity: 1,
+                  x: 0,
+                  scale: 1,
+                  filter: "blur(0px)",
+                },
+              }}
+              transition={{
+                duration: 1,
+                delay: 0.15,
+                ease: "easeInOut",
+              }}
+              viewOptions={{
+                margin: "0px 0px -80px 0px",
+              }}
+            >
               <span className="section-eyebrow">
                 COURSE CONTENT
               </span>
@@ -621,7 +743,7 @@ const CourseDetail = () => {
 
               </div>
 
-            </div>
+            </InView>
 
           </div>
 
@@ -638,30 +760,55 @@ const CourseDetail = () => {
 
         <div className="course-detail-container">
 
-          <span className="section-eyebrow">
-            READY TO START?
-          </span>
+          <InView
+            variants={{
+              hidden: {
+                opacity: 0,
+                y: 30,
+                filter: "blur(4px)",
+              },
+              visible: {
+                opacity: 1,
+                y: 0,
+                filter: "blur(0px)",
+              },
+            }}
+            transition={{
+              duration: 1,
+              ease: "easeInOut",
+            }}
+            viewOptions={{
+              margin: "0px 0px -80px 0px",
+            }}
+          >
+            <span className="section-eyebrow">
+              READY TO START?
+            </span>
 
-          <h2>
-            Start building your
-            <span> future.</span>
-          </h2>
+            <h2>
+              Start building your
+              <span> future.</span>
+            </h2>
 
-          <p>
-            Join the course and start learning today.
-          </p>
+            <p>
+              Join the course and start learning today.
+            </p>
 
 
-           {!isEnrolled && (
-  <button
-    type="button"
-    className="course-cta-btn"
-    onClick={handleEnroll}
-    disabled={enrolling}
-  >
-    {enrolling ? "Enrolling..." : "Enroll Now →"}
-  </button>
-)}
+            {!isEnrolled && (
+              <button
+                type="button"
+                className="course-cta-btn"
+                onClick={handleEnroll}
+                disabled={enrolling}
+              >
+                {enrolling
+                  ? "Enrolling..."
+                  : "Enroll Now →"}
+              </button>
+            )}
+
+          </InView>
 
         </div>
 

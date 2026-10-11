@@ -2,13 +2,9 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const db = require("../config/db");
 const transporter = require("../config/mailer");
-
 const { OAuth2Client } = require("google-auth-library");
 
-const googleClient = new OAuth2Client(
-  process.env.GOOGLE_CLIENT_ID
-);
-
+const googleClient = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
 // ========================================
 // REGISTER - SEND OTP
@@ -16,13 +12,8 @@ const googleClient = new OAuth2Client(
 
 const registerUser = async (req, res) => {
   try {
-    const {
-      name,
-      email,
-      password,
-    } = req.body;
+    const { name, email, password } = req.body;
 
-    // Basic validation
     if (!name || !email || !password) {
       return res.status(400).json({
         success: false,
@@ -33,7 +24,6 @@ const registerUser = async (req, res) => {
     const cleanName = name.trim();
     const cleanEmail = email.trim().toLowerCase();
 
-    // Check if user already exists
     const [existingUsers] = await db.query(
       "SELECT id FROM users WHERE email = ?",
       [cleanEmail]
@@ -46,7 +36,6 @@ const registerUser = async (req, res) => {
       });
     }
 
-    // Validate password length
     if (password.length < 6) {
       return res.status(400).json({
         success: false,
@@ -54,124 +43,58 @@ const registerUser = async (req, res) => {
       });
     }
 
-    // Hash password before storing temporarily
-    const hashedPassword = await bcrypt.hash(
-      password,
-      10
-    );
+    const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Generate 6 digit OTP
-    const otp = Math.floor(
-      100000 + Math.random() * 900000
-    ).toString();
+    const otp = Math.floor(100000 + Math.random() * 900000).toString();
+    const otpExpiresAt = new Date(Date.now() + 10 * 60 * 1000);
 
-    // OTP valid for 10 minutes
-    const otpExpiresAt = new Date(
-      Date.now() + 10 * 60 * 1000
-    );
-
-    // Remove previous pending verification
     await db.query(
       "DELETE FROM email_verifications WHERE email = ?",
       [cleanEmail]
     );
 
-    // Store pending registration
     await db.query(
-      `
-      INSERT INTO email_verifications
-      (
-        name,
-        email,
-        password,
-        otp,
-        otp_expires_at
-      )
-      VALUES (?, ?, ?, ?, ?)
-      `,
-      [
-        cleanName,
-        cleanEmail,
-        hashedPassword,
-        otp,
-        otpExpiresAt,
-      ]
+      `INSERT INTO email_verifications
+       (name, email, password, otp, otp_expires_at)
+       VALUES (?, ?, ?, ?, ?)`,
+      [cleanName, cleanEmail, hashedPassword, otp, otpExpiresAt]
     );
- 
-  const { data, error } = await transporter.emails.send({
-  from: "GEN Learning <noreply@genlearning.in>",
-  to: [cleanEmail],
-  subject: "GEN Learning - Email Verification OTP",
-  html: `
-    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 30px;">
-      
-      <h2 style="margin-bottom: 10px;">
-        Welcome to GEN Learning
-      </h2>
 
-      <p>
-        Hi ${cleanName},
-      </p>
+    const { data, error } = await transporter.emails.send({
+      from: "GEN Learning <noreply@genlearning.in>",
+      to: [cleanEmail],
+      subject: "GEN Learning - Email Verification OTP",
+      html: `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 30px;">
+          <h2>Welcome to GEN Learning</h2>
+          <p>Hi ${cleanName},</p>
+          <p>Use the OTP below to verify your email address.</p>
+          <div style="font-size: 32px; font-weight: bold; letter-spacing: 8px; padding: 20px; background: #f5f5f5; text-align: center; margin: 25px 0;">
+            ${otp}
+          </div>
+          <p>This OTP will expire in <strong>10 minutes</strong>.</p>
+          <p>If you did not create a GEN Learning account, you can safely ignore this email.</p>
+          <p>Regards,<br /><strong>GEN Learning</strong></p>
+        </div>
+      `,
+    });
 
-      <p>
-        Use the OTP below to verify your email address.
-      </p>
+    console.log("REGISTER RESEND DATA:", data);
+    console.log("REGISTER RESEND ERROR:", error);
+    console.log("REGISTER OTP EMAIL SENT:", cleanEmail);
 
-      <div style="
-        font-size: 32px;
-        font-weight: bold;
-        letter-spacing: 8px;
-        padding: 20px;
-        background: #f5f5f5;
-        text-align: center;
-        margin: 25px 0;
-      ">
-        ${otp}
-      </div>
-
-      <p>
-        This OTP will expire in <strong>10 minutes</strong>.
-      </p>
-
-      <p>
-        If you did not create a GEN Learning account,
-        you can safely ignore this email.
-      </p>
-
-      <p>
-        Regards,<br />
-        <strong>GEN Learning</strong>
-      </p>
-
-    </div>
-  `,
-});
-
-
-
-console.log("REGISTER RESEND DATA:", data);
-console.log("REGISTER RESEND ERROR:", error);
-console.log("REGISTER OTP EMAIL SENT:", cleanEmail);
-
-    res.status(200).json({
+    return res.status(200).json({
       success: true,
       message: "OTP sent successfully. Please verify your email.",
     });
-
   } catch (error) {
-
-    console.error(
-      "Register OTP error:",
-      error
-    );
-
-    res.status(500).json({
+    console.error("Register OTP error:", error);
+    return res.status(500).json({
       success: false,
       message: "Unable to send verification OTP.",
     });
   }
 };
-
 
 // ========================================
 // VERIFY EMAIL OTP
@@ -179,11 +102,7 @@ console.log("REGISTER OTP EMAIL SENT:", cleanEmail);
 
 const verifyEmail = async (req, res) => {
   try {
-
-    const {
-      email,
-      otp,
-    } = req.body;
+    const { email, otp } = req.body;
 
     if (!email || !otp) {
       return res.status(400).json({
@@ -194,20 +113,11 @@ const verifyEmail = async (req, res) => {
 
     const cleanEmail = email.trim().toLowerCase();
 
-    // Find pending registration
     const [pendingUsers] = await db.query(
-      `
-      SELECT
-        id,
-        name,
-        email,
-        password,
-        otp,
-        otp_expires_at
-      FROM email_verifications
-      WHERE email = ?
-      LIMIT 1
-      `,
+      `SELECT id, name, email, password, otp, otp_expires_at
+       FROM email_verifications
+       WHERE email = ?
+       LIMIT 1`,
       [cleanEmail]
     );
 
@@ -220,7 +130,6 @@ const verifyEmail = async (req, res) => {
 
     const pendingUser = pendingUsers[0];
 
-    // Check OTP
     if (pendingUser.otp !== otp.toString()) {
       return res.status(400).json({
         success: false,
@@ -228,11 +137,7 @@ const verifyEmail = async (req, res) => {
       });
     }
 
-    // Check expiry
-    if (
-      new Date(pendingUser.otp_expires_at) <
-      new Date()
-    ) {
+    if (new Date(pendingUser.otp_expires_at) < new Date()) {
       await db.query(
         "DELETE FROM email_verifications WHERE email = ?",
         [cleanEmail]
@@ -244,31 +149,17 @@ const verifyEmail = async (req, res) => {
       });
     }
 
-    // Create actual user
     const [result] = await db.query(
-      `
-      INSERT INTO users
-      (
-        name,
-        email,
-        password
-      )
-      VALUES (?, ?, ?)
-      `,
-      [
-        pendingUser.name,
-        pendingUser.email,
-        pendingUser.password,
-      ]
+      `INSERT INTO users (name, email, password)
+       VALUES (?, ?, ?)`,
+      [pendingUser.name, pendingUser.email, pendingUser.password]
     );
 
-    // Delete pending verification
     await db.query(
       "DELETE FROM email_verifications WHERE email = ?",
       [cleanEmail]
     );
 
-    // Create JWT
     const token = jwt.sign(
       {
         userId: result.insertId,
@@ -276,12 +167,10 @@ const verifyEmail = async (req, res) => {
         role: "student",
       },
       process.env.JWT_SECRET,
-      {
-        expiresIn: "7d",
-      }
+      { expiresIn: "7d" }
     );
 
-    res.status(201).json({
+    return res.status(201).json({
       success: true,
       message: "Email verified and account created successfully.",
       token,
@@ -292,21 +181,14 @@ const verifyEmail = async (req, res) => {
         role: "student",
       },
     });
-
   } catch (error) {
-
-    console.error(
-      "Email verification error:",
-      error
-    );
-
-    res.status(500).json({
+    console.error("Email verification error:", error);
+    return res.status(500).json({
       success: false,
       message: "Unable to verify email.",
     });
   }
 };
-
 
 // ========================================
 // LOGIN
@@ -314,11 +196,7 @@ const verifyEmail = async (req, res) => {
 
 const loginUser = async (req, res) => {
   try {
-
-    const {
-      email,
-      password,
-    } = req.body;
+    const { email, password } = req.body;
 
     if (!email || !password) {
       return res.status(400).json({
@@ -328,16 +206,9 @@ const loginUser = async (req, res) => {
     }
 
     const [users] = await db.query(
-      `
-      SELECT
-        id,
-        name,
-        email,
-        password,
-        role
-      FROM users
-      WHERE email = ?
-      `,
+      `SELECT id, name, email, password, role
+       FROM users
+       WHERE email = ?`,
       [email.trim().toLowerCase()]
     );
 
@@ -349,12 +220,7 @@ const loginUser = async (req, res) => {
     }
 
     const user = users[0];
-
-    const passwordMatch =
-      await bcrypt.compare(
-        password,
-        user.password
-      );
+    const passwordMatch = await bcrypt.compare(password, user.password);
 
     if (!passwordMatch) {
       return res.status(401).json({
@@ -370,12 +236,10 @@ const loginUser = async (req, res) => {
         role: user.role,
       },
       process.env.JWT_SECRET,
-      {
-        expiresIn: "7d",
-      }
+      { expiresIn: "7d" }
     );
 
-    res.json({
+    return res.json({
       success: true,
       message: "Login successful.",
       token,
@@ -386,20 +250,18 @@ const loginUser = async (req, res) => {
         role: user.role,
       },
     });
-
   } catch (error) {
-
-    console.error(
-      "Login error:",
-      error
-    );
-
-    res.status(500).json({
+    console.error("Login error:", error);
+    return res.status(500).json({
       success: false,
       message: "Something went wrong while logging in.",
     });
   }
 };
+
+// ========================================
+// GOOGLE LOGIN
+// ========================================
 
 const googleLogin = async (req, res) => {
   try {
@@ -418,7 +280,6 @@ const googleLogin = async (req, res) => {
     });
 
     const payload = ticket.getPayload();
-
     const email = payload.email.toLowerCase();
     const name = payload.name || "GEN Learning User";
 
@@ -457,22 +318,18 @@ const googleLogin = async (req, res) => {
         role: user.role,
       },
       process.env.JWT_SECRET,
-      {
-        expiresIn: "7d",
-      }
+      { expiresIn: "7d" }
     );
 
-    res.json({
+    return res.json({
       success: true,
       message: "Google login successful.",
       token,
       user,
     });
-
   } catch (error) {
     console.error("Google login error:", error);
-
-    res.status(401).json({
+    return res.status(401).json({
       success: false,
       message: "Google authentication failed.",
     });
@@ -496,7 +353,6 @@ const forgotPassword = async (req, res) => {
 
     const cleanEmail = email.trim().toLowerCase();
 
-    // Check user exists
     const [users] = await db.query(
       "SELECT id, name, email FROM users WHERE email = ? LIMIT 1",
       [cleanEmail]
@@ -510,116 +366,51 @@ const forgotPassword = async (req, res) => {
     }
 
     const user = users[0];
+    const otp = Math.floor(100000 + Math.random() * 900000).toString();
+    const otpExpiresAt = new Date(Date.now() + 10 * 60 * 1000);
 
-    // Generate 6 digit OTP
-    const otp = Math.floor(
-      100000 + Math.random() * 900000
-    ).toString();
-
-    // OTP valid for 10 minutes
-    const otpExpiresAt = new Date(
-      Date.now() + 10 * 60 * 1000
-    );
-
-    // Remove previous reset request
     await db.query(
       "DELETE FROM password_resets WHERE email = ?",
       [cleanEmail]
     );
 
-    // Store new OTP
     await db.query(
-      `
-      INSERT INTO password_resets
-      (
-        email,
-        otp,
-        otp_expires_at
-      )
-      VALUES (?, ?, ?)
-      `,
-      [
-        cleanEmail,
-        otp,
-        otpExpiresAt,
-      ]
+      `INSERT INTO password_resets (email, otp, otp_expires_at)
+       VALUES (?, ?, ?)`,
+      [cleanEmail, otp, otpExpiresAt]
     );
 
-    // Send email
     await transporter.emails.send({
-  from: "GEN Learning <noreply@genlearning.in>",
-  to: [cleanEmail],
-  subject: "GEN Learning - Password Reset OTP",
+      from: "GEN Learning <noreply@genlearning.in>",
+      to: [cleanEmail],
+      subject: "GEN Learning - Password Reset OTP",
+      html: `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 30px;">
+          <h2>Reset your GEN Learning password</h2>
+          <p>Hi ${user.name},</p>
+          <p>Use the OTP below to reset your password.</p>
+          <div style="font-size: 32px; font-weight: bold; letter-spacing: 8px; padding: 20px; background: #f5f5f5; text-align: center; margin: 25px 0;">
+            ${otp}
+          </div>
+          <p>This OTP will expire in <strong>10 minutes</strong>.</p>
+          <p>If you did not request a password reset, you can safely ignore this email.</p>
+          <p>Regards,<br /><strong>GEN Learning</strong></p>
+        </div>
+      `,
+    });
 
-  html: `
-    <div style="
-      font-family: Arial, sans-serif;
-      max-width: 600px;
-      margin: auto;
-      padding: 30px;
-    ">
-
-      <h2>
-        Reset your GEN Learning password
-      </h2>
-
-      <p>
-        Hi ${user.name},
-      </p>
-
-      <p>
-        Use the OTP below to reset your password.
-      </p>
-
-      <div style="
-        font-size: 32px;
-        font-weight: bold;
-        letter-spacing: 8px;
-        padding: 20px;
-        background: #f5f5f5;
-        text-align: center;
-        margin: 25px 0;
-      ">
-        ${otp}
-      </div>
-
-      <p>
-        This OTP will expire in
-        <strong>10 minutes</strong>.
-      </p>
-
-      <p>
-        If you did not request a password reset,
-        you can safely ignore this email.
-      </p>
-
-      <p>
-        Regards,<br />
-        <strong>GEN Learning</strong>
-      </p>
-
-    </div>
-  `,
-});
-    res.json({
+    return res.json({
       success: true,
       message: "Password reset OTP sent successfully.",
     });
-
   } catch (error) {
-
-    console.error(
-      "Forgot password error:",
-      error
-    );
-
-    res.status(500).json({
+    console.error("Forgot password error:", error);
+    return res.status(500).json({
       success: false,
       message: "Unable to send password reset OTP.",
     });
   }
 };
-
 
 // ========================================
 // VERIFY PASSWORD RESET OTP
@@ -627,10 +418,7 @@ const forgotPassword = async (req, res) => {
 
 const verifyResetOtp = async (req, res) => {
   try {
-    const {
-      email,
-      otp,
-    } = req.body;
+    const { email, otp } = req.body;
 
     if (!email || !otp) {
       return res.status(400).json({
@@ -642,16 +430,10 @@ const verifyResetOtp = async (req, res) => {
     const cleanEmail = email.trim().toLowerCase();
 
     const [resets] = await db.query(
-      `
-      SELECT
-        id,
-        email,
-        otp,
-        otp_expires_at
-      FROM password_resets
-      WHERE email = ?
-      LIMIT 1
-      `,
+      `SELECT id, email, otp, otp_expires_at
+       FROM password_resets
+       WHERE email = ?
+       LIMIT 1`,
       [cleanEmail]
     );
 
@@ -664,7 +446,6 @@ const verifyResetOtp = async (req, res) => {
 
     const reset = resets[0];
 
-    // Check OTP
     if (reset.otp !== otp.toString()) {
       return res.status(400).json({
         success: false,
@@ -672,11 +453,7 @@ const verifyResetOtp = async (req, res) => {
       });
     }
 
-    // Check expiry
-    if (
-      new Date(reset.otp_expires_at) <
-      new Date()
-    ) {
+    if (new Date(reset.otp_expires_at) < new Date()) {
       await db.query(
         "DELETE FROM password_resets WHERE email = ?",
         [cleanEmail]
@@ -688,25 +465,18 @@ const verifyResetOtp = async (req, res) => {
       });
     }
 
-    res.json({
+    return res.json({
       success: true,
       message: "OTP verified successfully.",
     });
-
   } catch (error) {
-
-    console.error(
-      "Reset OTP verification error:",
-      error
-    );
-
-    res.status(500).json({
+    console.error("Reset OTP verification error:", error);
+    return res.status(500).json({
       success: false,
       message: "Unable to verify OTP.",
     });
   }
 };
-
 
 // ========================================
 // RESET PASSWORD
@@ -714,56 +484,41 @@ const verifyResetOtp = async (req, res) => {
 
 const resetPassword = async (req, res) => {
   try {
-    const {
-      email,
-      otp,
-      newPassword,
-    } = req.body;
+    const { email, otp, newPassword } = req.body;
 
     if (!email || !otp || !newPassword) {
       return res.status(400).json({
         success: false,
-        message:
-          "Email, OTP and new password are required.",
+        message: "Email, OTP and new password are required.",
       });
     }
 
     if (newPassword.length < 6) {
       return res.status(400).json({
         success: false,
-        message:
-          "Password must be at least 6 characters.",
+        message: "Password must be at least 6 characters.",
       });
     }
 
     const cleanEmail = email.trim().toLowerCase();
 
-    // Find reset request
     const [resets] = await db.query(
-      `
-      SELECT
-        id,
-        email,
-        otp,
-        otp_expires_at
-      FROM password_resets
-      WHERE email = ?
-      LIMIT 1
-      `,
+      `SELECT id, email, otp, otp_expires_at
+       FROM password_resets
+       WHERE email = ?
+       LIMIT 1`,
       [cleanEmail]
     );
 
     if (resets.length === 0) {
       return res.status(404).json({
         success: false,
-        message:
-          "Password reset request not found.",
+        message: "Password reset request not found.",
       });
     }
 
     const reset = resets[0];
 
-    // Verify OTP again
     if (reset.otp !== otp.toString()) {
       return res.status(400).json({
         success: false,
@@ -771,11 +526,7 @@ const resetPassword = async (req, res) => {
       });
     }
 
-    // Check expiry again
-    if (
-      new Date(reset.otp_expires_at) <
-      new Date()
-    ) {
+    if (new Date(reset.otp_expires_at) < new Date()) {
       await db.query(
         "DELETE FROM password_resets WHERE email = ?",
         [cleanEmail]
@@ -783,75 +534,45 @@ const resetPassword = async (req, res) => {
 
       return res.status(400).json({
         success: false,
-        message:
-          "OTP has expired. Please request a new OTP.",
+        message: "OTP has expired. Please request a new OTP.",
       });
     }
 
-    // Hash new password
-    const hashedPassword =
-      await bcrypt.hash(
-        newPassword,
-        10
-      );
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
 
-    // Update password
     await db.query(
-      `
-      UPDATE users
-      SET password = ?
-      WHERE email = ?
-      `,
-      [
-        hashedPassword,
-        cleanEmail,
-      ]
+      "UPDATE users SET password = ? WHERE email = ?",
+      [hashedPassword, cleanEmail]
     );
 
-    // Delete used OTP
     await db.query(
       "DELETE FROM password_resets WHERE email = ?",
       [cleanEmail]
     );
 
-    res.json({
+    return res.json({
       success: true,
-      message:
-        "Password reset successfully. You can now login.",
+      message: "Password reset successfully. You can now login.",
     });
-
   } catch (error) {
-
-    console.error(
-      "Reset password error:",
-      error
-    );
-
-    res.status(500).json({
+    console.error("Reset password error:", error);
+    return res.status(500).json({
       success: false,
-      message:
-        "Unable to reset password.",
+      message: "Unable to reset password.",
     });
   }
 };
+
 // ========================================
 // GET CURRENT USER
 // ========================================
 
 const getMe = async (req, res) => {
   try {
-
     const [users] = await db.query(
-      `
-      SELECT
-        id,
-        name,
-        email,
-        role,
-        created_at
-      FROM users
-      WHERE id = ?
-      `,
+      `SELECT id, name, email, role, created_at
+       FROM users
+       WHERE id = ?`,
       [req.user.userId]
     );
 
@@ -862,25 +583,181 @@ const getMe = async (req, res) => {
       });
     }
 
-    res.json({
+    return res.json({
       success: true,
       user: users[0],
     });
-
   } catch (error) {
-
-    console.error(
-      "Get current user error:",
-      error
-    );
-
-    res.status(500).json({
+    console.error("Get current user error:", error);
+    return res.status(500).json({
       success: false,
       message: "Unable to fetch user.",
     });
   }
 };
 
+// ========================================
+// UPDATE PROFILE
+// ========================================
+
+const updateProfile = async (req, res) => {
+  try {
+    const name =
+      typeof req.body.name === "string" ? req.body.name.trim() : "";
+
+    if (!name) {
+      return res.status(400).json({
+        success: false,
+        message: "Name is required.",
+      });
+    }
+
+    if (name.length > 100) {
+      return res.status(400).json({
+        success: false,
+        message: "Name must be 100 characters or fewer.",
+      });
+    }
+
+    const [result] = await db.query(
+      "UPDATE users SET name = ? WHERE id = ?",
+      [name, req.user.userId]
+    );
+
+    if (result.affectedRows === 0) {
+      const [existingUsers] = await db.query(
+        "SELECT id FROM users WHERE id = ?",
+        [req.user.userId]
+      );
+
+      if (existingUsers.length === 0) {
+        return res.status(404).json({
+          success: false,
+          message: "User not found.",
+        });
+      }
+    }
+
+    const [users] = await db.query(
+      "SELECT id, name, email, role FROM users WHERE id = ?",
+      [req.user.userId]
+    );
+
+    return res.json({
+      success: true,
+      message: "Profile updated successfully.",
+      user: users[0],
+    });
+  } catch (error) {
+    console.error("Update profile error:", error);
+    return res.status(500).json({
+      success: false,
+      message: "Unable to update profile.",
+    });
+  }
+};
+
+// ========================================
+// CHANGE PASSWORD
+// ========================================
+
+const changePassword = async (req, res) => {
+  try {
+    const { currentPassword, newPassword, confirmPassword } = req.body;
+
+    if (!currentPassword || !newPassword || !confirmPassword) {
+      return res.status(400).json({
+        success: false,
+        message: "All password fields are required.",
+      });
+    }
+
+    if (
+      typeof currentPassword !== "string" ||
+      typeof newPassword !== "string" ||
+      typeof confirmPassword !== "string"
+    ) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid password fields.",
+      });
+    }
+
+    if (newPassword.length < 6) {
+      return res.status(400).json({
+        success: false,
+        message: "New password must be at least 6 characters.",
+      });
+    }
+
+    if (newPassword !== confirmPassword) {
+      return res.status(400).json({
+        success: false,
+        message: "New passwords do not match.",
+      });
+    }
+
+    if (currentPassword === newPassword) {
+      return res.status(400).json({
+        success: false,
+        message: "New password must differ from current password.",
+      });
+    }
+
+    const [users] = await db.query(
+      "SELECT id, password FROM users WHERE id = ? LIMIT 1",
+      [req.user.userId]
+    );
+
+    if (users.length === 0) {
+      return res.status(404).json({
+        success: false,
+        message: "User not found.",
+      });
+    }
+
+    // Google-created accounts may not know their randomly generated password.
+    const storedPassword = users[0].password;
+
+    let passwordMatches = false;
+
+    if (storedPassword) {
+      passwordMatches = await bcrypt.compare(
+        currentPassword,
+        storedPassword
+      );
+    }
+
+    if (!passwordMatches) {
+      return res.status(401).json({
+        success: false,
+        message: "Current password is incorrect.",
+      });
+    }
+
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+    await db.query(
+      "UPDATE users SET password = ? WHERE id = ?",
+      [hashedPassword, req.user.userId]
+    );
+
+    return res.json({
+      success: true,
+      message: "Password changed successfully.",
+    });
+  } catch (error) {
+    console.error("Change password error:", error);
+    return res.status(500).json({
+      success: false,
+      message: "Unable to change password.",
+    });
+  }
+};
+
+// ========================================
+// EXPORTS
+// ========================================
 
 module.exports = {
   registerUser,
@@ -891,4 +768,6 @@ module.exports = {
   loginUser,
   googleLogin,
   getMe,
+  updateProfile,
+  changePassword,
 };

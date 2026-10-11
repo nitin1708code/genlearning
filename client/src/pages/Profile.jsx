@@ -2,6 +2,20 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { InView } from "../components/motion-primitives/in-view";
 
+const API_URL = "https://api.genlearning.in";
+
+const readApiResponse = async (response) => {
+  const contentType = response.headers.get("content-type") || "";
+
+  if (!contentType.includes("application/json")) {
+    throw new Error(
+      `API returned a non-JSON response (HTTP ${response.status}). Check backend deployment and API route.`
+    );
+  }
+
+  return response.json();
+};
+
 const Profile = () => {
   const [user, setUser] = useState(null);
 
@@ -18,68 +32,50 @@ const Profile = () => {
 
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
-
   const [saving, setSaving] = useState(false);
-  const [changingPassword, setChangingPassword] =
-    useState(false);
-
+  const [changingPassword, setChangingPassword] = useState(false);
 
   // ========================================
   // LOAD PROFILE
   // ========================================
 
   useEffect(() => {
-    fetchProfile();
-  }, []);
+    const fetchProfile = async () => {
+      try {
+        const token = localStorage.getItem("genlearningToken");
 
-  const fetchProfile = async () => {
-    try {
-      const token =
-        localStorage.getItem("genlearningToken");
+        if (!token) {
+          setError("Authentication required. Please log in again.");
+          return;
+        }
 
-      if (!token) {
-        setError("Authentication required.");
-        return;
-      }
-
-      const response = await fetch(
-        "https://api.genlearning.in/api/auth/me",
-        {
+        const response = await fetch(`${API_URL}/api/auth/me`, {
           cache: "no-store",
           headers: {
             Authorization: `Bearer ${token}`,
           },
+        });
+
+        const data = await readApiResponse(response);
+
+        if (!response.ok || !data.success) {
+          throw new Error(data.message || "Failed to load profile.");
         }
-      );
 
-      const data = await response.json();
+        setUser(data.user);
 
-      if (!response.ok || !data.success) {
-        throw new Error(
-          data.message || "Failed to load profile."
-        );
+        setFormData({
+          name: data.user.name || "",
+          email: data.user.email || "",
+        });
+      } catch (error) {
+        console.error("Profile fetch error:", error);
+        setError(error.message || "Unable to load profile.");
       }
+    };
 
-      setUser(data.user);
-
-      setFormData({
-        name: data.user.name || "",
-        email: data.user.email || "",
-      });
-
-    } catch (error) {
-      console.error(
-        "Profile fetch error:",
-        error
-      );
-
-      setError(
-        error.message ||
-          "Unable to load profile."
-      );
-    }
-  };
-
+    fetchProfile();
+  }, []);
 
   // ========================================
   // PROFILE INPUT
@@ -97,7 +93,6 @@ const Profile = () => {
     setError("");
   };
 
-
   // ========================================
   // PASSWORD INPUT
   // ========================================
@@ -114,7 +109,6 @@ const Profile = () => {
     setError("");
   };
 
-
   // ========================================
   // UPDATE PROFILE
   // ========================================
@@ -127,59 +121,50 @@ const Profile = () => {
       setMessage("");
       setError("");
 
-      const token =
-        localStorage.getItem("genlearningToken");
+      const token = localStorage.getItem("genlearningToken");
 
-      const response = await fetch(
-        "https://api.genlearning.in/api/auth/profile",
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify({
-            name: formData.name,
-          }),
-        }
-      );
+      if (!token) {
+        throw new Error("Authentication required. Please log in again.");
+      }
 
-      const data = await response.json();
+      const response = await fetch(`${API_URL}/api/auth/profile`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          name: formData.name.trim(),
+        }),
+      });
+
+      const data = await readApiResponse(response);
 
       if (!response.ok || !data.success) {
-        throw new Error(
-          data.message ||
-            "Failed to update profile."
-        );
+        throw new Error(data.message || "Failed to update profile.");
+      }
+
+      if (!data.user) {
+        throw new Error("Profile updated, but user data was not returned.");
       }
 
       setUser(data.user);
 
-      localStorage.setItem(
-        "genlearningUser",
-        JSON.stringify(data.user)
-      );
+      setFormData({
+        name: data.user.name || "",
+        email: data.user.email || "",
+      });
 
-      setMessage(
-        "Profile updated successfully."
-      );
+      localStorage.setItem("genlearningUser", JSON.stringify(data.user));
 
+      setMessage(data.message || "Profile updated successfully.");
     } catch (error) {
-      console.error(
-        "Profile update error:",
-        error
-      );
-
-      setError(
-        error.message ||
-          "Unable to update profile."
-      );
-
+      console.error("Profile update error:", error);
+      setError(error.message || "Unable to update profile.");
     } finally {
       setSaving(false);
     }
   };
-
 
   // ========================================
   // CHANGE PASSWORD
@@ -192,34 +177,35 @@ const Profile = () => {
     setError("");
 
     if (
-      passwordData.newPassword !==
-      passwordData.confirmPassword
+      passwordData.newPassword !== passwordData.confirmPassword
     ) {
-      setError(
-        "New passwords do not match."
-      );
+      setError("New passwords do not match.");
+      return;
+    }
 
+    if (passwordData.newPassword.length < 6) {
+      setError("New password must be at least 6 characters.");
       return;
     }
 
     if (
-      passwordData.newPassword.length < 6
+      passwordData.currentPassword === passwordData.newPassword
     ) {
-      setError(
-        "New password must be at least 6 characters."
-      );
-
+      setError("New password must differ from current password.");
       return;
     }
 
     try {
       setChangingPassword(true);
 
-      const token =
-        localStorage.getItem("genlearningToken");
+      const token = localStorage.getItem("genlearningToken");
+
+      if (!token) {
+        throw new Error("Authentication required. Please log in again.");
+      }
 
       const response = await fetch(
-        "https://api.genlearning.in/api/auth/change-password",
+        `${API_URL}/api/auth/change-password`,
         {
           method: "PUT",
           headers: {
@@ -227,22 +213,17 @@ const Profile = () => {
             Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify({
-            currentPassword:
-              passwordData.currentPassword,
-
-            newPassword:
-              passwordData.newPassword,
+            currentPassword: passwordData.currentPassword,
+            newPassword: passwordData.newPassword,
+            confirmPassword: passwordData.confirmPassword,
           }),
         }
       );
 
-      const data = await response.json();
+      const data = await readApiResponse(response);
 
       if (!response.ok || !data.success) {
-        throw new Error(
-          data.message ||
-            "Failed to change password."
-        );
+        throw new Error(data.message || "Failed to change password.");
       }
 
       setPasswordData({
@@ -251,26 +232,14 @@ const Profile = () => {
         confirmPassword: "",
       });
 
-      setMessage(
-        "Password changed successfully."
-      );
-
+      setMessage(data.message || "Password changed successfully.");
     } catch (error) {
-      console.error(
-        "Password change error:",
-        error
-      );
-
-      setError(
-        error.message ||
-          "Unable to change password."
-      );
-
+      console.error("Password change error:", error);
+      setError(error.message || "Unable to change password.");
     } finally {
       setChangingPassword(false);
     }
   };
-
 
   // ========================================
   // LOADING
@@ -286,18 +255,16 @@ const Profile = () => {
     );
   }
 
+  // ========================================
+  // MAIN UI
+  // ========================================
 
   return (
     <main className="profile-page">
-
-      {/* ========================================
-          HEADER
-      ======================================== */}
+      {/* HEADER */}
 
       <section className="profile-header">
-
         <div className="profile-container">
-
           <InView
             variants={{
               hidden: {
@@ -319,47 +286,29 @@ const Profile = () => {
               margin: "0px 0px -80px 0px",
             }}
           >
-            <span className="section-eyebrow">
-              ACCOUNT
-            </span>
+            <span className="section-eyebrow">ACCOUNT</span>
 
             <h1>
               Your <span>profile.</span>
             </h1>
 
-            <p>
-              Manage your account information and
-              password.
-            </p>
+            <p>Manage your account information and password.</p>
           </InView>
-
         </div>
-
       </section>
 
-
-      {/* ========================================
-          MAIN
-      ======================================== */}
+      {/* MAIN */}
 
       <section className="profile-main">
-
         <div className="profile-container">
-
-          {/* SUCCESS */}
+          {/* SUCCESS MESSAGE */}
 
           {message && (
             <InView
               className="profile-success"
               variants={{
-                hidden: {
-                  opacity: 0,
-                  y: 20,
-                },
-                visible: {
-                  opacity: 1,
-                  y: 0,
-                },
+                hidden: { opacity: 0, y: 20 },
+                visible: { opacity: 1, y: 0 },
               }}
               transition={{
                 duration: 0.7,
@@ -370,21 +319,14 @@ const Profile = () => {
             </InView>
           )}
 
-
-          {/* ERROR */}
+          {/* ERROR MESSAGE */}
 
           {error && (
             <InView
               className="profile-error"
               variants={{
-                hidden: {
-                  opacity: 0,
-                  y: 20,
-                },
-                visible: {
-                  opacity: 1,
-                  y: 0,
-                },
+                hidden: { opacity: 0, y: 20 },
+                visible: { opacity: 1, y: 0 },
               }}
               transition={{
                 duration: 0.7,
@@ -395,12 +337,8 @@ const Profile = () => {
             </InView>
           )}
 
-
           <div className="profile-grid">
-
-            {/* ========================================
-                PROFILE INFORMATION
-            ======================================== */}
+            {/* PROFILE INFORMATION */}
 
             <InView
               className="profile-card"
@@ -426,30 +364,20 @@ const Profile = () => {
                 margin: "0px 0px -80px 0px",
               }}
             >
-
               <div className="profile-card-heading">
-
                 <span className="section-eyebrow">
                   PERSONAL INFORMATION
                 </span>
 
-                <h2>
-                  Account details
-                </h2>
-
+                <h2>Account details</h2>
               </div>
-
 
               <form
                 className="profile-form"
                 onSubmit={handleProfileSubmit}
               >
-
                 <div className="profile-form-group">
-
-                  <label htmlFor="name">
-                    Full Name
-                  </label>
+                  <label htmlFor="name">Full Name</label>
 
                   <input
                     id="name"
@@ -457,17 +385,13 @@ const Profile = () => {
                     type="text"
                     value={formData.name}
                     onChange={handleChange}
+                    maxLength={100}
                     required
                   />
-
                 </div>
 
-
                 <div className="profile-form-group">
-
-                  <label htmlFor="email">
-                    Email Address
-                  </label>
+                  <label htmlFor="email">Email Address</label>
 
                   <input
                     id="email"
@@ -477,50 +401,32 @@ const Profile = () => {
                     readOnly
                   />
 
-                  <small>
-                    Email address cannot be changed.
-                  </small>
-
+                  <small>Email address cannot be changed.</small>
                 </div>
-
 
                 <div className="profile-form-group">
-
-                  <label>
-                    Account Role
-                  </label>
+                  <label htmlFor="role">Account Role</label>
 
                   <input
+                    id="role"
                     type="text"
-                    value={
-                      user?.role || "student"
-                    }
+                    value={user?.role || "student"}
                     readOnly
                   />
-
                 </div>
-
 
                 <button
                   type="submit"
                   className="profile-submit"
                   disabled={saving}
                 >
-                  {saving
-                    ? "Saving..."
-                    : "Save Changes"}
-
+                  {saving ? "Saving..." : "Save Changes"}
                   <span>→</span>
                 </button>
-
               </form>
-
             </InView>
 
-
-            {/* ========================================
-                PASSWORD
-            ======================================== */}
+            {/* CHANGE PASSWORD */}
 
             <InView
               className="profile-card"
@@ -547,27 +453,17 @@ const Profile = () => {
                 margin: "0px 0px -80px 0px",
               }}
             >
-
               <div className="profile-card-heading">
+                <span className="section-eyebrow">SECURITY</span>
 
-                <span className="section-eyebrow">
-                  SECURITY
-                </span>
-
-                <h2>
-                  Change password
-                </h2>
-
+                <h2>Change password</h2>
               </div>
-
 
               <form
                 className="profile-form"
                 onSubmit={handlePasswordSubmit}
               >
-
                 <div className="profile-form-group">
-
                   <label htmlFor="currentPassword">
                     Current Password
                   </label>
@@ -576,42 +472,29 @@ const Profile = () => {
                     id="currentPassword"
                     name="currentPassword"
                     type="password"
-                    value={
-                      passwordData.currentPassword
-                    }
-                    onChange={
-                      handlePasswordChange
-                    }
+                    autoComplete="current-password"
+                    value={passwordData.currentPassword}
+                    onChange={handlePasswordChange}
                     required
                   />
-
                 </div>
 
-
                 <div className="profile-form-group">
-
-                  <label htmlFor="newPassword">
-                    New Password
-                  </label>
+                  <label htmlFor="newPassword">New Password</label>
 
                   <input
                     id="newPassword"
                     name="newPassword"
                     type="password"
-                    value={
-                      passwordData.newPassword
-                    }
-                    onChange={
-                      handlePasswordChange
-                    }
+                    autoComplete="new-password"
+                    minLength={6}
+                    value={passwordData.newPassword}
+                    onChange={handlePasswordChange}
                     required
                   />
-
                 </div>
 
-
                 <div className="profile-form-group">
-
                   <label htmlFor="confirmPassword">
                     Confirm New Password
                   </label>
@@ -620,17 +503,13 @@ const Profile = () => {
                     id="confirmPassword"
                     name="confirmPassword"
                     type="password"
-                    value={
-                      passwordData.confirmPassword
-                    }
-                    onChange={
-                      handlePasswordChange
-                    }
+                    autoComplete="new-password"
+                    minLength={6}
+                    value={passwordData.confirmPassword}
+                    onChange={handlePasswordChange}
                     required
                   />
-
                 </div>
-
 
                 <button
                   type="submit"
@@ -640,29 +519,18 @@ const Profile = () => {
                   {changingPassword
                     ? "Changing..."
                     : "Change Password"}
-
                   <span>→</span>
                 </button>
-
               </form>
-
             </InView>
-
           </div>
 
-
-          {/* BACK */}
+          {/* BACK TO DASHBOARD */}
 
           <InView
             variants={{
-              hidden: {
-                opacity: 0,
-                y: 20,
-              },
-              visible: {
-                opacity: 1,
-                y: 0,
-              },
+              hidden: { opacity: 0, y: 20 },
+              visible: { opacity: 1, y: 0 },
             }}
             transition={{
               duration: 0.8,
@@ -672,18 +540,12 @@ const Profile = () => {
               margin: "0px 0px -60px 0px",
             }}
           >
-            <Link
-              to="/dashboard"
-              className="profile-back"
-            >
+            <Link to="/dashboard" className="profile-back">
               ← Back to Dashboard
             </Link>
           </InView>
-
         </div>
-
       </section>
-
     </main>
   );
 };

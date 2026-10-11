@@ -58,7 +58,7 @@ export function AnimatedBackground({
             <motion.div
               layoutId={`background-${uniqueId}`}
                className={cn("animated-background-layer", className)}
-              transition={transition || { duration: 0.10, ease: "easeOut" }}
+              transition={transition || { duration: 0.15, ease: "easeOut" }}
               initial={{
                 opacity: defaultValue ? 1 : 0,
               }}

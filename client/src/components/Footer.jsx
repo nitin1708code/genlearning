@@ -278,8 +278,8 @@ const Footer = () => {
           >
             <h3>Let's Talk</h3>
 
-            <a href="mailto:nitinchess17@gmail.com">
-              nitinchess17@gmail.com
+            <a href="mailto:genlearning8@gmail.com">
+              genlearning8@gmail.com
             </a>
 
             <span>

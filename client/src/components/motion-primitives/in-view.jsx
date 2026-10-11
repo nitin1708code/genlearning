@@ -11,7 +11,7 @@ export function InView({
   const ref = useRef(null);
 
   const isInView = useInView(ref, {
-    once: false,
+    once: true,
     ...viewOptions,
   });
 

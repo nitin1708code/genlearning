@@ -15936,3 +15936,124 @@ html[data-theme="light"]
   }
 
 }
+
+
+/* Mentoring dropdown - supports both themes */
+.mentoring-field select {
+  display: block;
+  width: 100%;
+  min-height: 58px;
+  padding: 0 18px;
+  border: 1px solid var(--border-color, #d5d5d5);
+  border-radius: 14px;
+  background: var(--card-bg, #ffffff);
+  color: var(--text, #111111);
+  font: inherit;
+  font-size: 16px;
+  cursor: pointer;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.mentoring-field select:focus {
+  border-color: var(--text, #777777);
+  box-shadow: 0 0 0 2px rgb(128 128 128 / 15%);
+}
+
+.mentoring-field select option {
+  background: var(--card-bg, #ffffff);
+  color: var(--text, #111111);
+}
+
+/* Dark theme */
+.dark .mentoring-field select,
+[data-theme="dark"] .mentoring-field select {
+  background: #151515;
+  color: #ffffff;
+  border-color: #303030;
+  color-scheme: dark;
+}
+
+.dark .mentoring-field select option,
+[data-theme="dark"] .mentoring-field select option {
+  background: #151515;
+  color: #ffffff;
+}
+
+
+/* Mentoring form fields — light + dark theme */
+.mentoring-card .mentoring-field select,
+.mentoring-card .mentoring-field input[type="text"] {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  min-height: 58px;
+  padding: 0 18px;
+  border: 1px solid var(--border-color, #303030);
+  border-radius: 14px;
+  background-color: var(--card-bg, #151515);
+  color: var(--text, #ffffff);
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.5;
+  outline: none;
+  box-shadow: none;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.mentoring-card .mentoring-field select {
+  cursor: pointer;
+  appearance: auto;
+}
+
+.mentoring-card .mentoring-field input[type="text"] {
+  appearance: none;
+}
+
+.mentoring-card .mentoring-field select:focus,
+.mentoring-card .mentoring-field input[type="text"]:focus {
+  border-color: var(--text, #888888);
+  outline: none;
+  box-shadow: 0 0 0 2px rgb(128 128 128 / 15%);
+}
+
+.mentoring-card .mentoring-field select option {
+  background-color: #ffffff;
+  color: #111111;
+}
+
+/* Dark theme */
+.dark .mentoring-card .mentoring-field select,
+.dark .mentoring-card .mentoring-field input[type="text"],
+[data-theme="dark"] .mentoring-card .mentoring-field select,
+[data-theme="dark"] .mentoring-card .mentoring-field input[type="text"] {
+  background-color: #151515;
+  color: #ffffff;
+  border-color: #303030;
+  color-scheme: dark;
+}
+
+.dark .mentoring-card .mentoring-field select option,
+[data-theme="dark"] .mentoring-card .mentoring-field select option {
+  background-color: #151515;
+  color: #ffffff;
+}
+
+/* Light theme */
+.light .mentoring-card .mentoring-field select,
+.light .mentoring-card .mentoring-field input[type="text"],
+[data-theme="light"] .mentoring-card .mentoring-field select,
+[data-theme="light"] .mentoring-card .mentoring-field input[type="text"] {
+  background-color: #ffffff;
+  color: #111111;
+  border-color: #d5d5d5;
+  color-scheme: light;
+}
+
+.light .mentoring-card .mentoring-field select option,
+[data-theme="light"] .mentoring-card .mentoring-field select option {
+  background-color: #ffffff;
+  color: #111111;
+}

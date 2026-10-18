@@ -30,6 +30,10 @@ const initialDuration =
   const [bookingTime, setBookingTime] =
     useState("");
 
+  // Subject dropdown
+  const [helpCategory, setHelpCategory] = useState("");
+  const [otherTopic, setOtherTopic] = useState("");
+
   const [loading, setLoading] =
     useState(false);
 
@@ -456,17 +460,12 @@ setTimeout(() => {
             },
 
             body: JSON.stringify({
-
-              duration_minutes:
-                duration,
-
-              booking_date:
-                bookingDate,
-
-              booking_time:
-                bookingTime,
-
-            }),
+  duration_minutes: duration,
+  booking_date: bookingDate,
+  booking_time: bookingTime,
+  subject: helpCategory,
+  custom_topic: helpCategory === "Other" ? otherTopic : null,
+}),
           }
         );
 
@@ -726,6 +725,55 @@ setTimeout(() => {
                 />
 
               </div>
+
+              {/* =================================================
+                  HELP CATEGORY
+              ================================================= */}
+
+              <div className="mentoring-field">
+                <label htmlFor="help-category">
+                  What do you need help with?
+                </label>
+
+                <select
+                  id="help-category"
+                  value={helpCategory}
+                  onChange={(event) => {
+                    setHelpCategory(event.target.value);
+                    if (event.target.value !== "Other") {
+                      setOtherTopic("");
+                    }
+                    clearMessages();
+                  }}
+                  required
+                >
+                  <option value="">Select a subject or topic</option>
+                  <option value="Coding">Coding / Programming</option>
+                  <option value="Bug Fixing">Coding Bug Fixing</option>
+                  <option value="Web Development">Web Development</option>
+                  <option value="Data Structures & Algorithms">
+                    Data Structures &amp; Algorithms
+                  </option>
+                  <option value="Physics">Physics</option>
+                  <option value="Chemistry">Chemistry</option>
+                  <option value="Mathematics">Mathematics</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+
+              {helpCategory === "Other" && (
+                <div className="mentoring-field">
+                  <label htmlFor="other-topic">Specify Subject / Topic</label>
+                  <input
+                    id="other-topic"
+                    type="text"
+                    value={otherTopic}
+                    onChange={(event) => setOtherTopic(event.target.value)}
+                    placeholder="Enter your subject or topic"
+                    required
+                  />
+                </div>
+              )}
 
               {/* =================================================
                   SUMMARY

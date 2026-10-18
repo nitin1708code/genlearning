@@ -133,6 +133,18 @@ async function sendMentoringEmails({
               </p>
 
               <p>
+  <strong>Subject:</strong>
+  ${booking.subject || "Not specified"}
+</p>
+
+${booking.custom_topic ? `
+<p>
+  <strong>Custom Topic:</strong>
+  ${booking.custom_topic}
+</p>
+` : ""}
+
+              <p>
                 <strong>Date:</strong>
                 ${booking.booking_date}
               </p>
@@ -251,6 +263,18 @@ async function sendMentoringEmails({
               </p>
 
               <p>
+  <strong>Subject:</strong>
+  ${booking.subject || "Not specified"}
+</p>
+
+${booking.custom_topic ? `
+<p>
+  <strong>Custom Topic:</strong>
+  ${booking.custom_topic}
+</p>
+` : ""}
+
+              <p>
                 <strong>Date:</strong>
                 ${booking.booking_date}
               </p>
@@ -342,12 +366,13 @@ router.get("/options", (req, res) => {
 router.post("/book", protect, async (req, res) => {
   try {
     const userId = req.user.userId;
-
     const {
-      duration_minutes,
-      booking_date,
-      booking_time,
-    } = req.body;
+  duration_minutes,
+  booking_date,
+  booking_time,
+  subject,
+  custom_topic,
+} = req.body;
 
 
     // -----------------------------------------------------
@@ -440,27 +465,31 @@ router.post("/book", protect, async (req, res) => {
 
     const [result] = await db.query(
       `
-      INSERT INTO mentoring_bookings
-      (
-        user_id,
-        duration_minutes,
-        price,
-        booking_date,
-        booking_time,
-        status,
-        razorpay_order_id
-      )
-      VALUES (?, ?, ?, ?, ?, ?, ?)
+     INSERT INTO mentoring_bookings
+(
+  user_id,
+  duration_minutes,
+  price,
+  booking_date,
+  booking_time,
+  status,
+  razorpay_order_id,
+  subject,
+  custom_topic
+)
+VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
       `,
       [
-        userId,
-        duration_minutes,
-        price,
-        booking_date,
-        booking_time,
-        "pending",
-        order.id,
-      ]
+  userId,
+  duration_minutes,
+  price,
+  booking_date,
+  booking_time,
+  "pending",
+  order.id,
+  subject || null,
+  custom_topic || null,
+]
     );
 
 
@@ -548,13 +577,15 @@ router.post(
       const [bookings] = await db.query(
         `
         SELECT
-          id,
-          duration_minutes,
-          price,
-          booking_date,
-          booking_time,
-          status
-        FROM mentoring_bookings
+  id,
+  duration_minutes,
+  price,
+  booking_date,
+  booking_time,
+  status,
+  subject,
+  custom_topic
+FROM mentoring_bookings
         WHERE razorpay_order_id = ?
         AND user_id = ?
         LIMIT 1

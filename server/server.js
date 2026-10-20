@@ -66,33 +66,7 @@ app.get("/", (req, res) => {
   });
 });
 
-
-// ========================================
-// DATABASE TEST
-// ========================================
-
-app.get("/api/db-test", async (req, res) => {
-  try {
-    const [rows] = await db.query(
-      "SELECT 1 AS connected"
-    );
-
-    res.json({
-      success: true,
-      message: "MySQL connected successfully",
-      data: rows,
-    });
-
-  } catch (error) {
-
-    console.error("Database error:", error);
-
-    res.status(500).json({
-      success: false,
-      message: "Database connection failed",
-    });
-  }
-});
+ 
 
 app.get("/api/health", (req, res) => {
   res.status(200).json({

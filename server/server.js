@@ -9,8 +9,7 @@ const enrollmentRoutes = require("./routes/enrollments");
 const contactRoutes = require("./routes/contactRoutes");
 const paymentRoutes = require("./routes/paymentRoutes");
 const mentoringRoutes = require("./routes/mentoringRoutes");
-
-
+const keepAliveRoute = require("./routes/keepAlive");
 const app = express();
 app.use(helmet());
  
@@ -54,6 +53,8 @@ app.use(
 app.use("/api/mentoring", 
   mentoringRoutes
 );
+
+app.use("/api/keepalive", keepAliveRoute);
 
 // ========================================
 // TEST ROUTE

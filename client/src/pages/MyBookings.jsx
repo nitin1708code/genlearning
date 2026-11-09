@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { InView } from "../components/motion-primitives/in-view";
-
+const API_URL = import.meta.env.VITE_API_URL;
 const MyBookings = () => {
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -23,7 +23,7 @@ const MyBookings = () => {
       }
 
       const response = await fetch(
-        "https://api.genlearning.in/api/mentoring/my-bookings",
+  `${API_URL}/api/mentoring/my-bookings`,
         {
           method: "GET",
           cache: "no-store",

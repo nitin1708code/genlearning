@@ -1,0 +1,3916 @@
+/* =========================================================
+   GEN LEARNING — MENTORING PAGE
+   Works with ThemeContext:
+   html[data-theme="dark"]
+   html[data-theme="light"]
+========================================================= */
+
+
+/* =========================================================
+   PAGE
+========================================================= */
+
+.mentoring-page {
+  width: 100%;
+  min-height: calc(100vh - 80px);
+  box-sizing: border-box;
+}
+
+
+/* =========================================================
+   DARK THEME
+========================================================= */
+
+html[data-theme="dark"] .mentoring-page {
+  background: #000;
+  color: #fff;
+}
+
+
+/* =========================================================
+   LIGHT THEME
+========================================================= */
+
+html[data-theme="light"] .mentoring-page {
+  background: #fff;
+  color: #111;
+}
+
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.mentoring-hero {
+  width: 100%;
+  min-height: calc(100vh - 80px);
+
+  display: flex;
+  align-items: center;
+
+  padding: 80px 24px 100px;
+
+  box-sizing: border-box;
+}
+
+
+/* =========================================================
+   CONTAINER
+========================================================= */
+
+.mentoring-container {
+  width: min(1100px, 100%);
+  margin: 0 auto;
+
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 1fr)
+    420px;
+
+  gap: 80px;
+
+  align-items: center;
+}
+
+
+/* =========================================================
+   LEFT CONTENT
+========================================================= */
+
+.mentoring-content {
+  max-width: 650px;
+}
+
+
+/* EYEBROW */
+
+.mentoring-content .section-eyebrow {
+  display: inline-block;
+
+  margin-bottom: 24px;
+
+  font-size: 12px;
+  font-weight: 600;
+
+  letter-spacing: 0.18em;
+}
+
+
+/* DARK */
+
+html[data-theme="dark"]
+.mentoring-content .section-eyebrow {
+  color: #999;
+}
+
+
+/* LIGHT */
+
+html[data-theme="light"]
+.mentoring-content .section-eyebrow {
+  color: #444;
+}
+
+
+/* HEADING */
+
+.mentoring-content h1 {
+  margin: 0;
+
+  font-size: clamp(48px, 6vw, 78px);
+
+  line-height: 0.98;
+
+  letter-spacing: -0.055em;
+
+  font-weight: 700;
+}
+
+
+/* DARK */
+
+html[data-theme="dark"]
+.mentoring-content h1 {
+  color: #fff;
+}
+
+
+/* LIGHT */
+
+html[data-theme="light"]
+.mentoring-content h1 {
+  color: #111;
+}
+
+
+/* SECOND LINE */
+
+.mentoring-content h1 span {
+  display: block;
+}
+
+
+/* DARK */
+
+html[data-theme="dark"]
+.mentoring-content h1 span {
+  color: #858585;
+}
+
+
+/* LIGHT */
+
+html[data-theme="light"]
+.mentoring-content h1 span {
+  color: #555;
+}
+
+
+/* DESCRIPTION */
+
+.mentoring-content p {
+  max-width: 600px;
+
+  margin: 30px 0 0;
+
+  font-size: 17px;
+
+  line-height: 1.7;
+}
+
+
+/* DARK */
+
+html[data-theme="dark"]
+.mentoring-content p {
+  color: #aaa;
+}
+
+
+/* LIGHT */
+
+html[data-theme="light"]
+.mentoring-content p {
+  color: #333;
+}
+
+
+/* =========================================================
+   BOOKING CARD
+========================================================= */
+
+.mentoring-card {
+  width: 100%;
+
+  box-sizing: border-box;
+
+  padding: 34px;
+
+  border-radius: 22px;
+
+  box-shadow:
+    0 25px 70px rgba(0, 0, 0, 0.12);
+}
+
+
+/* DARK */
+
+html[data-theme="dark"]
+.mentoring-card {  background: #101010;
+  border: 1px solid #292929;
+}
+
+
+/* LIGHT */
+
+html[data-theme="light"]
+.mentoring-card {
+  background: #f8f8f8;
+  border: 1px solid #d8d8d8;
+}
+
+
+/* =========================================================
+   CARD HEADER
+========================================================= */
+
+.mentoring-card-header {
+  margin-bottom: 30px;
+}
+
+
+.mentoring-card-header h2 {
+  margin: 0;
+
+  font-size: 28px;
+
+  line-height: 1.2;
+
+  letter-spacing: -0.03em;
+}
+
+
+/* DARK */
+
+html[data-theme="dark"]
+.mentoring-card-header h2 {
+  color: #fff;
+}
+
+
+/* LIGHT */
+
+html[data-theme="light"]
+.mentoring-card-header h2 {
+  color: #111;
+}
+
+
+.mentoring-card-header p {
+  margin: 9px 0 0;
+
+  font-size: 14px;
+
+  line-height: 1.5;
+}
+
+
+/* DARK */
+
+html[data-theme="dark"]
+.mentoring-card-header p {
+  color: #999;
+}
+
+
+/* LIGHT */
+
+html[data-theme="light"]
+.mentoring-card-header p {
+  color: #444;
+}
+
+
+/* =========================================================
+   FORM FIELD
+========================================================= */
+
+.mentoring-field {
+  margin-bottom: 24px;
+}
+
+
+.mentoring-field > label {
+  display: block;
+
+  margin-bottom: 10px;
+
+  font-size: 12px;
+
+  font-weight: 600;
+
+  letter-spacing: 0.08em;
+
+  text-transform: uppercase;
+}
+
+
+/* DARK */
+
+html[data-theme="dark"]
+.mentoring-field > label {
+  color: #aaa;
+}
+
+
+/* LIGHT */
+
+html[data-theme="light"]
+.mentoring-field > label {
+  color: #444;
+}
+/* =========================================================
+   DURATION OPTIONS
+========================================================= */
+
+.mentoring-options {
+  display: grid;
+
+  grid-template-columns: 1fr 1fr;
+
+  gap: 10px;
+}
+
+
+.mentoring-option {
+  width: 100%;
+
+  min-height: 92px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  justify-content: center;
+
+  align-items: flex-start;
+
+  gap: 8px;
+
+  padding: 16px;
+
+  box-sizing: border-box;
+
+  border-radius: 12px;
+
+  cursor: pointer;
+
+  text-align: left;
+
+  font-family: inherit;
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+
+/* =========================================================
+   DARK OPTION
+========================================================= */
+
+html[data-theme="dark"]
+.mentoring-option {
+  background: #151515;
+
+  border: 1px solid #303030;
+
+  color: #fff;
+}
+
+
+html[data-theme="dark"]
+.mentoring-option:hover {
+  border-color: #777;
+
+  transform: translateY(-1px);
+}
+
+
+html[data-theme="dark"]
+.mentoring-option span {
+  color: #b0b0b0;
+}
+
+
+html[data-theme="dark"]
+.mentoring-option strong {
+  color: #fff;
+
+  font-size: 20px;
+}
+
+
+/* =========================================================
+   LIGHT OPTION
+========================================================= */
+
+html[data-theme="light"]
+.mentoring-option {
+  background: #fff;
+
+  border: 1px solid #ddd;
+
+  color: #111;
+}
+
+
+html[data-theme="light"]
+.mentoring-option:hover {
+  border-color: #888;
+
+  transform: translateY(-1px);
+}
+
+
+html[data-theme="light"]
+.mentoring-option span {
+  color: #555;
+}
+
+
+html[data-theme="light"]
+.mentoring-option strong {
+  color: #111;
+
+  font-size: 20px;
+}
+/* =========================================================
+   ACTIVE OPTION — DARK
+========================================================= */
+
+html[data-theme="dark"]
+.mentoring-option.active {
+  background: #222 !important;
+
+  border-color: #fff !important;
+
+  color: #fff !important;
+}
+
+
+html[data-theme="dark"]
+.mentoring-option.active span,
+html[data-theme="dark"]
+.mentoring-option.active strong {
+  color: #fff !important;
+}
+
+
+/* =========================================================
+   ACTIVE OPTION — LIGHT
+========================================================= */
+
+/*
+   IMPORTANT:
+   Selected option becomes BLACK,
+   therefore ₹199 remains clearly visible.
+*/
+
+html[data-theme="light"]
+.mentoring-option.active {
+  background: #111 !important;
+
+  border-color: #111 !important;
+
+  color: #fff !important;
+}
+
+
+html[data-theme="light"]
+.mentoring-option.active span,
+html[data-theme="light"]
+.mentoring-option.active strong {
+  color: #fff !important;
+}
+
+
+/* =========================================================
+   DATE / TIME
+========================================================= */
+
+.mentoring-field input[type="date"],
+.mentoring-field input[type="time"] {
+  width: 100%;  height: 52px;
+
+  padding: 0 15px;
+
+  box-sizing: border-box;
+
+  border-radius: 10px;
+
+  font-family: inherit;
+
+  font-size: 14px;
+
+  outline: none;
+
+  transition:
+    border-color 0.2s ease,
+    background 0.2s ease;
+}
+
+
+/* DARK */
+
+html[data-theme="dark"]
+.mentoring-field input[type="date"],
+html[data-theme="dark"]
+.mentoring-field input[type="time"] {
+  background: #151515;
+
+  border: 1px solid #303030;
+
+  color: #fff;
+
+  color-scheme: dark;
+}
+
+
+/* LIGHT */
+
+html[data-theme="light"]
+.mentoring-field input[type="date"],
+html[data-theme="light"]
+.mentoring-field input[type="time"] {
+  background: #fff;
+
+  border: 1px solid #cfcfcf;
+
+  color: #111;
+
+  color-scheme: light;
+}
+/* FOCUS */
+
+.mentoring-field input[type="date"]:focus,
+.mentoring-field input[type="time"]:focus {
+  border-color: #777;
+}
+
+
+/* =========================================================
+   SUMMARY
+========================================================= */
+
+.mentoring-summary {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  margin: 28px 0 22px;
+
+  padding-top: 22px;
+}
+
+
+/* DARK */
+
+html[data-theme="dark"]
+.mentoring-summary {
+  border-top: 1px solid #292929;
+}
+
+
+/* LIGHT */
+
+html[data-theme="light"]
+.mentoring-summary {
+  border-top: 1px solid #d5d5d5;
+}
+
+
+.mentoring-summary span {
+  font-size: 14px;
+}
+
+
+/* DARK */
+
+html[data-theme="dark"]
+.mentoring-summary span {
+  color: #999;
+}
+
+
+/* LIGHT */
+
+html[data-theme="light"]
+.mentoring-summary span {
+  color: #333;
+}
+
+
+.mentoring-summary strong {
+  font-size: 26px;
+
+  line-height: 1;
+}
+
+
+/* DARK */
+
+html[data-theme="dark"]
+.mentoring-summary strong {
+  color: #fff;
+}
+
+
+/* LIGHT */
+
+html[data-theme="light"]
+.mentoring-summary strong {
+  color: #111;
+}
+
+
+/* =========================================================
+   BOOK BUTTON
+========================================================= */
+
+.mentoring-submit {
+  width: 100%;
+
+  min-height: 56px;
+
+  padding: 15px 20px;
+
+  border: none;
+
+  border-radius: 10px;
+
+  font-family: inherit;
+
+  font-size: 15px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.2s ease,
+    opacity 0.2s ease;
+}
+
+
+/* DARK */
+
+html[data-theme="dark"]
+.mentoring-submit {
+  background: #fff;
+
+  color: #000;
+}
+
+
+/* LIGHT */
+
+html[data-theme="light"]
+.mentoring-submit {
+  background: #111;
+
+  color: #fff;
+}
+
+
+/* HOVER */
+
+.mentoring-submit:hover {
+  transform: translateY(-1px);
+}
+
+
+/* DISABLED */
+
+.mentoring-submit:disabled {
+  opacity: 0.5;
+
+  cursor: not-allowed;
+
+  transform: none;
+}
+
+
+/* =========================================================
+   ERROR
+========================================================= */
+
+.mentoring-error {
+  margin: 10px 0 16px;
+
+  color: #e53935;
+
+  font-size: 13px;
+
+  line-height: 1.5;
+}
+/* =========================================================
+   SUCCESS
+========================================================= */
+
+.mentoring-success {
+  margin: 10px 0 16px;
+
+  color: #249653;
+
+  font-size: 13px;
+
+  line-height: 1.5;
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 950px) {
+
+  .mentoring-container {
+    grid-template-columns:
+      minmax(0, 1fr)
+      390px;
+
+    gap: 45px;
+  }
+
+  .mentoring-content h1 {
+    font-size: clamp(42px, 5vw, 62px);
+  }
+
+  .mentoring-card {
+    padding: 28px;
+  }
+
+}
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 800px) {
+
+  .mentoring-hero {
+    min-height: auto;
+    padding: 65px 20px 90px;
+  }
+
+  .mentoring-container {
+    grid-template-columns: 1fr;
+    gap: 55px;
+  }
+
+  .mentoring-content {
+    max-width: 650px;
+  }
+
+  .mentoring-content h1 {
+    font-size: clamp(44px, 12vw, 64px);
+    line-height: 0.98;
+  }
+
+  .mentoring-content p {
+    margin-top: 24px;
+    font-size: 15px;
+  }
+
+  .mentoring-card {
+    padding: 26px;
+    border-radius: 18px;
+  }
+
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 480px) {
+
+  .mentoring-hero {
+    padding: 50px 16px 70px;
+  }
+
+  .mentoring-content .section-eyebrow {
+    margin-bottom: 18px;
+    font-size: 11px;
+  }
+
+  .mentoring-content h1 {
+    font-size: 46px;
+  }
+
+  .mentoring-content p {
+    font-size: 14px;
+    line-height: 1.65;
+  }
+
+  .mentoring-card {
+    padding: 21px;
+    border-radius: 16px;
+  }
+
+  .mentoring-card-header h2 {
+    font-size: 25px;
+  }
+
+  .mentoring-options {
+    grid-template-columns: 1fr;
+  }
+
+  .mentoring-option {
+    min-height: 78px;
+  }
+
+}
+
+
+/* =========================================================
+   VERY SMALL DEVICES
+========================================================= */
+
+@media (max-width: 360px) {
+
+  .mentoring-content h1 {
+    font-size: 40px;
+  }
+
+  .mentoring-card {
+    padding: 18px;
+  }
+
+}
+
+
+/* =========================================================
+   HERO CONTAINER
+========================================================= */
+
+.hero-container {
+  position: relative;
+}
+
+
+/* =========================================================
+   1:1 MENTORING QUICK BOOK
+   DESKTOP
+========================================================= */
+
+.hero-mentoring-quick {
+  position: absolute;
+
+  top: 22px;
+  right: 28px;
+
+  z-index: 100;
+
+  display: flex;
+  align-items: center;
+
+  min-height: 42px;
+
+  padding: 4px 5px 4px 13px;
+
+  gap: 7px;
+
+  border: 1px solid rgba(255, 255, 255, 0.14);
+
+  border-radius: 999px;
+
+  background: rgba(18, 18, 18, 0.90);
+
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.22);
+
+  white-space: nowrap;
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+
+/* =========================================================
+   LABEL
+========================================================= */
+
+.hero-mentoring-quick-label {
+  color: #fff;
+
+  font-size: 11px;
+
+  font-weight: 600;
+
+  letter-spacing: 0.01em;
+
+  white-space: nowrap;
+}
+
+
+/* =========================================================
+   DROPDOWN
+========================================================= */
+
+.hero-mentoring-quick-select {
+  height: 30px;
+
+  min-width: 92px;
+
+  padding: 0 25px 0 9px;
+
+  border: 1px solid #383838;
+
+  border-radius: 7px;
+
+  background: #202020;
+
+  color: #fff;
+
+  font-family: inherit;
+
+  font-size: 10px;
+
+  font-weight: 600;
+
+  outline: none;
+
+  cursor: pointer;
+
+  color-scheme: dark;
+
+  transition:
+    border-color 0.2s ease,
+    background 0.2s ease;
+}
+
+
+.hero-mentoring-quick-select:hover {
+  border-color: #666;
+}
+
+
+.hero-mentoring-quick-select:focus {
+  border-color: #888;
+}
+
+
+.hero-mentoring-quick-select option {
+  background: #202020;
+  color: #fff;
+}
+
+
+/* =========================================================
+   PRICE
+   Hidden until dropdown is changed
+========================================================= */
+
+.hero-mentoring-quick-price {
+  min-width: 34px;
+
+  color: #fff;
+
+  font-size: 11px;
+
+  font-weight: 700;
+
+  text-align: center;
+
+  white-space: nowrap;
+
+  animation: mentoringPriceIn 0.18s ease;
+}
+
+
+@keyframes mentoringPriceIn {
+  from {
+    opacity: 0;
+    transform: translateX(-3px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+
+/* =========================================================
+   BOOK BUTTON
+========================================================= */
+
+.hero-mentoring-quick-link {
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  height: 30px;
+
+  padding: 0 10px;
+
+  gap: 4px;
+
+  border-radius: 7px;
+
+  background: #fff;
+
+  color: #000;
+
+  text-decoration: none;
+
+  font-family: inherit;
+
+  font-size: 10px;
+
+  font-weight: 700;
+
+  white-space: nowrap;
+
+  transition:
+    transform 0.2s ease,
+    opacity 0.2s ease;
+}
+
+
+.hero-mentoring-quick-link span {
+  font-size: 12px;
+}
+
+
+.hero-mentoring-quick-link:hover {
+  transform: translateY(-1px);
+  opacity: 0.9;
+}
+
+
+.hero-mentoring-quick-link:active {
+  transform: translateY(0);
+}
+
+
+/* =========================================================
+   DARK THEME
+========================================================= */
+
+[data-theme="dark"] .hero-mentoring-quick {
+  background: rgba(18, 18, 18, 0.90);
+
+  border-color: rgba(255, 255, 255, 0.14);
+
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.28);
+}
+
+
+[data-theme="dark"] .hero-mentoring-quick-label {
+  color: #fff;
+}
+
+
+[data-theme="dark"] .hero-mentoring-quick-select {
+  background: #202020;
+  border-color: #383838;
+  color: #fff;
+  color-scheme: dark;
+}
+
+
+[data-theme="dark"] .hero-mentoring-quick-price {
+  color: #fff;
+}
+
+
+[data-theme="dark"] .hero-mentoring-quick-link {
+  background: #fff;
+  color: #000;
+}
+
+
+/* =========================================================
+   LIGHT THEME
+========================================================= */
+
+[data-theme="light"] .hero-mentoring-quick {
+  background: rgba(255, 255, 255, 0.96);
+
+  border-color: #d5d5d5;
+
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.10);
+}
+
+
+[data-theme="light"] .hero-mentoring-quick-label {
+  color: #111;
+}
+
+
+[data-theme="light"] .hero-mentoring-quick-select {
+  background: #f5f5f5;
+  border-color: #cfcfcf;
+  color: #111;
+  color-scheme: light;
+}
+
+
+[data-theme="light"] .hero-mentoring-quick-select option {
+  background: #fff;
+  color: #111;
+}
+
+
+[data-theme="light"] .hero-mentoring-quick-price {
+  color: #111;
+}
+
+
+[data-theme="light"] .hero-mentoring-quick-link {
+  background: #111;
+  color: #fff;
+}
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 1100px) {
+
+  .hero-mentoring-quick {
+    top: 18px;
+    right: 15px;
+  }
+
+}
+
+
+/* =========================================================
+   SMALL TABLET
+========================================================= */
+
+@media (max-width: 900px) {
+
+  .hero-mentoring-quick {
+    top: 14px;
+    right: 10px;
+
+    transform: scale(0.95);
+    transform-origin: right top;
+  }
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 700px) {
+
+  /*
+    Mobile me navbar ke just neeche.
+    Hero content ka layout disturb nahi karega.
+  */
+
+  .hero-mentoring-quick {
+    position: absolute;
+
+    top: 10px;
+
+    left: 50%;
+    right: auto;
+
+    transform: translateX(-50%);
+
+    min-height: 40px;
+
+    padding: 4px 5px 4px 12px;
+
+    gap: 6px;
+
+    max-width: calc(100% - 20px);
+
+    z-index: 100;
+  }
+
+
+  .hero-mentoring-quick-label {
+    font-size: 10px;
+  }
+
+
+  .hero-mentoring-quick-select {
+    height: 29px;
+
+    min-width: 86px;
+    max-width: 86px;
+
+    padding: 0 21px 0 8px;
+
+    font-size: 10px;
+  }
+
+
+  .hero-mentoring-quick-price {
+    font-size: 10px;
+    min-width: 30px;
+  }
+
+
+  .hero-mentoring-quick-link {
+    height: 29px;
+
+    padding: 0 9px;
+
+    font-size: 10px;
+  }
+
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 480px) {
+
+  .hero-mentoring-quick {
+    top: 8px;
+
+    min-height: 40px;
+
+    padding-left: 10px;
+
+    gap: 5px;
+  }
+
+
+  .hero-mentoring-quick-label {
+    font-size: 9px;
+  }
+
+
+  .hero-mentoring-quick-select {
+    min-width: 80px;
+    max-width: 80px;
+
+    height: 28px;
+
+    padding-left: 7px;
+    padding-right: 18px;
+
+    font-size: 9px;
+  }
+
+
+  .hero-mentoring-quick-price {
+    font-size: 10px;
+    min-width: 28px;
+  }
+
+
+  .hero-mentoring-quick-link {
+    height: 28px;
+
+    padding: 0 8px;
+
+    font-size: 9px;
+  }
+
+
+  .hero-mentoring-quick-link span {
+    font-size: 10px;
+  }
+
+}
+
+
+/* =========================================================
+   VERY SMALL DEVICES
+========================================================= */
+
+@media (max-width: 360px) {
+
+  .hero-mentoring-quick {
+    gap: 4px;
+    padding-left: 8px;
+  }
+
+
+  .hero-mentoring-quick-label {
+    font-size: 8px;
+  }
+
+
+  .hero-mentoring-quick-select {
+    min-width: 72px;
+    max-width: 72px;
+
+    font-size: 8px;
+  }
+
+
+  .hero-mentoring-quick-price {
+    font-size: 9px;
+  }
+
+
+  .hero-mentoring-quick-link {
+    padding: 0 7px;
+    font-size: 8px;
+  }
+
+}
+
+
+/* =========================================================
+   MY BOOKINGS PAGE
+   GenLearning Dark Theme
+========================================================= */
+
+.my-bookings-page {
+  min-height: 100vh;
+
+  background: #000;
+  color: #fff;
+}
+
+
+/* =========================================================
+   CONTAINER
+========================================================= */
+
+.my-bookings-container {
+  width: min(1180px, calc(100% - 48px));
+
+  margin: 0 auto;
+}
+
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.my-bookings-hero {
+  position: relative;
+
+  padding: 130px 0 80px;
+
+  overflow: hidden;
+
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+
+.my-bookings-hero::before {
+  content: "";
+
+  position: absolute;
+
+  width: 520px;
+  height: 520px;
+
+  left: -180px;
+  top: 20px;
+
+  background: radial-gradient(
+    circle,
+    rgba(0, 120, 255, 0.11),
+    transparent 70%
+  );
+
+  pointer-events: none;
+}
+
+
+.my-bookings-hero::after {
+  content: "";
+
+  position: absolute;
+
+  width: 450px;
+  height: 450px;
+    right: -180px;
+  top: 50px;
+
+  background: radial-gradient(
+    circle,
+    rgba(0, 200, 255, 0.07),
+    transparent 70%
+  );
+
+  pointer-events: none;
+}
+
+
+/* =========================================================
+   EYEBROW
+========================================================= */
+
+.my-bookings-eyebrow {
+  display: inline-flex;
+  align-items: center;
+
+  color: #91a9c2;
+
+  font-size: 12px;
+  font-weight: 600;
+
+  letter-spacing: 2.5px;
+
+  margin-bottom: 18px;
+}
+
+
+/* =========================================================
+   HERO TEXT
+========================================================= */
+
+.my-bookings-hero h1 {
+  position: relative;
+
+  margin: 0;
+
+  max-width: 800px;
+
+  font-size: clamp(52px, 7vw, 92px);
+
+  line-height: 0.98;
+
+  letter-spacing: -4px;
+
+  font-weight: 700;
+}
+
+.my-bookings-hero h1 span {
+  display: block;
+  color: #686868;
+}
+
+.my-bookings-hero p {
+  position: relative;
+
+  max-width: 650px;
+
+  margin: 30px 0 0;
+
+  color: #9eacc0;
+
+  font-size: 18px;
+
+  line-height: 1.7;
+}
+
+
+/* =========================================================
+   HERO BUTTON
+========================================================= */
+
+.my-bookings-hero-btn {
+  position: relative;
+
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 18px;
+
+  margin-top: 34px;
+
+  padding: 14px 22px;
+
+  background: #fff;
+  color: #000;
+
+  border-radius: 999px;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  text-decoration: none;
+
+  transition:
+    transform 0.25s ease,
+    background 0.25s ease;
+}
+
+.my-bookings-hero-btn:hover {
+  transform: translateY(-2px);
+
+  background: #e8e8e8;
+}
+
+.my-bookings-hero-btn span {
+  font-size: 18px;
+}
+
+
+/* =========================================================
+   CONTENT
+========================================================= */
+
+.my-bookings-content {
+  padding: 80px 0 120px;
+}
+
+
+/* =========================================================
+   ALERT
+========================================================= */
+
+.my-bookings-alert {
+  display: flex;
+  align-items: flex-start;
+
+  gap: 16px;
+
+  padding: 20px;
+
+  margin-bottom: 30px;
+
+  border: 1px solid rgba(255, 80, 80, 0.3);
+
+  border-radius: 16px;
+
+  background: rgba(255, 50, 50, 0.05);
+
+  color: #fff;
+}
+
+.my-bookings-alert-icon {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  width: 32px;
+  height: 32px;
+
+  flex-shrink: 0;
+
+  border-radius: 50%;
+
+  background: rgba(255, 70, 70, 0.15);
+
+  color: #ff7272;
+
+  font-weight: 700;
+}
+
+.my-bookings-alert strong {
+  display: block;
+
+  margin-bottom: 5px;
+
+  font-size: 14px;
+}
+
+.my-bookings-alert p {
+  margin: 0;
+
+  color: #a8a8a8;
+
+  font-size: 14px;
+}
+
+
+/* =========================================================
+   LOADING
+========================================================= */
+
+.my-bookings-loading {
+  min-height: 320px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 18px;
+
+  color: #858585;
+}
+
+.my-bookings-spinner {
+  width: 36px;
+  height: 36px;
+
+  border: 2px solid rgba(255, 255, 255, 0.15);
+
+  border-top-color: #fff;
+
+  border-radius: 50%;
+
+  animation: myBookingsSpin 0.8s linear infinite;
+}
+
+@keyframes myBookingsSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.my-bookings-loading p {
+  margin: 0;
+
+  font-size: 14px;
+}
+
+
+/* =========================================================
+   EMPTY STATE
+========================================================= */
+
+.my-bookings-empty {
+  max-width: 650px;
+
+  margin: 20px auto;
+
+  padding: 80px 30px;
+
+  text-align: center;
+
+  border: 1px solid rgba(255, 255, 255, 0.1);
+
+  border-radius: 24px;
+
+  background:
+    radial-gradient(
+      circle at top,
+      rgba(255, 255, 255, 0.035),
+      transparent 55%
+    ),
+    #0b0b0b;
+}
+
+.my-bookings-empty-icon {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  width: 70px;
+  height: 70px;
+
+  margin: 0 auto 25px;
+
+  border: 1px solid rgba(255, 255, 255, 0.12);
+
+  border-radius: 20px;
+
+  color: #a8b8c8;
+
+  font-size: 30px;
+}
+
+.my-bookings-empty .my-bookings-eyebrow {
+  margin-bottom: 12px;
+}
+
+.my-bookings-empty h2 {
+  margin: 0;
+
+  font-size: 32px;
+
+  letter-spacing: -1px;
+}
+
+.my-bookings-empty p {
+  max-width: 480px;
+
+  margin: 18px auto 0;
+
+  color: #8d8d8d;
+
+  font-size: 15px;
+
+  line-height: 1.7;
+}
+
+
+/* =========================================================
+   PRIMARY BUTTON
+========================================================= */
+
+.my-bookings-primary-btn {
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 14px;
+
+  margin-top: 28px;
+
+  padding: 14px 22px;
+
+  border-radius: 999px;
+
+  background: #fff;
+
+  color: #000;
+
+  font-size: 14px;
+
+  font-weight: 600;
+
+  text-decoration: none;
+
+  transition:
+    transform 0.25s ease,
+    background 0.25s ease;
+}
+
+.my-bookings-primary-btn:hover {
+  transform: translateY(-2px);
+
+  background: #e8e8e8;
+}
+
+
+/* =========================================================
+   LIST HEADER
+========================================================= */
+
+.my-bookings-list-header {
+  display: flex;
+
+  align-items: flex-end;
+  .my-bookings-list-header {
+  display: flex;
+
+  align-items: flex-end;
+
+  justify-content: space-between;
+
+  gap: 30px;
+
+  margin-bottom: 35px;
+}}
+
+.my-bookings-list-header h2 {
+  margin: 0;
+
+  font-size: 38px;
+
+  letter-spacing: -1.5px;
+}
+
+.my-bookings-list-header p {
+  margin: 8px 0 0;
+
+  color: #777;
+
+  font-size: 14px;
+}
+
+
+/* =========================================================
+   SECONDARY BUTTON
+========================================================= */
+
+.my-bookings-secondary-btn {
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 12px;
+
+  padding: 12px 18px;
+
+  border: 1px solid rgba(255, 255, 255, 0.14);
+
+  border-radius: 999px;
+
+  color: #fff;
+
+  background: #0a0a0a;
+
+  font-size: 13px;
+
+  font-weight: 500;
+
+  text-decoration: none;
+
+  transition:
+    background 0.25s ease,
+    border-color 0.25s ease,
+    transform 0.25s ease;
+}
+
+.my-bookings-secondary-btn:hover {
+  background: #151515;
+
+  border-color: rgba(255, 255, 255, 0.28);
+
+  transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   BOOKINGS LIST
+========================================================= */
+
+.my-bookings-list {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 18px;
+}
+
+
+/* =========================================================
+   BOOKING CARD
+========================================================= */
+
+.my-booking-card {
+  position: relative;
+
+  padding: 28px;
+
+  border: 1px solid rgba(255, 255, 255, 0.1);
+
+  border-radius: 22px;
+
+  background:
+    radial-gradient(
+      circle at 85% 10%,
+      rgba(255, 255, 255, 0.035),
+      transparent 35%
+    ),
+    #0b0b0b;
+
+  transition:
+    border-color 0.25s ease,
+    transform 0.25s ease,
+    background 0.25s ease;
+}
+
+.my-booking-card:hover {
+  transform: translateY(-2px);
+
+  border-color: rgba(255, 255, 255, 0.18);
+
+  background:
+    radial-gradient(
+      circle at 85% 10%,
+      rgba(255, 255, 255, 0.05),
+      transparent 35%
+    ),
+    #0d0d0d;
+}
+
+
+/* =========================================================
+   CARD TOP
+========================================================= */
+
+.my-booking-card-top {
+  display: flex;
+
+  align-items: flex-start;
+
+  justify-content: space-between;
+
+  gap: 25px;
+}
+
+.my-booking-label {
+  display: block;
+
+  margin-bottom: 9px;
+
+  color: #7690aa;
+
+  font-size: 11px;
+
+  font-weight: 600;
+
+  letter-spacing: 2px;
+}
+
+.my-booking-title-area h3 {
+  margin: 0;
+
+  color: #fff;
+
+  font-size: 25px;
+
+  font-weight: 600;
+
+  letter-spacing: -0.6px;
+}
+
+
+/* =========================================================
+   STATUS
+========================================================= */
+
+.my-booking-status {
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 8px;
+
+  flex-shrink: 0;
+
+  padding: 8px 12px;
+
+  border-radius: 999px;
+
+  font-size: 12px;
+
+  font-weight: 500;
+}
+
+.my-booking-status.confirmed {
+  border: 1px solid rgba(40, 200, 120, 0.25);
+
+  background: rgba(40, 200, 120, 0.08);
+
+  color: #57d995;
+}
+
+.my-booking-status.pending {
+  border: 1px solid rgba(255, 190, 70, 0.25);
+
+  background: rgba(255, 190, 70, 0.07);
+
+  color: #e6b85c;
+}
+
+.status-dot {
+  width: 6px;
+  height: 6px;
+
+  border-radius: 50%;
+
+  background: currentColor;
+}
+
+
+/* =========================================================
+   DIVIDER
+========================================================= */
+
+.my-booking-divider {
+  width: 100%;
+
+  height: 1px;
+
+  margin: 24px 0;
+
+  background: rgba(255, 255, 255, 0.08);
+}
+
+
+/* =========================================================
+   DETAILS
+========================================================= */
+
+.my-booking-details {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, 1fr);
+
+  gap: 20px;
+}
+
+.my-booking-detail {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 7px;
+}
+
+.my-booking-detail span {
+  color: #656565;
+
+  font-size: 10px;
+
+  font-weight: 600;
+
+  letter-spacing: 1.7px;
+}
+
+.my-booking-detail strong {
+  color: #e7e7e7;
+
+  font-size: 15px;
+
+  font-weight: 500;
+}
+
+
+/* =========================================================
+   PAYMENT
+========================================================= */
+
+.my-booking-payment {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 20px;
+
+  margin-top: 24px;
+
+  padding-top: 18px;
+
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.my-booking-payment span {
+  color: #5e5e5e;
+
+  font-size: 10px;
+
+  font-weight: 600;
+
+  letter-spacing: 1.5px;
+}
+
+.my-booking-payment strong {
+  max-width: 70%;
+
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+
+  white-space: nowrap;
+
+  color: #7c8998;
+
+  font-size: 11px;
+
+  font-weight: 400;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 900px) {
+
+  .my-bookings-hero {
+    padding: 100px 0 65px;
+  }
+
+  .my-bookings-content {
+    padding: 60px 0 90px;
+  }
+
+  .my-bookings-hero h1 {
+    font-size: clamp(48px, 9vw, 72px);
+
+    letter-spacing: -3px;
+  }
+
+  .my-bookings-list-header {
+    align-items: flex-start;
+  }
+
+}
+
+
+@media (max-width: 650px) {
+
+  .my-bookings-container {
+    width: min(
+      100% - 30px,
+      1180px
+    );
+  }
+
+  .my-bookings-hero {
+    padding: 85px 0 55px;
+  }
+
+  .my-bookings-hero h1 {
+    font-size: 48px;
+
+    letter-spacing: -2.5px;
+  }
+
+  .my-bookings-hero p {
+    margin-top: 22px;
+
+    font-size: 15px;
+
+    line-height: 1.65;
+  }
+
+  .my-bookings-content {
+    padding: 45px 0 70px;
+  }
+
+  .my-bookings-list-header {
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    gap: 20px;
+  }
+
+  .my-bookings-list-header h2 {
+    font-size: 30px;
+  }
+
+  .my-bookings-secondary-btn {
+    width: 100%;
+
+    justify-content: center;
+  }
+
+  .my-booking-card {
+    padding: 21px;
+
+    border-radius: 18px;
+  }
+
+  .my-booking-card-top {
+    flex-direction: column;
+
+    gap: 18px;
+  }
+
+  .my-booking-status {
+    align-self: flex-start;
+  }
+
+  .my-booking-details {
+    grid-template-columns: 1fr 1fr;
+
+    gap: 22px 15px;
+  }
+
+  .my-booking-detail:last-child {
+    grid-column: 1 / -1;
+  }
+
+  .my-booking-payment {
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    gap: 8px;
+  }
+
+  .my-booking-payment strong {
+    max-width: 100%;
+  }
+
+}
+
+
+@media (max-width: 420px) {
+
+  .my-bookings-container {
+    width: calc(100% - 24px);
+  }
+
+  .my-bookings-hero {
+    padding-top: 70px;
+  }
+
+  .my-bookings-hero h1 {
+    font-size: 42px;
+
+    letter-spacing: -2px;
+  }
+
+  .my-bookings-empty {
+    padding: 55px 20px;
+  }
+
+  .my-bookings-empty h2 {
+    font-size: 26px;
+  }
+
+  .my-booking-details {
+    grid-template-columns: 1fr;
+  }
+
+  .my-booking-detail:last-child {
+    grid-column: auto;
+  }
+
+}
+
+/* =========================================================
+   GEN LEARNING: MENTORING + MENTORING BOOKING
+   All classes start with "gm-" so they never clash with the
+   old .mentoring-* styles in index.css.
+========================================================= */
+
+.gm-page {
+  --gm-accent: #25d6a0;
+  --gm-ink: #06251c;
+  --gm-accent-text: #0b8a66;
+  --gm-feature: rgba(37, 214, 160, 0.07);
+  --gm-glow: rgba(37, 214, 160, 0.14);
+
+  width: 100%;
+  min-height: calc(100vh - 76px);
+  display: flex;
+  align-items: center;
+  padding: 28px 0;
+  box-sizing: border-box;
+  background: var(--bg);
+  color: var(--text);
+}
+
+[data-theme="dark"] .gm-page {
+  --gm-accent-text: #25d6a0;
+  --gm-feature: #0e1612;
+  color-scheme: dark;
+}
+
+.gm-page *,
+.gm-page *::before,
+.gm-page *::after {
+  box-sizing: border-box;
+}
+
+.gm-wrap {
+  width: min(1320px, calc(100% - 48px));
+  margin: 0 auto;
+}
+
+
+/* HEADING */
+
+.gm-head {
+  margin-bottom: clamp(18px, 3.2vh, 32px);
+}
+
+.gm-eyebrow {
+  display: block;
+  color: var(--text-muted);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+}
+
+.gm-title {
+  margin: 10px 0 12px;
+  color: var(--text);
+  font-size: clamp(2rem, 4vw, 3.4rem);
+  font-weight: 800;
+  line-height: 1.02;
+  letter-spacing: -0.045em;
+}
+
+.gm-title span {
+  display: block;
+  color: var(--text-secondary);
+}
+
+.gm-sub {
+  max-width: 620px;
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 14px;
+  line-height: 1.65;
+}
+
+
+/* ALL CARDS IN ONE ROW (3 monthly + 2 single) */
+
+.gm-row {
+  display: flex;
+  align-items: stretch;
+  gap: 28px;
+}
+
+.gm-group {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-width: 0;
+}
+
+.gm-group--monthly {
+  flex: 3 1 0;
+}
+
+.gm-group--single {
+  flex: 2 1 0;
+  padding-left: 28px;
+  border-left: 1px solid var(--border);
+}
+
+.gm-group-title {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.gm-group-title h2 {
+  margin: 0;
+  color: var(--text);
+  font-size: 15px;
+  font-weight: 750;
+  letter-spacing: -0.01em;
+}
+
+.gm-group-title span {
+  color: var(--text-muted);
+  font-size: 11px;
+}
+
+.gm-cards {
+  flex: 1;
+  display: grid;
+  gap: 12px;
+}
+
+.gm-group--monthly .gm-cards {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.gm-group--single .gm-cards {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+
+/* CARD */
+
+.gm-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: 22px 16px 16px;
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  background: var(--surface);
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.gm-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--gm-accent);
+}
+
+.gm-card.is-featured {
+  border-color: var(--gm-accent);
+  background: var(--gm-feature);
+  box-shadow:
+    0 0 0 1px var(--gm-accent),
+    0 0 0 6px var(--gm-glow);
+}
+
+.gm-badge {
+  position: absolute;
+  top: -11px;
+  left: 14px;
+  padding: 5px 10px;
+  border-radius: 999px;
+  background: var(--gm-accent);
+  color: var(--gm-ink);
+  font-size: 9.5px;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: 0.06em;
+}
+
+.gm-name {
+  margin: 0 0 10px;
+  color: var(--text-secondary);
+  font-size: 13px;
+  font-weight: 650;
+}
+
+.gm-price {
+  color: var(--text);
+  font-size: clamp(1.8rem, 2.5vw, 2.5rem);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.045em;
+  white-space: nowrap;
+}
+
+.gm-period {
+  margin: 6px 0 0;
+  color: var(--text-muted);
+  font-size: 12px;
+}
+
+.gm-sessions {
+  margin: 14px 0 4px;
+  color: var(--text);
+  font-size: 12.5px;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.gm-persession {
+  margin: 0;
+  color: var(--gm-accent-text);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.gm-note {
+  margin: 4px 0 12px;
+  color: var(--text-muted);
+  font-size: 11px;
+}
+
+.gm-list {
+  flex: 1;
+  display: grid;
+  align-content: start;
+  gap: 7px;
+  margin: 0 0 14px;
+  padding: 0;
+  list-style: none;
+}
+
+.gm-list li {
+  position: relative;
+  padding-left: 18px;
+  color: var(--text-secondary);
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.gm-list li::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  color: var(--gm-accent-text);
+  font-weight: 800;
+}
+
+
+/* SINGLE SESSION CARD */
+
+.gm-duration {
+  margin: 0 0 10px;
+  color: var(--text);
+  font-size: 1.35rem;
+  font-weight: 750;
+  letter-spacing: -0.02em;
+}
+
+.gm-single-note {
+  flex: 1;
+  margin: 12px 0 14px;
+  color: var(--text-muted);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+
+/* BUTTONS */
+
+.gm-btn {
+  width: 100%;
+  min-height: 40px;
+  margin-top: auto;
+  padding: 0 14px;
+  border: 1px solid var(--border-strong);
+  border-radius: 10px;
+  background: transparent;
+  color: var(--text);
+  font: inherit;
+  font-size: 12.5px;
+  font-weight: 700;
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.gm-btn:hover {
+  border-color: var(--gm-accent);
+  transform: translateY(-1px);
+}
+
+.gm-btn.is-primary {
+  border-color: var(--gm-accent);
+  background: var(--gm-accent);
+  color: var(--gm-ink);
+}
+
+.gm-btn--inline {
+  width: auto;
+  min-height: 44px;
+  margin-top: 24px;
+  padding: 0 20px;
+  font-size: 13.5px;
+}
+
+.gm-foot {
+  margin: 16px 0 0;
+  color: var(--text-muted);
+  font-size: 11.5px;
+}
+
+
+/* SHORT LAPTOP SCREENS (keep everything in 1 viewport) */
+
+@media (min-width: 1181px) and (max-height: 800px) {
+  .gm-page {
+    padding: 14px 0;
+  }
+
+  .gm-title {
+    font-size: 2.2rem;
+    margin-bottom: 8px;
+  }
+
+  .gm-sub {
+    font-size: 13px;
+  }
+
+  .gm-card {
+    padding: 18px 14px 14px;
+  }
+
+  .gm-sessions {
+    margin-top: 10px;
+  }
+
+  .gm-list {
+    gap: 5px;
+    margin-bottom: 10px;
+  }
+
+  .gm-btn {
+    min-height: 36px;
+  }
+
+  .gm-foot {
+    margin-top: 10px;
+  }
+}
+/* =========================================================
+   GENLEARNING MENTORING BOOKING PAGE
+   Scoped styles
+========================================================= */
+
+.gm-page--book {
+  min-height: calc(100vh - 80px);
+  padding: 42px 24px 72px;
+
+  color: #f8fafc;
+
+  background:
+    radial-gradient(
+      ellipse at 12% 8%,
+      rgba(0, 194, 137, 0.10),
+      transparent 38%
+    ),
+    radial-gradient(
+      ellipse at 92% 18%,
+      rgba(76, 100, 180, 0.10),
+      transparent 35%
+    ),
+    #05080d;
+}
+
+.gm-page--book,
+.gm-page--book * {
+  box-sizing: border-box;
+}
+
+.gm-page--book .gm-wrap {
+  width: min(1280px, 100%);
+  margin-inline: auto;
+}
+
+
+/* =========================================================
+   BOOKING LAYOUT
+========================================================= */
+
+.gm-booking-layout {
+  display: grid;
+
+  grid-template-columns:
+    minmax(285px, 0.78fr)
+    minmax(0, 1.22fr);
+
+  gap: 30px;
+
+  align-items: start;
+}
+
+
+/* =========================================================
+   INTRO
+========================================================= */
+
+.gm-booking-intro {
+  position: sticky;
+  top: 28px;
+
+  min-width: 0;
+}
+
+.gm-eyebrow {
+  display: inline-block;
+
+  margin-bottom: 16px;
+
+  color: #27d6a0;
+
+  font-size: 11px;
+  font-weight: 900;
+
+  letter-spacing: .16em;
+
+  text-transform: uppercase;
+}
+
+.gm-booking-intro .gm-title {
+  max-width: 560px;
+
+  margin: 0;
+
+  color: #f8fafc;
+
+  font-size: clamp(34px, 4vw, 56px);
+
+  font-weight: 900;
+
+  line-height: 1.02;
+
+  letter-spacing: -.045em;
+}
+
+.gm-booking-intro .gm-title span {
+  color: #27d6a0;
+}
+
+.gm-booking-intro .gm-sub {
+  max-width: 510px;
+
+  margin: 16px 0 0;
+
+  color: #aebccc;
+
+  font-size: 15px;
+
+  line-height: 1.75;
+}
+
+
+/* =========================================================
+   BOOKING SUMMARY AND PANEL
+========================================================= */
+
+.gm-booking-summary,
+.gm-booking-panel {
+  min-width: 0;
+
+  border: 1px solid #263747;
+
+  border-radius: 22px;
+
+  background: linear-gradient(
+    145deg,
+    rgba(17, 28, 42, .97),
+    rgba(7, 13, 21, .98)
+  );
+
+  box-shadow: 0 18px 55px rgba(0, 0, 0, .18);
+}
+
+
+/* =========================================================
+   SUMMARY
+========================================================= */
+
+.gm-booking-summary {
+  margin-top: 25px;
+
+  padding: 24px;
+}
+
+.gm-summary-kicker {
+  color: #27d6a0;
+
+  font-size: 10px;
+
+  font-weight: 900;
+
+  letter-spacing: .16em;
+}
+
+.gm-booking-summary h2 {
+  margin: 10px 0 5px;
+
+  color: #fff;
+
+  font-size: 25px;
+
+  font-weight: 850;
+
+  line-height: 1.2;
+}
+
+.gm-booking-summary > p {
+  margin: 0;
+
+  color: #aebccc;
+
+  font-size: 13px;
+
+  line-height: 1.6;
+}
+
+.gm-summary-price {
+  margin: 20px 0 15px;
+
+  color: #fff;
+
+  font-size: clamp(30px, 3vw, 39px);
+
+  font-weight: 950;
+
+  letter-spacing: -.045em;
+
+  line-height: 1.1;
+}
+
+.gm-summary-price small {
+  display: inline-block;
+
+  color: #aebccc;
+
+  font-size: 12px;
+
+  font-weight: 600;
+
+  letter-spacing: 0;
+
+  white-space: normal;
+}
+
+
+/* =========================================================
+   LEVEL TOGGLE
+========================================================= */
+
+.gm-level-toggle {
+  display: grid;
+
+  gap: 9px;
+
+  margin: 16px 0 5px;
+}
+
+.gm-level-toggle button {
+  display: flex;
+
+  justify-content: space-between;
+  align-items: center;
+
+  gap: 12px;
+
+  width: 100%;
+
+  padding: 13px 14px;
+
+  border: 1px solid #304254;
+
+  border-radius: 12px;
+
+  background: #0c1520;
+
+  color: #dce5ef;
+
+  font: inherit;
+
+  font-size: 12px;
+
+  text-align: left;
+
+  cursor: pointer;
+
+  transition:
+    border-color .18s ease,
+    background .18s ease,
+    transform .18s ease;
+}
+
+.gm-level-toggle button:hover {
+  border-color: #27d6a0;
+
+  transform: translateY(-1px);
+}
+
+.gm-level-toggle button.active {
+  border-color: #27d6a0;
+
+  background: rgba(39, 214, 160, .11);
+
+  box-shadow:
+    inset 0 0 0 1px rgba(39, 214, 160, .10);
+}
+
+.gm-level-toggle button strong {
+  color: #fff;
+
+  font-size: 14px;
+
+  white-space: nowrap;
+}
+
+.gm-selected-level {
+  margin-top: 12px !important;
+
+  color: #dce5ef !important;
+}
+
+
+/* =========================================================
+   BACK BUTTON
+========================================================= */
+
+.gm-book-back {
+  margin-top: 16px;
+
+  padding: 7px 0;
+
+  border: 0;
+
+  background: transparent;
+
+  color: #27d6a0;
+
+  font-size: 13px;
+
+  font-weight: 800;
+
+  cursor: pointer;
+}
+
+.gm-book-back:hover {
+  color: #83f3ce;
+}
+
+
+/* =========================================================
+   BOOKING PANEL
+========================================================= */
+
+.gm-booking-panel {
+  padding: clamp(20px, 3vw, 32px);
+}
+
+.gm-booking-panel-head {
+  margin-bottom: 24px;
+}
+
+.gm-booking-panel-head h2 {
+  margin: 0 0 7px;
+
+  color: #fff;
+
+  font-size: clamp(24px, 3vw, 30px);
+
+  font-weight: 850;
+
+  letter-spacing: -.025em;
+}
+
+.gm-booking-panel-head p {
+  margin: 0;
+
+  color: #aebccc;
+
+  font-size: 13px;
+
+  line-height: 1.6;
+}
+
+
+/* =========================================================
+   FORM GRID
+========================================================= */
+
+.gm-form-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  gap: 17px;
+}
+
+.gm-form-field {
+  display: grid;
+
+  align-content: start;
+
+  gap: 8px;
+
+  min-width: 0;
+
+  color: #dce5ef;
+
+  font-size: 12px;
+
+  font-weight: 750;
+}
+
+.gm-form-field--full {
+  grid-column: 1 / -1;
+}
+
+
+/* =========================================================
+   INPUTS / SELECT / TEXTAREA
+========================================================= */
+
+.gm-form-field input,
+.gm-form-field select,
+.gm-form-field textarea {
+  display: block;
+
+  width: 100%;
+
+  min-width: 0;
+
+  min-height: 45px;
+
+  margin: 0;
+
+  padding: 12px 13px;
+
+  border: 1px solid #304254;
+
+  border-radius: 11px;
+
+  outline: none;
+
+  background: #080f18;
+
+  color: #f8fafc;
+
+  font: inherit;
+
+  font-size: 13px;
+
+  font-weight: 450;
+
+  line-height: 1.45;
+
+  color-scheme: dark;
+
+  transition:
+    border-color .18s ease,
+    box-shadow .18s ease;
+}
+
+.gm-form-field textarea {
+  min-height: 96px;
+
+  resize: vertical;
+}
+
+.gm-form-field select {
+  cursor: pointer;
+}
+
+.gm-form-field input::placeholder,
+.gm-form-field textarea::placeholder {
+  color: #758496;
+}
+
+.gm-form-field input:focus,
+.gm-form-field select:focus,
+.gm-form-field textarea:focus {
+  border-color: #27d6a0;
+
+  box-shadow:
+    0 0 0 3px rgba(39, 214, 160, .11);
+}
+
+
+/* =========================================================
+   BOOKING TOTAL
+========================================================= */
+
+.gm-booking-total {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+
+  gap: 14px;
+
+  margin: 23px 0 17px;
+
+  padding: 17px;
+
+  border: 1px solid #2c4051;
+
+  border-radius: 14px;
+
+  background: rgba(255, 255, 255, .035);
+}
+
+.gm-booking-total div {
+  display: grid;
+
+  align-content: start;
+
+  gap: 6px;
+
+  min-width: 0;
+}
+
+.gm-booking-total span,
+.gm-booking-total small {
+  color: #aebccc;
+
+  font-size: 11px;
+
+  line-height: 1.5;
+}
+
+.gm-booking-total strong {
+  overflow-wrap: anywhere;
+
+  color: #fff;
+
+  font-size: 13px;
+
+  line-height: 1.45;
+}
+
+.gm-booking-total small {
+  grid-column: 1 / -1;
+
+  padding-top: 4px;
+}
+
+
+/* =========================================================
+   SUBMIT BUTTON
+========================================================= */
+
+.gm-booking-submit {
+  display: inline-flex;
+
+  justify-content: center;
+  align-items: center;
+
+  width: 100%;
+
+  min-height: 50px;
+
+  padding: 14px 18px;
+
+  border: 1px solid #27d6a0;
+
+  border-radius: 12px;
+
+  background: #27d6a0;
+
+  color: #031711;
+
+  font-size: 14px;
+
+  font-weight: 900;
+
+  text-align: center;
+
+  cursor: pointer;
+
+  transition:
+    transform .18s ease,
+    background .18s ease,
+    box-shadow .18s ease;
+}
+
+.gm-booking-submit:hover:not(:disabled) {
+  transform: translateY(-1px);
+
+  background: #45e6b4;
+
+  box-shadow:
+    0 8px 25px rgba(39, 214, 160, .16);
+}
+
+.gm-booking-submit:disabled {
+  opacity: .65;
+
+  cursor: wait;
+}
+
+
+/* =========================================================
+   DISCLAIMER
+========================================================= */
+
+.gm-booking-disclaimer {
+  margin: 13px 0 0;
+
+  color: #8e9dad;
+
+  font-size: 11px;
+
+  line-height: 1.65;
+}
+
+
+/* =========================================================
+   FORM ERROR / NOTICE
+========================================================= */
+
+.gm-form-error,
+.gm-form-notice {
+  margin: 14px 0;
+
+  padding: 12px 14px;
+
+  border-radius: 11px;
+
+  font-size: 13px;
+
+  line-height: 1.6;
+}
+
+.gm-form-error {
+  border: 1px solid rgba(255, 90, 90, .28);
+
+  background: rgba(255, 90, 90, .08);
+
+  color: #ffcaca;
+}
+
+.gm-form-notice {
+  border: 1px solid rgba(39, 214, 160, .25);
+
+  background: rgba(39, 214, 160, .08);
+
+  color: #c8fbe9;
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 960px) {
+
+  .gm-booking-layout {
+    grid-template-columns: minmax(0, 1fr);
+
+    gap: 22px;
+
+    max-width: 760px;
+  }
+
+  .gm-booking-intro {
+    position: static;
+  }
+
+  .gm-booking-intro .gm-title {
+    max-width: 720px;
+  }
+
+  .gm-booking-summary {
+    margin-top: 18px;
+  }
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 600px) {
+
+  .gm-page--book {
+    padding: 28px 13px 48px;
+  }
+
+  .gm-booking-summary,
+  .gm-booking-panel {
+    padding: 18px;
+
+    border-radius: 17px;
+  }
+
+  .gm-booking-intro .gm-title {
+    font-size: clamp(32px, 9vw, 43px);
+  }
+
+  .gm-booking-intro .gm-sub {
+    font-size: 14px;
+  }
+
+  .gm-form-grid {
+    grid-template-columns: minmax(0, 1fr);
+
+    gap: 14px;
+  }
+
+  .gm-form-field--full {
+    grid-column: auto;
+  }
+
+  .gm-booking-total {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+
+    gap: 13px;
+  }
+
+  .gm-booking-total div:last-of-type {
+    grid-column: 1 / -1;
+  }
+
+  .gm-booking-total strong {
+    font-size: 13px;
+  }
+
+}
+/* =========================================================
+   SMALL CLARITY IMPROVEMENTS
+   Package / Group Options
+========================================================= */
+
+.gm-booking-summary .gm-selected-level {
+  display: inline-flex;
+
+  width: fit-content;
+
+  max-width: 100%;
+
+  padding: 7px 10px;
+
+  border: 1px solid #304254;
+
+  border-radius: 999px;
+
+  background: rgba(255, 255, 255, .035);
+}
+
+
+.gm-booking-total small {
+  overflow-wrap: anywhere;
+}
+
+
+/* FIX: Mentoring class selection price buttons */
+
+.gm-price-pair {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 9px;
+  margin-bottom: 16px;
+}
+
+.gm-price-option {
+  appearance: none;
+  -webkit-appearance: none;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  min-width: 0;
+  padding: 12px 10px;
+  border: 1px solid var(--border, #d5d5d5);
+  border-radius: 13px;
+  background: var(--surface, #ffffff);
+  color: var(--text, #111111);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.gm-price-option--alt {
+  background: var(--card-bg, #f7f7f7);
+}
+
+.gm-price-select {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+}
+
+.gm-price-label,
+.gm-price-unit {
+  display: block;
+  font-size: 11px;
+  line-height: 1.4;
+}
+
+.gm-price {
+  display: block;
+  margin: 5px 0 2px;
+  font-size: clamp(22px, 2vw, 29px);
+  font-weight: 900;
+  line-height: 1.1;
+}
+
+.gm-select-hint {
+  display: block;
+  margin-top: 7px;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.gm-price-option.is-selected {
+  border: 2px solid #20c997;
+  background: rgba(32, 201, 151, 0.08);
+}
+
+.gm-price-pair--single {
+  margin-top: 8px;
+  margin-bottom: 10px;
+}
+
+@media (max-width: 640px) {
+  .gm-price-pair {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+
+
+/* Fix unselected price option visibility in dark theme */
+
+.gm-price-option {
+  background: #111c2a !important;
+  color: #f8fafc !important;
+  border: 1px solid #394657;
+}
+
+.gm-price-option--alt {
+  background: #172536 !important;
+  color: #f8fafc !important;
+}
+
+.gm-price-option .gm-price-label,
+.gm-price-option .gm-price-unit,
+.gm-price-option .gm-select-hint {
+  color: #b8c4d1 !important;
+}
+
+.gm-price-option .gm-price {
+  color: #ffffff !important;
+}
+
+.gm-price-option.is-selected .gm-select-hint {
+  color: #25d6a0 !important;
+}
+
+.gm-price-option.is-selected {
+  border: 2px solid #25d6a0;
+  background: #10271f !important;
+}
+
+
+/* Mentoring page: floating dock adjustment */
+body:has(.gm-page) .hero-dock {
+  width: min(680px, calc(100vw - 32px)) !important;
+  min-width: 0 !important;
+  bottom: 14px !important;
+}
+
+body:has(.gm-page) .hero-dock .dock {
+  min-height: 66px;
+  padding: 8px 16px;
+  gap: 14px;
+}
+
+body:has(.gm-page) .hero-dock .dock-item {
+  width: 54px;
+  height: 50px;
+  flex: 0 0 54px;
+}
+
+body:has(.gm-page) .hero-dock .dock-item-inner {
+  width: 44px;
+  height: 44px;
+}
+
+/* Keep the final mentoring content reachable above the dock */
+.gm-page {
+  padding-bottom: 170px !important;
+}
+
+
+/* =========================================
+   GENLEARNING MENTORING - MOBILE FIX
+   ========================================= */
+
+.gm-page,
+.gm-wrap,
+.gm-group {
+  min-width: 0;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.gm-wrap {
+  width: min(1180px, calc(100% - 48px));
+  margin-inline: auto;
+}
+
+.gm-group--monthly,
+.gm-group--single {
+  min-width: 0;
+  width: 100%;
+}
+
+.gm-cards--monthly {
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  gap: 18px;
+  width: 100%;
+}
+
+.gm-monthly-card {
+  min-width: 0;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.gm-price-pair {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  width: 100%;
+  min-width: 0;
+}
+
+.gm-price-option {
+  min-width: 0;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+.gm-price-option span {
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+
+.gm-price {
+  font-size: clamp(19px, 2vw, 27px);
+  line-height: 1.2;
+}
+
+.gm-card-topline {
+  min-width: 0;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.gm-name {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.gm-badge {
+  max-width: 100%;
+  white-space: normal;
+  line-height: 1.3;
+}
+
+.gm-btn {
+  width: 100%;
+  min-width: 0;
+  white-space: normal;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+
+/* TABLET */
+
+@media (max-width: 900px) {
+  .gm-wrap {
+    width: calc(100% - 36px);
+  }
+
+  .gm-cards--monthly {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  .gm-group--monthly .gm-monthly-card:last-child {
+    grid-column: auto !important;
+    display: block !important;
+  }
+}
+
+/* MOBILE */
+
+@media (max-width: 600px) {
+  .gm-wrap {
+    width: calc(100% - 32px);
+  }
+
+  .gm-head {
+    margin-bottom: 34px;
+  }
+
+  .gm-title {
+    font-size: clamp(34px, 9vw, 44px);
+    line-height: 1.08;
+    letter-spacing: -0.045em;
+  }
+
+  .gm-sub {
+    font-size: 15px;
+    line-height: 1.65;
+  }
+
+  .gm-group {
+    margin-bottom: 42px;
+  }
+
+  .gm-group-title {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .gm-group-title h2 {
+    font-size: 25px;
+    line-height: 1.2;
+  }
+
+  .gm-price-caption {
+    white-space: normal;
+    max-width: 100%;
+  }
+
+  .gm-cards--monthly,
+  .gm-cards--single {
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 20px;
+  }
+
+  .gm-group--monthly .gm-monthly-card:last-child {
+    grid-column: auto !important;
+    display: block !important;
+  }
+
+  .gm-monthly-card,
+  .gm-single-card {
+    padding: 22px 18px;
+    border-radius: 18px;
+  }
+
+  .gm-price-pair {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 9px;
+  }
+
+  .gm-price-option {
+    padding: 12px 9px;
+    min-height: 120px;
+    border-radius: 13px;
+  }
+
+  .gm-price-label {
+    font-size: 11px;
+    line-height: 1.4;
+  }
+
+  .gm-price {
+    font-size: 22px;
+  }
+
+  .gm-price-unit,
+  .gm-select-hint {
+    font-size: 10px;
+    line-height: 1.4;
+  }
+
+  .gm-name {
+    font-size: 18px;
+  }
+
+  .gm-btn {
+    min-height: 48px;
+    font-size: 13px;
+    margin-top: 12px;
+  }
+}
+
+/* VERY SMALL MOBILE */
+
+@media (max-width: 360px) {
+  .gm-wrap {
+    width: calc(100% - 24px);
+  }
+
+  .gm-monthly-card,
+  .gm-single-card {
+    padding: 18px 14px;
+  }
+
+  .gm-price-pair {
+    gap: 7px;
+  }
+
+  .gm-price-option {
+    padding: 10px 7px;
+  }
+
+  .gm-price {
+    font-size: 19px;
+  }
+}
+
+
+
+/* =========================================
+   GENLEARNING — CLEAN MENTORING PRICING UI
+   Append at the END of the CSS file
+========================================= */
+
+.gm-page {
+  align-items: flex-start;
+  padding: 56px 0 160px !important;
+}
+
+.gm-wrap {
+  width: min(1400px, calc(100% - 80px));
+  margin-inline: auto;
+}
+
+/* Page heading */
+.gm-head {
+  margin-bottom: 52px;
+}
+
+.gm-eyebrow {
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  margin-bottom: 14px;
+}
+
+.gm-title {
+  font-size: clamp(38px, 4vw, 54px);
+  line-height: 1.08;
+  margin: 12px 0;
+}
+
+.gm-sub {
+  max-width: 650px;
+  font-size: 15px;
+  line-height: 1.75;
+}
+
+/* Monthly section */
+.gm-group {
+  gap: 22px;
+}
+
+.gm-group-title {
+  align-items: flex-end;
+  margin-bottom: 4px;
+}
+
+.gm-group-title h2 {
+  font-size: 22px;
+  margin-top: 8px;
+}
+
+.gm-group-title p {
+  margin: 8px 0 0;
+  max-width: 600px;
+  color: var(--text-secondary);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.gm-price-caption {
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+/* Three equal pricing cards */
+.gm-cards--monthly {
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  gap: 22px !important;
+  align-items: stretch;
+}
+
+.gm-monthly-card {
+  min-width: 0;
+  padding: 28px 24px 24px !important;
+  border-radius: 20px !important;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.035);
+}
+
+.gm-monthly-card.is-featured {
+  border-width: 1.5px;
+}
+
+/* Card title */
+.gm-card-topline {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 5px;
+  margin-bottom: 10px;
+}
+
+.gm-name {
+  font-size: 17px;
+  font-weight: 750;
+  margin: 0;
+}
+
+.gm-plan-period {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+/* Price choices */
+.gm-price-pair {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin: 4px 0 12px;
+}
+
+.gm-price-option {
+  min-width: 0;
+  min-height: 138px;
+  padding: 16px 13px !important;
+  border-radius: 15px !important;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  text-align: left;
+  transition: border-color .2s ease, background .2s ease;
+}
+
+.gm-price-label {
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.gm-price {
+  font-size: clamp(21px, 2vw, 29px);
+  line-height: 1.15;
+  letter-spacing: -0.04em;
+}
+
+.gm-price-unit {
+  font-size: 11px;
+}
+
+.gm-select-hint {
+  font-size: 10px;
+  margin-top: 5px;
+}
+
+/* Sessions and benefits */
+.gm-sessions {
+  margin: 14px 0 5px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.gm-persession {
+  font-size: 13px;
+  margin-bottom: 5px;
+}
+
+.gm-note {
+  margin: 4px 0 12px;
+  font-size: 12px;
+}
+
+.gm-list {
+  gap: 11px;
+  margin: 8px 0 22px;
+}
+
+.gm-list li {
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+/* Badges */
+.gm-badge {
+  top: -12px;
+  left: 20px;
+  padding: 6px 12px;
+  font-size: 9px;
+  letter-spacing: .04em;
+}
+
+/* Buttons */
+.gm-btn {
+  min-height: 46px;
+  border-radius: 11px;
+  font-size: 13px;
+  margin-top: auto;
+}
+
+/* Remove unnecessary visual emphasis */
+.gm-price-caption {
+  opacity: .8;
+}
+
+.gm-monthly-card:hover {
+  transform: translateY(-2px);
+}
+
+/* Tablet */
+@media (max-width: 1050px) {
+  .gm-wrap {
+    width: calc(100% - 48px);
+  }
+
+  .gm-cards--monthly {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+}
+
+/* Mobile */
+@media (max-width: 650px) {
+  .gm-page {
+    padding: 38px 0 150px !important;
+  }
+
+  .gm-wrap {
+    width: calc(100% - 32px);
+  }
+
+  .gm-head {
+    margin-bottom: 36px;
+  }
+
+  .gm-title {
+    font-size: 38px;
+  }
+
+  .gm-group-title {
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .gm-group-title h2 {
+    font-size: 21px;
+  }
+
+  .gm-cards--monthly {
+    grid-template-columns: 1fr !important;
+    gap: 22px !important;
+  }
+
+  .gm-monthly-card {
+    padding: 25px 20px 21px !important;
+  }
+
+  .gm-price-option {
+    min-height: 125px;
+  }
+}

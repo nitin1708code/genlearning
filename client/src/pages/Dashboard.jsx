@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { InView } from "../components/motion-primitives/in-view";
-
+const API_URL = import.meta.env.VITE_API_URL;
 const Dashboard = () => {
   const [user, setUser] = useState({
     name: "User",
@@ -56,8 +56,8 @@ const Dashboard = () => {
         return;
       }
 
-      const response = await fetch(
-        "https://api.genlearning.in/api/enrollments/my",
+       const response = await fetch(
+  `${API_URL}/api/enrollments/my`,
         {
           cache: "no-store",
           headers: {

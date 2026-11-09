@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { InView } from "../components/motion-primitives/in-view";
 
-const API_URL = "https://api.genlearning.in";
+const API_URL = import.meta.env.VITE_API_URL;
 
 const readApiResponse = async (response) => {
   const contentType = response.headers.get("content-type") || "";

@@ -3,7 +3,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { GoogleLogin } from "@react-oauth/google";
 import { InView } from "../components/motion-primitives/in-view";
 import { BorderTrail } from "../components/motion-primitives/border-trail";
-
+const API_URL = import.meta.env.VITE_API_URL;
 const Login = () => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -68,7 +68,7 @@ const Login = () => {
 
     try {
       const response = await fetch(
-        "https://api.genlearning.in/api/auth/login",
+       `${API_URL}/api/auth/login`,
         {
           method: "POST",
 
@@ -135,7 +135,7 @@ const Login = () => {
 
     try {
       const response = await fetch(
-        "https://api.genlearning.in/api/auth/google",
+       `${API_URL}/api/auth/google`,
         {
           method: "POST",
 

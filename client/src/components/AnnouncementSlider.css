@@ -1,0 +1,146 @@
+/* ============================================================
+   GENLEARNING ANNOUNCEMENT SLIDER
+============================================================ */
+
+.announcement-slider {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  overflow: hidden;
+  position: relative;
+  isolation: isolate;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface);
+  box-sizing: border-box;
+}
+
+/* Soft fade at both edges */
+.announcement-slider::before,
+.announcement-slider::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 28px;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.announcement-slider::before {
+  left: 0;
+  background: linear-gradient(to right, var(--surface), transparent);
+}
+
+.announcement-slider::after {
+  right: 0;
+  background: linear-gradient(to left, var(--surface), transparent);
+}
+
+.announcement-track {
+  display: flex;
+  align-items: center;
+  width: max-content;
+  animation: announcement-scroll 32s linear infinite;
+  will-change: transform;
+}
+
+/* Pause on hover and keyboard focus */
+.announcement-slider:hover .announcement-track,
+.announcement-slider:focus-within .announcement-track {
+  animation-play-state: paused;
+}
+
+.announcement-item {
+  min-height: 42px;
+  display: inline-flex;
+  align-items: center;
+  flex: 0 0 auto;
+  gap: 9px;
+  padding: 7px 18px;
+  color: var(--text);
+  white-space: nowrap;
+  font-size: 12px;
+  transition: background-color 0.2s ease;
+}
+
+.announcement-item:hover {
+  background: var(--surface-hover);
+}
+
+.announcement-tag {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 21px;
+  padding: 3px 7px;
+  border-radius: 999px;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.45px;
+}
+
+.announcement-tag-new {
+  color: #087b55;
+  background: rgba(16, 185, 129, 0.13);
+}
+
+.announcement-tag-offer {
+  color: #9a5b00;
+  background: rgba(245, 158, 11, 0.15);
+}
+
+.announcement-tag-mentor {
+  color: #2563a6;
+  background: rgba(59, 130, 246, 0.13);
+}
+
+.announcement-message {
+  font-weight: 600;
+}
+
+.announcement-arrow {
+  color: var(--text-muted);
+  font-size: 15px;
+  margin-left: 1px;
+}
+
+@keyframes announcement-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (max-width: 600px) {
+  .announcement-slider {
+    max-width: 100%;
+    margin: 0 auto 20px;
+  }
+
+  .announcement-item {
+    min-height: 40px;
+    padding: 7px 14px;
+    gap: 7px;
+    font-size: 11px;
+  }
+
+  .announcement-track {
+    animation-duration: 27s;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .announcement-track {
+    animation: none;
+    width: 100%;
+    overflow-x: auto;
+  }
+
+  .announcement-slider::before,
+  .announcement-slider::after {
+    display: none;
+  }
+}

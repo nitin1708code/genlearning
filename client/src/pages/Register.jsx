@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { GoogleLogin } from "@react-oauth/google";
 import { InView } from "../components/motion-primitives/in-view";
 import { BorderTrail } from "../components/motion-primitives/border-trail";
-
+const API_URL = import.meta.env.VITE_API_URL;
 const Register = () => {
   const navigate = useNavigate();
 
@@ -122,7 +122,7 @@ const Register = () => {
       setLoading(true);
 
       const response = await fetch(
-        "https://api.genlearning.in/api/auth/register",
+        `${API_URL}/api/auth/register`,
         {
           method: "POST",
 
@@ -188,7 +188,7 @@ const Register = () => {
 
     try {
       const response = await fetch(
-        "https://api.genlearning.in/api/auth/google",
+        `${API_URL}/api/auth/google`,
         {
           method: "POST",
 
@@ -286,7 +286,7 @@ const Register = () => {
       setLoading(true);
 
       const response = await fetch(
-        "https://api.genlearning.in/api/auth/verify-email",
+        `${API_URL}/api/auth/verify-email`,
         {
           method: "POST",
 

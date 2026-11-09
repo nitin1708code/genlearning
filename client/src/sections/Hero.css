@@ -1,0 +1,751 @@
+
+/* ============================================================
+   GENLEARNING HERO SECTION
+============================================================ */
+
+.hero {
+  width: 100%;
+  min-height: calc(100vh - 76px);
+  position: relative;
+  overflow: hidden;
+  background: var(--bg);
+  box-sizing: border-box;
+}
+
+/* ============================================================
+   ANNOUNCEMENT SLIDER
+============================================================ */
+
+.hero-announcement-slider {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  padding: 20px 32px 0;
+}
+
+.hero-announcement-slider > .announcement-slider {
+  width: 100%;
+  max-width: none;
+}
+
+/* ============================================================
+   MAIN HERO CONTAINER
+============================================================ */
+
+.hero-container {
+  width: 100%;
+  max-width: 1400px;
+  min-height: calc(100vh - 140px);
+  box-sizing: border-box;
+  margin: 0 auto;
+  padding: 35px 32px 55px;
+
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: 65px;
+}
+
+/* ============================================================
+   LEFT CONTENT
+============================================================ */
+
+.hero-content {
+  width: 100%;
+  max-width: 650px;
+  min-width: 0;
+}
+
+/* Badge */
+
+.hero-badge {
+  width: fit-content;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+
+  margin-bottom: 25px;
+  padding: 8px 13px;
+
+  border: 1px solid var(--border);
+  border-radius: 30px;
+
+  background: var(--surface);
+  color: var(--text-secondary);
+
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.hero-badge-dot {
+  width: 7px;
+  height: 7px;
+  flex-shrink: 0;
+
+  border-radius: 50%;
+  background: var(--text);
+}
+
+/* Heading */
+
+.hero-title {
+  margin: 0;
+
+  color: var(--text);
+
+  font-size: clamp(48px, 6vw, 78px);
+  line-height: 1.02;
+  letter-spacing: -4px;
+  font-weight: 850;
+}
+
+.hero-title > span {
+  color: var(--text-secondary);
+}
+
+.hero-title .text-effect {
+  display: inline;
+}
+
+.hero-title .text-effect-item {
+  display: inline-block;
+  white-space: pre;
+}
+
+/* Description */
+
+.hero-description.text-effect {
+  display: block;
+  width: 100%;
+  margin-top: 25px;
+}
+
+.hero-description {
+  max-width: 590px;
+  margin-top: 25px;
+
+  color: var(--text-secondary);
+
+  font-size: 17px;
+  line-height: 1.75;
+}
+
+/* Buttons */
+
+.hero-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  margin-top: 34px;
+}
+
+.hero-btn {
+  min-height: 49px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  padding: 0 20px;
+
+  border-radius: 9px;
+
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+
+  transition:
+    transform 0.2s ease,
+    opacity 0.2s ease,
+    background-color 0.2s ease;
+}
+
+.hero-btn-primary {
+  background: var(--button-bg);
+  color: var(--button-text);
+  border: 1px solid var(--button-bg);
+}
+
+.hero-btn-primary:hover {
+  transform: translateY(-2px);
+  opacity: 0.85;
+}
+
+.hero-btn-secondary {
+  background: var(--surface);
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+
+.hero-btn-secondary:hover {
+  background: var(--surface-hover);
+  transform: translateY(-2px);
+}
+
+.hero-btn-primary span {
+  font-size: 17px;
+}
+
+/* Note */
+
+.hero-note {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+
+  margin-top: 35px;
+}
+
+.hero-note-icon {
+  width: 31px;
+  height: 31px;
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: var(--surface);
+  border: 1px solid var(--border);
+
+  color: var(--text);
+
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.hero-note strong {
+  display: block;
+  color: var(--text);
+  font-size: 12px;
+}
+
+.hero-note p {
+  margin-top: 2px;
+  color: var(--text-muted);
+  font-size: 11px;
+}
+
+/* ============================================================
+   RIGHT SIDE - IMAGE CAROUSEL
+============================================================ */
+
+.hero-visual {
+  width: 100%;
+  min-width: 0;
+  min-height: 500px;
+
+  position: relative;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-carousel {
+  width: 100%;
+  max-width: 570px;
+  min-width: 0;
+  position: relative;
+  z-index: 2;
+}
+
+/* Image wrapper */
+
+.hero-carousel-image-wrapper {
+  width: 100%;
+  aspect-ratio: 5 / 4;
+
+  position: relative;
+  overflow: hidden;
+
+  border: 1px solid var(--border);
+  border-radius: 22px;
+
+  background: var(--surface);
+
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.16);
+}
+
+/* Image */
+
+.hero-carousel-image {
+  width: 100%;
+  height: 100%;
+
+  position: absolute;
+  inset: 0;
+
+  display: block;
+
+  object-fit: cover;
+  object-position: center;
+}
+
+/* Dark overlay */
+
+.hero-carousel-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.02) 25%,
+    rgba(0, 0, 0, 0.25) 55%,
+    rgba(0, 0, 0, 0.78) 100%
+  );
+
+  pointer-events: none;
+}
+
+/* Caption */
+
+.hero-carousel-caption {
+  position: absolute;
+  z-index: 2;
+
+  left: 35px;
+  right: 35px;
+  bottom: 38px;
+
+  color: #ffffff;
+  pointer-events: none;
+}
+
+.hero-carousel-label {
+  display: inline-block;
+
+  margin-bottom: 13px;
+  padding: 7px 12px;
+
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 30px;
+
+  background: rgba(255, 255, 255, 0.13);
+
+  color: #ffffff;
+
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+.hero-carousel-caption h2 {
+  margin: 0 0 9px;
+
+  color: #ffffff;
+
+  font-size: clamp(25px, 3vw, 38px);
+  line-height: 1.15;
+  font-weight: 800;
+  letter-spacing: -1px;
+}
+
+.hero-carousel-caption p {
+  max-width: 380px;
+  margin: 0;
+
+  color: rgba(255, 255, 255, 0.88);
+
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+/* Previous / Next arrows */
+
+.hero-carousel-arrow {
+  width: 42px;
+  height: 42px;
+
+  position: absolute;
+  z-index: 4;
+  top: 50%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  transform: translateY(-50%);
+
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 50%;
+
+  background: rgba(0, 0, 0, 0.35);
+  color: #ffffff;
+
+  font-size: 15px;
+  cursor: pointer;
+
+  backdrop-filter: blur(8px);
+
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
+}
+
+.hero-carousel-arrow:hover {
+  background: rgba(0, 0, 0, 0.7);
+}
+
+.hero-carousel-prev {
+  left: 18px;
+}
+
+.hero-carousel-next {
+  right: 18px;
+}
+
+/* Slide counter */
+
+.hero-carousel-counter {
+  position: absolute;
+  z-index: 3;
+
+  top: 22px;
+  right: 22px;
+
+  display: flex;
+  align-items: center;
+  gap: 7px;
+
+  padding: 8px 12px;
+
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 30px;
+
+  background: rgba(0, 0, 0, 0.3);
+  color: #ffffff;
+
+  font-size: 11px;
+  font-weight: 700;
+
+  backdrop-filter: blur(8px);
+}
+
+.hero-carousel-counter span {
+  opacity: 0.6;
+}
+
+/* Dots */
+
+.hero-carousel-dots {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+
+  margin-top: 22px;
+}
+
+.hero-carousel-dot {
+  width: 9px;
+  height: 9px;
+
+  padding: 0;
+
+  border: none;
+  border-radius: 20px;
+
+  background: var(--text-muted);
+  opacity: 0.4;
+
+  cursor: pointer;
+
+  transition:
+    width 0.3s ease,
+    opacity 0.3s ease,
+    background 0.3s ease;
+}
+
+.hero-carousel-dot.active {
+  width: 28px;
+  background: var(--text);
+  opacity: 1;
+}
+
+/* ============================================================
+   TABLET RESPONSIVE
+============================================================ */
+
+@media (max-width: 1000px) {
+  .hero-container {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 35px;
+
+    padding: 55px 28px 55px;
+  }
+
+  .hero-content {
+    width: 100%;
+    max-width: 700px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .hero-badge {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .hero-description {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .hero-actions {
+    justify-content: center;
+  }
+
+  .hero-note {
+    justify-content: center;
+  }
+
+  .hero-visual {
+    width: 100%;
+    min-height: auto;
+    padding: 10px 0 20px;
+  }
+
+  .hero-carousel {
+    max-width: 650px;
+  }
+}
+
+/* ============================================================
+   MOBILE RESPONSIVE
+============================================================ */
+
+@media (max-width: 600px) {
+  .hero {
+    width: 100%;
+    min-width: 0;
+    overflow: hidden;
+  }
+
+  /* Announcement */
+
+  .hero-announcement-slider {
+    padding: 14px 12px 0;
+  }
+
+  /* Main container */
+
+  .hero-container {
+    width: 100%;
+    max-width: 100%;
+    min-height: auto;
+
+    grid-template-columns: minmax(0, 1fr);
+    gap: 32px;
+
+    padding: 35px 18px 45px;
+  }
+
+  /* Content */
+
+  .hero-content {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+
+    text-align: center;
+  }
+
+  .hero-badge {
+    margin: 10px auto 22px;
+    font-size: 11px;
+  }
+
+  /* Heading */
+
+  .hero-title {
+    width: 100%;
+    max-width: 100%;
+
+    margin: 0 auto;
+
+    font-size: clamp(32px, 9vw, 40px);
+    line-height: 1.15;
+    letter-spacing: -1.5px;
+
+    text-align: center;
+    overflow-wrap: break-word;
+  }
+
+  .hero-title > span {
+    display: inline;
+  }
+
+  .hero-title .text-effect,
+  .hero-title .text-effect-item {
+    max-width: 100%;
+  }
+
+  /* Description */
+
+  .hero-description {
+    width: 100%;
+    max-width: 100%;
+
+    margin: 20px auto 0;
+
+    font-size: 14px;
+    line-height: 1.7;
+    text-align: center;
+  }
+
+  /* Buttons */
+
+  .hero-actions {
+    width: 100%;
+
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+
+    margin-top: 27px;
+  }
+
+  .hero-btn {
+    width: 100%;
+    min-height: 52px;
+    box-sizing: border-box;
+  }
+
+  /* Note */
+
+  .hero-note {
+    justify-content: center;
+    margin-top: 25px;
+    text-align: left;
+  }
+
+  /* Carousel */
+
+  .hero-visual {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+
+    min-height: auto;
+    padding: 0;
+  }
+
+  .hero-carousel {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .hero-carousel-image-wrapper {
+    aspect-ratio: 4 / 3;
+    border-radius: 15px;
+  }
+
+  .hero-carousel-caption {
+    left: 20px;
+    right: 20px;
+    bottom: 22px;
+  }
+
+  .hero-carousel-label {
+    margin-bottom: 9px;
+    padding: 6px 10px;
+    font-size: 9px;
+  }
+
+  .hero-carousel-caption h2 {
+    margin-bottom: 6px;
+    font-size: 24px;
+  }
+
+  .hero-carousel-caption p {
+    font-size: 12px;
+    line-height: 1.5;
+  }
+
+  .hero-carousel-arrow {
+    width: 34px;
+    height: 34px;
+    font-size: 12px;
+  }
+
+  .hero-carousel-prev {
+    left: 10px;
+  }
+
+  .hero-carousel-next {
+    right: 10px;
+  }
+
+  .hero-carousel-counter {
+    top: 12px;
+    right: 12px;
+    padding: 6px 9px;
+    font-size: 10px;
+  }
+
+  .hero-carousel-dots {
+    margin-top: 16px;
+    gap: 8px;
+  }
+
+  .hero-carousel-dot {
+    width: 7px;
+    height: 7px;
+  }
+
+  .hero-carousel-dot.active {
+    width: 23px;
+  }
+}
+
+/* ============================================================
+   EXTRA SMALL SCREENS
+============================================================ */
+
+@media (max-width: 350px) {
+  .hero-container {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+
+  .hero-title {
+    font-size: 31px;
+    letter-spacing: -1px;
+  }
+
+  .hero-description {
+    font-size: 13px;
+  }
+
+  .hero-carousel-caption {
+    left: 15px;
+    right: 15px;
+    bottom: 17px;
+  }
+
+  .hero-carousel-caption h2 {
+    font-size: 20px;
+  }
+
+  .hero-carousel-caption p {
+    font-size: 11px;
+  }
+}
+
+/* ============================================================
+   ACCESSIBILITY
+============================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-carousel-arrow,
+  .hero-carousel-dot,
+  .hero-btn {
+    transition: none;
+  }
+}

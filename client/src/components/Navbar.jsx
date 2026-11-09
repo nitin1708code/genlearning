@@ -13,6 +13,7 @@ import {
 
 import { AnimatedBackground } from "./motion-primitives/animated-background";
 import { useTheme } from "../context/ThemeContext";
+import "./Navbar.css";
 
 const Navbar = () => {
   const location = useLocation();
@@ -24,6 +25,7 @@ const Navbar = () => {
   const [user, setUser] = useState(null);
   const [accountOpen, setAccountOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [servicesOpen, setServicesOpen] = useState(false);
 
   // SEARCH
   const [searchOpen, setSearchOpen] = useState(false);
@@ -32,6 +34,8 @@ const Navbar = () => {
   // REFS
   const accountRef = useRef(null);
   const mobileMenuRef = useRef(null);
+  const servicesRef = useRef(null);
+  const mobileServicesRef = useRef(null);
   const searchInputRef = useRef(null);
 
   // ========================================
@@ -56,6 +60,7 @@ const Navbar = () => {
 
     setAccountOpen(false);
     setMenuOpen(false);
+    setServicesOpen(false);
   }, [location.pathname]);
 
   // ========================================
@@ -83,6 +88,17 @@ const Navbar = () => {
       ) {
         setAccountOpen(false);
       }
+
+     // SERVICES DROPDOWN - DESKTOP + MOBILE
+const clickedDesktopServices =
+  servicesRef.current?.contains(event.target);
+
+const clickedMobileServices =
+  mobileServicesRef.current?.contains(event.target);
+
+if (!clickedDesktopServices && !clickedMobileServices) {
+  setServicesOpen(false);
+}
 
       // MOBILE MENU
       if (
@@ -156,6 +172,7 @@ const Navbar = () => {
     setUser(null);
     setAccountOpen(false);
     setMenuOpen(false);
+    setServicesOpen(false);
 
     navigate("/");
   };
@@ -177,6 +194,7 @@ const Navbar = () => {
     });
 
     setMenuOpen(false);
+    setServicesOpen(false);
   };
 
   // ========================================
@@ -186,6 +204,7 @@ const Navbar = () => {
   const openSearch = () => {
     setAccountOpen(false);
     setMenuOpen(false);
+    setServicesOpen(false);
     setSearchOpen(true);
   };
 
@@ -210,10 +229,6 @@ const Navbar = () => {
     {
       name: "Courses",
       path: "/courses",
-    },
-    {
-      name: "IT Services",
-      path: "/services",
     },
     {
       name: "Projects",
@@ -270,15 +285,60 @@ const Navbar = () => {
             }}
             enableHover
           >
-            {navLinks.map((link) => (
+            {navLinks.slice(0, 2).map((link) => (
               <NavLink
                 key={link.path}
                 to={link.path}
                 data-id={link.path}
                 className={({ isActive }) =>
-                  `nav-link ${
-                    isActive ? "active" : ""
-                  }`
+                  `nav-link ${isActive ? "active" : ""}`
+                }
+                onClick={handleNavClick}
+              >
+                {link.name}
+              </NavLink>
+            ))}
+
+             <div
+  className={`services-dropdown ${servicesOpen ? "open" : ""}`}
+  ref={servicesRef}
+  onMouseEnter={() => setServicesOpen(true)}
+  onMouseLeave={() => setServicesOpen(false)}
+>
+              <button
+                type="button"
+                className={`nav-link services-trigger ${
+                  ["/mentoring", "/services", "/training"].some((path) =>
+                    location.pathname.startsWith(path)
+                  ) ? "active" : ""
+                }`}
+                onClick={() => setServicesOpen((previous) => !previous)}
+                aria-expanded={servicesOpen}
+                aria-haspopup="true"
+              >
+                Services <span className="services-chevron"></span>
+              </button>
+
+              <div className="services-dropdown-menu">
+                <NavLink to="/mentoring" onClick={handleNavClick}>
+                  Mentoring
+                </NavLink>
+                <NavLink to="/services" onClick={handleNavClick}>
+                  IT Services
+                </NavLink>
+                <NavLink to="/training" onClick={handleNavClick}>
+                  Training
+                </NavLink>
+              </div>
+            </div>
+
+            {navLinks.slice(2).map((link) => (
+              <NavLink
+                key={link.path}
+                to={link.path}
+                data-id={link.path}
+                className={({ isActive }) =>
+                  `nav-link ${isActive ? "active" : ""}`
                 }
                 onClick={handleNavClick}
               >
@@ -435,6 +495,21 @@ const Navbar = () => {
                     <span>02</span>
                     My Bookings
                   </Link>
+                
+                 {/* MY PACKAGES */}
+
+<Link
+  to="/my-packages"
+  onClick={() => {
+    setAccountOpen(false);
+    handleNavClick();
+  }}
+>
+  <span>03</span>
+  My Packages
+</Link>
+
+
 
                   {/* PROFILE */}
 
@@ -495,18 +570,81 @@ const Navbar = () => {
 
       <nav
         ref={mobileMenuRef}
-        className={`mobile-nav ${
-          menuOpen ? "open" : ""
-        }`}
+        className={`mobile-nav ${menuOpen ? "open" : ""}`}
       >
-        {navLinks.map((link) => (
+        {navLinks.slice(0, 2).map((link) => (
           <NavLink
             key={link.path}
             to={link.path}
             className={({ isActive }) =>
-              `mobile-link ${
-                isActive ? "active" : ""
-              }`
+              `mobile-link ${isActive ? "active" : ""}`
+            }
+            onClick={handleNavClick}
+          >
+            {link.name}
+          </NavLink>
+        ))}
+        <div
+  ref={mobileServicesRef}
+  className={`mobile-services-group ${servicesOpen ? "open" : ""}`}
+>
+          <button
+            type="button"
+            className={`mobile-link mobile-services-trigger ${
+              ["/mentoring", "/services", "/training"].some((path) =>
+                location.pathname.startsWith(path)
+              ) ? "active" : ""
+            }`}
+            onClick={() => setServicesOpen((previous) => !previous)}
+            aria-expanded={servicesOpen}
+          >
+            Services
+            <span className="services-chevron">⌄</span>
+          </button>
+
+          <div className="mobile-services-menu">
+            <NavLink
+  to="/mentoring"
+  className="mobile-link"
+  onClick={() => {
+    setMenuOpen(false);
+    setServicesOpen(false);
+    navigate("/mentoring");
+  }}
+>
+  Mentoring
+</NavLink>
+            <NavLink
+  to="/services"
+  className="mobile-link"
+  onClick={() => {
+    setMenuOpen(false);
+    setServicesOpen(false);
+    navigate("/services");
+  }}
+>
+  IT Services
+</NavLink>
+            <NavLink
+  to="/training"
+  className="mobile-link"
+  onClick={() => {
+    setMenuOpen(false);
+    setServicesOpen(false);
+    navigate("/training");
+  }}
+>
+  Training
+            </NavLink>
+          </div>
+        </div>
+
+        {navLinks.slice(2).map((link) => (
+          <NavLink
+            key={link.path}
+            to={link.path}
+            className={({ isActive }) =>
+              `mobile-link ${isActive ? "active" : ""}`
             }
             onClick={handleNavClick}
           >
@@ -546,7 +684,15 @@ const Navbar = () => {
             >
               My Bookings
             </Link>
+       {/* MY PACKAGES */}
 
+<Link
+  to="/my-packages"
+  className="mobile-link"
+  onClick={handleNavClick}
+>
+  My Packages
+</Link>
             <Link
               to="/profile"
               className="mobile-link"

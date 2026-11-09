@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-
+const API_URL = import.meta.env.VITE_API_URL;
 const ForgotPassword = () => {
   const navigate = useNavigate();
 
@@ -36,7 +36,7 @@ const ForgotPassword = () => {
       setLoading(true);
 
       const response = await fetch(
-        "https://api.genlearning.in/api/auth/forgot-password",
+        `${API_URL}/api/auth/forgot-password`,
         {
           method: "POST",
           headers: {
@@ -99,7 +99,7 @@ const ForgotPassword = () => {
       setLoading(true);
 
       const response = await fetch(
-        "https://api.genlearning.in/api/auth/verify-reset-otp",
+        `${API_URL}/api/auth/verify-reset-otp`,
         {
           method: "POST",
           headers: {
@@ -172,7 +172,7 @@ const ForgotPassword = () => {
       setLoading(true);
 
       const response = await fetch(
-        "https://api.genlearning.in/api/auth/reset-password",
+        `${API_URL}/api/auth/reset-password`,
         {
           method: "POST",
           headers: {

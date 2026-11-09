@@ -14,7 +14,10 @@ import PrivacyPolicy from "./pages/PrivacyPolicy";
 import Terms from "./pages/Terms";
 import Mentoring from "./pages/Mentoring";
 import MyBookings from "./pages/MyBookings";
-
+import MentoringBooking from "./pages/MentoringBooking";
+import Training from "./pages/Training";
+import MyPackages from "./pages/MyPackages";
+import MentorPopup from "./components/MentorPopup";
 // Lazy-loaded pages
 const Courses = lazy(() => import("./pages/Courses"));
 const CourseDetail = lazy(() => import("./pages/coursedetail"));
@@ -50,9 +53,11 @@ const App = () => {
   return (
     <BrowserRouter>
 
-      <ScrollToTop />
+  <ScrollToTop />
 
-      <Suspense fallback={<PageLoader />}>
+  <MentorPopup />
+
+  <Suspense fallback={<PageLoader />}>
 
         <Routes>
 
@@ -107,6 +112,11 @@ const App = () => {
   path="/mentoring"
   element={<Mentoring />}
 />
+<Route path="/training" element={<Training />} />
+<Route
+  path="/mentoring/book"
+  element={<MentoringBooking />}
+/>
 
             <Route
   path="/privacy"
@@ -124,7 +134,10 @@ const App = () => {
                 path="/dashboard"
                 element={<Dashboard />}
               />
-
+<Route
+  path="/my-packages"
+  element={<MyPackages />}
+/>
               <Route
                 path="/profile"
                 element={<Profile />}

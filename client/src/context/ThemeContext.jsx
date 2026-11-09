@@ -1,3 +1,4 @@
+
 import React, {
   createContext,
   useContext,
@@ -11,7 +12,8 @@ export const ThemeProvider = ({ children }) => {
   const [darkMode, setDarkMode] = useState(() => {
     const savedTheme = localStorage.getItem("genlearning-theme");
 
-    return savedTheme !== "light";
+    // Default theme: Light
+    return savedTheme === "dark";
   });
 
   useEffect(() => {
@@ -19,20 +21,15 @@ export const ThemeProvider = ({ children }) => {
       "data-theme",
       darkMode ? "dark" : "light"
     );
+
+    localStorage.setItem(
+      "genlearning-theme",
+      darkMode ? "dark" : "light"
+    );
   }, [darkMode]);
 
   const toggleTheme = () => {
-    setDarkMode((previous) => {
-      const newDarkMode = !previous;
-
-      // Save immediately
-      localStorage.setItem(
-        "genlearning-theme",
-        newDarkMode ? "dark" : "light"
-      );
-
-      return newDarkMode;
-    });
+    setDarkMode((previous) => !previous);
   };
 
   return (

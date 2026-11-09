@@ -7,7 +7,7 @@ import {
   Navigate,
   Outlet,
 } from "react-router-dom";
-
+const API_URL = import.meta.env.VITE_API_URL;
 
 const ProtectedRoute = () => {
 
@@ -34,8 +34,8 @@ const ProtectedRoute = () => {
 
       try {
 
-        const response = await fetch(
-          "https://api.genlearning.in/api/auth/me",
+         const response = await fetch(
+  `${API_URL}/api/auth/me`,
           {
             method: "GET",
 

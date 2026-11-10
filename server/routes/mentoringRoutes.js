@@ -6,6 +6,11 @@ const { Resend } = require("resend");
 const router = express.Router();
 const db = require("../config/db");
 const protect = require("../middleware/authMiddleware");
+const publicFormLimiter = require("../middleware/publicFormLimiter");
+
+const escapeHtml = (value) => String(value ?? "").replace(/[&<>\"']/g, (char) => ({
+  "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;",
+}[char]));
 
 // ---------------------------------------------------------
 // OPTIONAL SERVICES
@@ -149,7 +154,7 @@ router.get("/options", (req, res) => {
 // SUBMIT MONTHLY PLAN / ENQUIRY REQUEST (NO PAYMENT)
 // POST /api/mentoring/request
 // ---------------------------------------------------------
-router.post("/request", async (req, res) => {
+router.post("/request", publicFormLimiter, async (req, res) => {
   try {
     const {
       full_name,
@@ -170,6 +175,11 @@ router.post("/request", async (req, res) => {
         success: false,
         message: "Name, phone, plan and class level are required.",
       });
+    }
+
+    if (typeof full_name !== "string" || typeof phone !== "string" ||
+        [full_name, phone, email, subject, topic, notes].some((value) => value != null && (typeof value !== "string" || value.length > 2000))) {
+      return res.status(400).json({ success: false, message: "One or more fields are invalid or too long." });
     }
 
     if (phone.replace(/\D/g, "").length < 10) {
@@ -243,13 +253,13 @@ router.post("/request", async (req, res) => {
       ADMIN_EMAIL,
       "New Mentoring Request - GenLearning",
       `<h2>New Mentoring Request</h2>
-       <p><strong>Name:</strong> ${full_name}</p>
-       <p><strong>Phone:</strong> ${phone}</p>
-       <p><strong>Email:</strong> ${email || "Not provided"}</p>
+       <p><strong>Name:</strong> ${escapeHtml(full_name)}</p>
+       <p><strong>Phone:</strong> ${escapeHtml(phone)}</p>
+       <p><strong>Email:</strong> ${escapeHtml(email || "Not provided")}</p>
        <p><strong>Plan:</strong> ${plan.name}</p>
        <p><strong>Class:</strong> ${class_level}</p>
        <p><strong>Amount:</strong> ₹${amount}</p>
-       <p><strong>Subject:</strong> ${subject || "Not specified"}</p>`
+       <p><strong>Subject:</strong> ${escapeHtml(subject || "Not specified")}</p>`
     );
 
     return res.status(201).json({

@@ -24,13 +24,13 @@ const {
 // REGISTER
 // ========================================
 
-router.post("/register", registerUser);
+router.post("/register", otpLimiter, registerUser);
 
 // ========================================
 // VERIFY EMAIL
 // ========================================
 
-router.post("/verify-email", verifyEmail);
+router.post("/verify-email", resetLimiter, verifyEmail);
 
 // ========================================
 // LOGIN
@@ -38,7 +38,7 @@ router.post("/verify-email", verifyEmail);
 
 router.post("/login", loginLimiter, loginUser);
 
-router.post("/google", googleLogin);
+router.post("/google", loginLimiter, googleLogin);
 
 // ========================================
 // FORGOT PASSWORD
@@ -50,13 +50,13 @@ router.post("/forgot-password", otpLimiter, forgotPassword);
 // VERIFY RESET OTP
 // ========================================
 
-router.post("/verify-reset-otp", resetLimiter, verifyResetOtp);
+router.post("/verify-reset-otp", otpLimiter, resetLimiter, verifyResetOtp);
 
 // ========================================
 // RESET PASSWORD
 // ========================================
 
-router.post("/reset-password", resetLimiter, resetPassword);
+router.post("/reset-password", otpLimiter, resetLimiter, resetPassword);
 
 // ========================================
 // CURRENT USER

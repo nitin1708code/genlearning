@@ -3,13 +3,14 @@ const express = require("express");
 const router = express.Router();
 const db = require("../config/db");
 const { Resend } = require("resend");
+const publicFormLimiter = require("../middleware/publicFormLimiter");
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 const EMAIL_FROM =
   process.env.EMAIL_FROM || "GenLearning <onboarding@resend.dev>";
 const ADMIN_EMAIL = process.env.ADMIN_EMAIL;
 
-router.post("/", async (req, res) => {
+router.post("/", publicFormLimiter, async (req, res) => {
   try {
     const { name, email, phone, service, budget, message } = req.body;
 
@@ -27,6 +28,12 @@ router.post("/", async (req, res) => {
         success: false,
         message: "Name, email, service and message are required.",
       });
+    }
+
+    if ([name, email, service, message].some((value) => value.length > 4000) ||
+        (typeof phone === "string" && phone.length > 50) ||
+        (typeof budget === "string" && budget.length > 100)) {
+      return res.status(400).json({ success: false, message: "One or more fields exceed the allowed length." });
     }
 
     // Save enquiry in the database first

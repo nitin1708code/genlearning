@@ -1,10 +1,21 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const crypto = require("crypto");
 const db = require("../config/db");
 const transporter = require("../config/mailer");
 const { OAuth2Client } = require("google-auth-library");
 
 const googleClient = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
+
+const escapeHtml = (value) => String(value ?? "").replace(/[&<>\"']/g, (char) => ({
+  "&": "&amp;",
+  "<": "&lt;",
+  ">": "&gt;",
+  '"': "&quot;",
+  "'": "&#39;",
+}[char]));
+
+const otpDigest = (otp) => crypto.createHash("sha256").update(otp).digest("hex");
 
 // ========================================
 // REGISTER - SEND OTP
@@ -14,7 +25,7 @@ const registerUser = async (req, res) => {
   try {
     const { name, email, password } = req.body;
 
-    if (!name || !email || !password) {
+    if (typeof name !== "string" || typeof email !== "string" || typeof password !== "string" || !name.trim() || !email.trim() || !password) {
       return res.status(400).json({
         success: false,
         message: "Name, email and password are required.",
@@ -23,6 +34,10 @@ const registerUser = async (req, res) => {
 
     const cleanName = name.trim();
     const cleanEmail = email.trim().toLowerCase();
+
+    if (cleanName.length > 100 || cleanEmail.length > 254 || password.length > 128) {
+      return res.status(400).json({ success: false, message: "Input exceeds the allowed length." });
+    }
 
     const [existingUsers] = await db.query(
       "SELECT id FROM users WHERE email = ?",
@@ -45,7 +60,7 @@ const registerUser = async (req, res) => {
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    const otp = Math.floor(100000 + Math.random() * 900000).toString();
+    const otp = crypto.randomInt(100000, 1000000).toString();
     const otpExpiresAt = new Date(Date.now() + 10 * 60 * 1000);
 
     await db.query(
@@ -55,9 +70,9 @@ const registerUser = async (req, res) => {
 
     await db.query(
       `INSERT INTO email_verifications
-       (name, email, password, otp, otp_expires_at)
-       VALUES (?, ?, ?, ?, ?)`,
-      [cleanName, cleanEmail, hashedPassword, otp, otpExpiresAt]
+       (name, email, password, otp, otp_expires_at, attempts)
+       VALUES (?, ?, ?, ?, ?, 0)`,
+      [cleanName, cleanEmail, hashedPassword, otpDigest(otp), otpExpiresAt]
     );
 
     const { data, error } = await transporter.emails.send({
@@ -67,7 +82,7 @@ const registerUser = async (req, res) => {
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 30px;">
           <h2>Welcome to GEN Learning</h2>
-          <p>Hi ${cleanName},</p>
+          <p>Hi ${escapeHtml(cleanName)},</p>
           <p>Use the OTP below to verify your email address.</p>
           <div style="font-size: 32px; font-weight: bold; letter-spacing: 8px; padding: 20px; background: #f5f5f5; text-align: center; margin: 25px 0;">
             ${otp}
@@ -114,7 +129,7 @@ const verifyEmail = async (req, res) => {
     const cleanEmail = email.trim().toLowerCase();
 
     const [pendingUsers] = await db.query(
-      `SELECT id, name, email, password, otp, otp_expires_at
+      `SELECT id, name, email, password, otp, otp_expires_at, attempts
        FROM email_verifications
        WHERE email = ?
        LIMIT 1`,
@@ -130,7 +145,13 @@ const verifyEmail = async (req, res) => {
 
     const pendingUser = pendingUsers[0];
 
-    if (pendingUser.otp !== otp.toString()) {
+    if (Number(pendingUser.attempts) >= 5) {
+      await db.query("DELETE FROM email_verifications WHERE id = ?", [pendingUser.id]);
+      return res.status(429).json({ success: false, message: "Too many invalid codes. Please register again." });
+    }
+    if (typeof otp !== "string" || !/^\d{6}$/.test(otp) || pendingUser.otp !== otpDigest(otp)) {
+      await db.query("UPDATE email_verifications SET attempts = attempts + 1 WHERE id = ?", [pendingUser.id]);
+      await db.query("DELETE FROM email_verifications WHERE id = ? AND attempts >= 5", [pendingUser.id]);
       return res.status(400).json({
         success: false,
         message: "Invalid OTP.",
@@ -165,6 +186,7 @@ const verifyEmail = async (req, res) => {
         userId: result.insertId,
         email: pendingUser.email,
         role: "student",
+        tokenVersion: 0,
       },
       process.env.JWT_SECRET,
       { expiresIn: "7d" }
@@ -206,7 +228,7 @@ const loginUser = async (req, res) => {
     }
 
     const [users] = await db.query(
-      `SELECT id, name, email, password, role
+      `SELECT id, name, email, password, role, token_version
        FROM users
        WHERE email = ?`,
       [email.trim().toLowerCase()]
@@ -234,6 +256,7 @@ const loginUser = async (req, res) => {
         userId: user.id,
         email: user.email,
         role: user.role,
+        tokenVersion: Number(user.token_version || 0),
       },
       process.env.JWT_SECRET,
       { expiresIn: "7d" }
@@ -284,7 +307,7 @@ const googleLogin = async (req, res) => {
     const name = payload.name || "GEN Learning User";
 
     const [users] = await db.query(
-      "SELECT id, name, email, role FROM users WHERE email = ?",
+      "SELECT id, name, email, role, token_version FROM users WHERE email = ?",
       [email]
     );
 
@@ -316,6 +339,7 @@ const googleLogin = async (req, res) => {
         userId: user.id,
         email: user.email,
         role: user.role,
+        tokenVersion: Number(user.token_version || 0),
       },
       process.env.JWT_SECRET,
       { expiresIn: "7d" }
@@ -344,7 +368,7 @@ const forgotPassword = async (req, res) => {
   try {
     const { email } = req.body;
 
-    if (!email) {
+    if (typeof email !== "string" || !email.trim()) {
       return res.status(400).json({
         success: false,
         message: "Email is required.",
@@ -359,14 +383,11 @@ const forgotPassword = async (req, res) => {
     );
 
     if (users.length === 0) {
-      return res.status(404).json({
-        success: false,
-        message: "No account found with this email.",
-      });
+      return res.json({ success: true, message: "If an account exists for this email, a reset code has been sent." });
     }
 
     const user = users[0];
-    const otp = Math.floor(100000 + Math.random() * 900000).toString();
+    const otp = crypto.randomInt(100000, 1000000).toString();
     const otpExpiresAt = new Date(Date.now() + 10 * 60 * 1000);
 
     await db.query(
@@ -375,9 +396,9 @@ const forgotPassword = async (req, res) => {
     );
 
     await db.query(
-      `INSERT INTO password_resets (email, otp, otp_expires_at)
-       VALUES (?, ?, ?)`,
-      [cleanEmail, otp, otpExpiresAt]
+      `INSERT INTO password_resets (email, otp, otp_expires_at, attempts)
+       VALUES (?, ?, ?, 0)`,
+      [cleanEmail, otpDigest(otp), otpExpiresAt]
     );
 
     await transporter.emails.send({
@@ -387,7 +408,7 @@ const forgotPassword = async (req, res) => {
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 30px;">
           <h2>Reset your GEN Learning password</h2>
-          <p>Hi ${user.name},</p>
+          <p>Hi ${escapeHtml(user.name)},</p>
           <p>Use the OTP below to reset your password.</p>
           <div style="font-size: 32px; font-weight: bold; letter-spacing: 8px; padding: 20px; background: #f5f5f5; text-align: center; margin: 25px 0;">
             ${otp}
@@ -420,7 +441,7 @@ const verifyResetOtp = async (req, res) => {
   try {
     const { email, otp } = req.body;
 
-    if (!email || !otp) {
+    if (typeof email !== "string" || !email.trim() || typeof otp !== "string" || !/^\d{6}$/.test(otp)) {
       return res.status(400).json({
         success: false,
         message: "Email and OTP are required.",
@@ -430,7 +451,7 @@ const verifyResetOtp = async (req, res) => {
     const cleanEmail = email.trim().toLowerCase();
 
     const [resets] = await db.query(
-      `SELECT id, email, otp, otp_expires_at
+      `SELECT id, email, otp, otp_expires_at, attempts
        FROM password_resets
        WHERE email = ?
        LIMIT 1`,
@@ -446,7 +467,13 @@ const verifyResetOtp = async (req, res) => {
 
     const reset = resets[0];
 
-    if (reset.otp !== otp.toString()) {
+    if (Number(reset.attempts) >= 5) {
+      await db.query("DELETE FROM password_resets WHERE id = ?", [reset.id]);
+      return res.status(429).json({ success: false, message: "Too many invalid codes. Please request a new OTP." });
+    }
+    if (reset.otp !== otpDigest(otp)) {
+      await db.query("UPDATE password_resets SET attempts = attempts + 1 WHERE id = ?", [reset.id]);
+      await db.query("DELETE FROM password_resets WHERE id = ? AND attempts >= 5", [reset.id]);
       return res.status(400).json({
         success: false,
         message: "Invalid OTP.",
@@ -486,7 +513,7 @@ const resetPassword = async (req, res) => {
   try {
     const { email, otp, newPassword } = req.body;
 
-    if (!email || !otp || !newPassword) {
+    if (typeof email !== "string" || !email.trim() || typeof otp !== "string" || !/^\d{6}$/.test(otp) || typeof newPassword !== "string" || !newPassword) {
       return res.status(400).json({
         success: false,
         message: "Email, OTP and new password are required.",
@@ -503,7 +530,7 @@ const resetPassword = async (req, res) => {
     const cleanEmail = email.trim().toLowerCase();
 
     const [resets] = await db.query(
-      `SELECT id, email, otp, otp_expires_at
+      `SELECT id, email, otp, otp_expires_at, attempts
        FROM password_resets
        WHERE email = ?
        LIMIT 1`,
@@ -519,7 +546,13 @@ const resetPassword = async (req, res) => {
 
     const reset = resets[0];
 
-    if (reset.otp !== otp.toString()) {
+    if (Number(reset.attempts) >= 5) {
+      await db.query("DELETE FROM password_resets WHERE id = ?", [reset.id]);
+      return res.status(429).json({ success: false, message: "Too many invalid codes. Please request a new OTP." });
+    }
+    if (reset.otp !== otpDigest(otp)) {
+      await db.query("UPDATE password_resets SET attempts = attempts + 1 WHERE id = ?", [reset.id]);
+      await db.query("DELETE FROM password_resets WHERE id = ? AND attempts >= 5", [reset.id]);
       return res.status(400).json({
         success: false,
         message: "Invalid OTP.",
@@ -544,6 +577,8 @@ const resetPassword = async (req, res) => {
       "UPDATE users SET password = ? WHERE email = ?",
       [hashedPassword, cleanEmail]
     );
+
+    await db.query("UPDATE users SET token_version = COALESCE(token_version, 0) + 1 WHERE email = ?", [cleanEmail]);
 
     await db.query(
       "DELETE FROM password_resets WHERE email = ?",

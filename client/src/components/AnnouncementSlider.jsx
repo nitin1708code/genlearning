@@ -11,13 +11,13 @@ const announcements = [
   {
     label: "REGISTRATION OPEN",
     message: "Join GENLearning today",
-    to: "/register",
+    to: "/contact",
     type: "new",
   },
   {
     label: "SPECIAL OFFER",
-    message: "Explore courses and available offers",
-    to: "/courses",
+    message: "Explore mentor and available offers",
+    to: "/mentoring",
     type: "offer",
   },
   {

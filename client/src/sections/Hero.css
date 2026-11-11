@@ -749,3 +749,220 @@
     transition: none;
   }
 }
+
+/* ==========================================================
+   APPEND THIS AT THE END OF YOUR Hero.css
+   (your existing .hero-carousel-* styles stay as they are)
+   ========================================================== */
+
+/* Background layer: holds the colored tone and, if it loads, the photo */
+.hero-carousel-bg {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background:
+    radial-gradient(120% 90% at 85% 0%, var(--tone-glow) 0%, transparent 55%),
+    linear-gradient(160deg, var(--tone-1) 0%, var(--tone-2) 100%);
+}
+
+.hero-carousel-bg .hero-carousel-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Four tones, one per slide */
+.hero-tone-teal   { --tone-accent: #2fd0b8; --tone-1: #0f3a35; --tone-2: #06130f; --tone-glow: rgba(47, 208, 184, 0.28); }
+.hero-tone-blue   { --tone-accent: #7db2ff; --tone-1: #12294d; --tone-2: #060d1c; --tone-glow: rgba(125, 178, 255, 0.28); }
+.hero-tone-violet { --tone-accent: #b79dff; --tone-1: #261a4d; --tone-2: #0b0719; --tone-glow: rgba(183, 157, 255, 0.28); }
+.hero-tone-amber  { --tone-accent: #ffbd5c; --tone-1: #3d2808; --tone-2: #140b02; --tone-glow: rgba(255, 189, 92, 0.26); }
+
+/* Make sure overlay, caption and controls sit above the background */
+.hero-carousel-overlay { z-index: 1; }
+.hero-carousel-caption { z-index: 2; }
+.hero-carousel-arrow,
+.hero-carousel-counter,
+.hero-carousel-pause { z-index: 3; }
+
+/* Tag pill above the title (sentence case, replaces the old GENLEARNING label) */
+.hero-carousel-label {
+  display: inline-block;
+  padding: 6px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.14);
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: normal;
+  text-transform: none;
+}
+
+/* Button inside the caption */
+.hero-carousel-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  margin-top: 18px;
+  padding: 0 22px;
+  border-radius: 12px;
+  background: #ffffff;
+  color: #101418;
+  font-size: 15px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: background-color 0.15s ease;
+}
+
+.hero-carousel-cta:hover {
+  background: #e9edf0;
+}
+
+/* Pause / play button, sits to the left of the counter.
+   If it overlaps your counter, change the "right" value. */
+.hero-carousel-pause {
+  position: absolute;
+  top: 20px;
+  right: 96px;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.16);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: #ffffff;
+  font-size: 11px;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.hero-carousel-pause:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* Keyboard focus */
+.hero-carousel-cta:focus-visible,
+.hero-carousel-pause:focus-visible,
+.hero-carousel-arrow:focus-visible,
+.hero-carousel-dot:focus-visible {
+  outline: 2px solid #ffffff;
+  outline-offset: 3px;
+}
+
+/* Phones */
+@media (max-width: 600px) {
+  .hero-carousel-cta {
+    width: 100%;
+  }
+
+  .hero-carousel-pause {
+    top: 14px;
+    right: 88px;
+  }
+}
+
+/* ==========================================================
+   HERO CAROUSEL FIXES
+   Paste this at the VERY END of Hero.css (after everything else),
+   so it overrides the earlier rules.
+   ========================================================== */
+
+/* 1. CTA button was not clickable: the caption has pointer-events: none */
+.hero-carousel-cta {
+  pointer-events: auto;
+}
+
+/* 2. "Source: ..." line. Needs the longer selector, otherwise
+      ".hero-carousel-caption p" (14px, bright) wins over it. */
+.hero-carousel-caption .hero-carousel-source {
+  max-width: 420px;
+  margin: 10px 0 0;
+  color: rgba(255, 255, 255, 0.62);
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+/* 3. Square card, so the text has room and does not cover the artwork.
+      object-position keeps the whole illustration inside the square crop. */
+.hero-carousel-image-wrapper {
+  aspect-ratio: 1 / 1;
+}
+
+.hero-carousel-bg .hero-carousel-image {
+  object-position: 100% 50%;
+}
+
+/* 4. Darker bottom half so white text stays readable over the artwork */
+.hero-carousel-overlay {
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0) 0%,
+    rgba(0, 0, 0, 0.1) 35%,
+    rgba(0, 0, 0, 0.7) 62%,
+    rgba(0, 0, 0, 0.92) 100%
+  );
+}
+
+/* 5. Arrows moved to the bottom-right, next to the CTA button.
+      In the middle they sat on top of the text. */
+.hero-carousel-arrow {
+  top: auto;
+  bottom: 39px;
+  transform: none;
+}
+
+.hero-carousel-prev {
+  left: auto;
+  right: 72px;
+}
+
+.hero-carousel-next {
+  left: auto;
+  right: 22px;
+}
+
+/* 6. Pause button: a little further from the counter */
+.hero-carousel-pause {
+  right: 108px;
+}
+
+/* ---------- Phones ---------- */
+@media (max-width: 600px) {
+  .hero-carousel-caption {
+    bottom: 22px;
+  }
+
+  /* Keep the card readable: show tag, title and button only */
+  .hero-carousel-caption p {
+    display: none;
+  }
+
+  /* Button no longer full width, so the arrows fit beside it */
+  .hero-carousel-cta {
+    width: auto;
+    margin-top: 14px;
+  }
+
+  .hero-carousel-arrow {
+    bottom: 22px;
+  }
+
+  .hero-carousel-prev {
+    right: 58px;
+  }
+
+  .hero-carousel-next {
+    right: 14px;
+  }
+
+  .hero-carousel-pause {
+    right: 88px;
+  }
+}

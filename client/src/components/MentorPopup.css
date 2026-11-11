@@ -1,5 +1,36 @@
+/* ---------- Theme tokens (light by default, matches genlearning.in) ---------- */
+.mp-overlay {
+  --mp-bg: #ffffff;
+  --mp-text: #14171a;
+  --mp-muted: #50575f;
+  --mp-border: #e3e6ea;
+  --mp-accent: #0a8f7c;          /* teal from the logo; adjust to your exact brand color */
+  --mp-accent-soft: #e6f5f2;
+  --mp-btn-bg: #111418;
+  --mp-btn-text: #ffffff;
+  --mp-btn-hover: #2a2f36;
+  --mp-focus: #0a8f7c;
+  --mp-backdrop: rgba(15, 18, 22, 0.55);
+}
 
-.mentor-popup-overlay {
+/* Dark mode: works with the site's theme toggle if it sets one of these. */
+[data-theme="dark"] .mp-overlay,
+.dark .mp-overlay {
+  --mp-bg: #14171b;
+  --mp-text: #f3f5f7;
+  --mp-muted: #a7aeb6;
+  --mp-border: #2b3037;
+  --mp-accent: #2fd0b8;
+  --mp-accent-soft: #123530;
+  --mp-btn-bg: #f3f5f7;
+  --mp-btn-text: #111418;
+  --mp-btn-hover: #d9dde1;
+  --mp-focus: #2fd0b8;
+  --mp-backdrop: rgba(0, 0, 0, 0.7);
+}
+
+/* ---------- Overlay ---------- */
+.mp-overlay {
   position: fixed;
   inset: 0;
   z-index: 99999;
@@ -7,238 +38,203 @@
   justify-content: center;
   align-items: center;
   padding: 20px;
-  background: rgba(0, 0, 0, 0.78);
-  backdrop-filter: blur(9px);
-  -webkit-backdrop-filter: blur(9px);
-  animation: mentorOverlayIn 0.3s ease;
+  overflow-y: auto;
+  background: var(--mp-backdrop);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  animation: mp-fade 0.25s ease;
 }
 
-.mentor-popup {
+/* ---------- Dialog ---------- */
+.mp-dialog {
   position: relative;
   width: 100%;
-  max-width: 490px;
-  overflow: hidden;
-  border: 1px solid #30343a;
-  border-radius: 22px;
-  background:
-    radial-gradient(
-      circle at 100% 0%,
-      rgba(0, 190, 160, 0.10),
-      transparent 38%
-    ),
-    #090b0e;
-  box-shadow: 0 25px 90px rgba(0, 0, 0, 0.65);
-  animation: mentorPopupIn 0.4s ease;
+  max-width: 460px;
+  max-height: calc(100dvh - 40px);
+  overflow-y: auto;
+  border: 1px solid var(--mp-border);
+  border-radius: 20px;
+  background: var(--mp-bg);
+  color: var(--mp-text);
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.28);
+  animation: mp-rise 0.3s ease;
 }
 
-.mentor-popup-content {
-  position: relative;
-  padding: 36px;
+.mp-body {
+  padding: 36px 32px 30px;
 }
 
-.mentor-popup-brand {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  color: #f5f5f5;
-  font-size: 13px;
-  font-weight: 700;
-  letter-spacing: 1.2px;
-}
-
-.mentor-brand-icon {
-  width: 35px;
-  height: 35px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 10px;
-  color: #00c7a5;
-  background: #10201e;
-  border: 1px solid #17443c;
-  font-size: 19px;
-  font-weight: 800;
-}
-
-.mentor-popup-close {
+/* ---------- Close ---------- */
+.mp-close {
   position: absolute;
-  top: 20px;
-  right: 20px;
-  width: 36px;
-  height: 36px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border: 1px solid #34383e;
-  border-radius: 50%;
-  background: #171a1e;
-  color: #ffffff;
-  font-size: 25px;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-  z-index: 10;
-  pointer-events: auto;
-}
-
-.mentor-popup-close:hover {
-  background: #292e34;
-  border-color: #00c7a5;
-  transform: none;
-}
-
-.mentor-popup-label {
-  display: inline-block;
-  margin-top: 42px;
-  color: #00c7a5;
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 2px;
-}
-
-.mentor-popup h2 {
-  margin: 15px 0 0;
-  color: #ffffff;
-  font-size: clamp(35px, 7vw, 48px);
-  line-height: 1.08;
-  font-weight: 750;
-  letter-spacing: -2px;
-}
-
-.mentor-popup h2 span {
-  display: block;
-  margin-top: 5px;
-  color: #00c7a5;
-  font-size: clamp(43px, 8vw, 59px);
-  letter-spacing: -2.5px;
-}
-
-.mentor-popup-description {
-  margin: 18px 0 28px;
-  color: #a4a9b0;
-  font-size: 14px;
-  line-height: 1.7;
-}
-
-/* Find Your Mentor Button - Simple Design */
-.mentor-popup-button {
-  position: relative;
-  z-index: 2;
-  width: 100%;
-  min-height: 54px;
+  top: 14px;
+  right: 14px;
+  width: 44px;                    /* 44px touch target */
+  height: 44px;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 18px;
   border: none;
-  border-radius: 10px;
-  background: #00a98f;
-  color: #ffffff;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--mp-muted);
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.mp-close:hover {
+  background: var(--mp-accent-soft);
+  color: var(--mp-text);
+}
+
+/* ---------- Text ---------- */
+.mp-brand {
+  margin: 0 0 14px;
+  padding-right: 44px;            /* keep clear of the close button */
+  color: var(--mp-accent);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.mp-title {
+  margin: 0;
+  color: var(--mp-text);
+  font-size: clamp(26px, 6vw, 32px);
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+.mp-desc {
+  margin: 14px 0 0;
+  color: var(--mp-muted);
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+/* ---------- Points ---------- */
+.mp-points {
+  margin: 22px 0 0;
+  padding: 18px 0 0;
+  list-style: none;
+  display: grid;
+  gap: 12px;
+  border-top: 1px solid var(--mp-border);
+}
+
+.mp-points li {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  color: var(--mp-text);
+  font-size: 14.5px;
+  line-height: 1.45;
+}
+
+.mp-points svg {
+  flex: none;
+  margin-top: 1px;
+  padding: 3px;
+  box-sizing: content-box;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--mp-accent-soft);
+  color: var(--mp-accent);
+}
+
+/* ---------- Actions ---------- */
+.mp-actions {
+  margin-top: 28px;
+  display: grid;
+  gap: 8px;
+}
+
+.mp-btn {
+  min-height: 50px;
+  width: 100%;
+  border: none;
+  border-radius: 12px;
+  font: inherit;
   font-size: 15px;
   font-weight: 600;
   cursor: pointer;
-  transition: background-color 0.2s ease;
-  pointer-events: auto;
+  transition: background-color 0.15s ease, color 0.15s ease;
 }
 
-.mentor-popup-button:hover {
-  background: #009b83;
-  transform: none;
-  box-shadow: none;
+.mp-btn-primary {
+  background: var(--mp-btn-bg);
+  color: var(--mp-btn-text);
 }
 
-.mentor-popup-button:active {
-  transform: none;
-  box-shadow: none;
+.mp-btn-primary:hover {
+  background: var(--mp-btn-hover);
 }
 
-.mentor-popup-button span {
-  font-size: 20px;
+.mp-btn-ghost {
+  background: transparent;
+  color: var(--mp-muted);
+  font-weight: 500;
 }
 
-.mentor-popup-footer {
-  margin: 19px 0 0;
-  color: #666e77;
-  font-size: 11px;
-  text-align: center;
+.mp-btn-ghost:hover {
+  color: var(--mp-text);
+  background: var(--mp-accent-soft);
 }
 
-/* Popup Animations */
-@keyframes mentorOverlayIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+/* ---------- Keyboard focus ---------- */
+.mp-btn:focus-visible,
+.mp-close:focus-visible {
+  outline: 2px solid var(--mp-focus);
+  outline-offset: 3px;
 }
 
-@keyframes mentorPopupIn {
-  from {
-    opacity: 0;
-    transform: translateY(18px) scale(0.97);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
+/* ---------- Animations ---------- */
+@keyframes mp-fade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
 }
 
-/* Mobile Responsive */
+@keyframes mp-rise {
+  from { opacity: 0; transform: translateY(14px) scale(0.98); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* ---------- Small screens ---------- */
 @media (max-width: 480px) {
-  .mentor-popup-overlay {
-    padding: 18px;
+  .mp-overlay {
+    padding: 14px;
+    align-items: flex-end;        /* bottom-sheet feel on phones */
   }
 
-  .mentor-popup {
+  .mp-dialog {
     max-width: 100%;
     border-radius: 18px;
+    max-height: calc(100dvh - 28px);
   }
 
-  .mentor-popup-content {
-    padding: 27px 23px;
+  .mp-body {
+    padding: 30px 22px 22px;
   }
 
-  .mentor-popup-label {
-    margin-top: 35px;
-    font-size: 9px;
-  }
-
-  .mentor-popup h2 {
-    font-size: 36px;
-  }
-
-  .mentor-popup h2 span {
-    font-size: 46px;
-  }
-
-  .mentor-popup-description {
-    font-size: 13px;
-  }
-
-  .mentor-popup-close {
-    top: 16px;
-    right: 16px;
-  }
+  .mp-desc { font-size: 14px; }
+  .mp-points li { font-size: 14px; }
 }
 
 @media (max-width: 350px) {
-  .mentor-popup-content {
-    padding: 24px 18px;
-  }
-
-  .mentor-popup h2 {
-    font-size: 31px;
-  }
-
-  .mentor-popup h2 span {
-    font-size: 40px;
-  }
+  .mp-body { padding: 26px 18px 18px; }
+  .mp-title { font-size: 24px; }
 }
 
-/* Reduced Motion Accessibility */
+/* ---------- Reduced motion ---------- */
 @media (prefers-reduced-motion: reduce) {
-  .mentor-popup-overlay,
-  .mentor-popup {
+  .mp-overlay,
+  .mp-dialog {
     animation: none;
+  }
+
+  .mp-btn,
+  .mp-close {
+    transition: none;
   }
 }

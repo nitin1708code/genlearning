@@ -18,17 +18,22 @@ import "./Hero.css";
    you keep a news slide up for long.
 ------------------------------------------------------------------- */
 const heroSlides = [
-  {
-    id: "education-day",
-    image: "/images/hero/news1.jpg",
-    tone: "amber",
-    tag: "News · 11 November",
-    title: "Today is National Education Day",
-    description:
-      "India remembers Maulana Abul Kalam Azad, the country's first education minister, on his birth anniversary every year.",
-    source: "National Education Day, observed annually on 11 November",
-    cta: { label: "Start learning", to: "/courses" },
+ 
+{
+  id: "national-scholarship-2026",
+  image: "/images/hero/news2.jpg",
+  tone: "blue",
+  tag: "Student Opportunity · November 2026",
+  title: "Multiple Scholarships Open for Students – 2026–27",
+  description:
+    "Explore Central Government scholarship opportunities for school, college, technical and postgraduate students. Check eligibility and application deadlines.",
+  source: "National Scholarship Portal · Government of India",
+  cta: {
+    label: "Explore Scholarships",
+    href: "https://scholarships.gov.in/All-Scholarships"
   },
+},
+
   {
     id: "cbse-2027-dates",
     image: "/images/hero/news2.jpg",

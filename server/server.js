@@ -23,7 +23,8 @@ app.use(
   cors({
     origin: [
       "http://localhost:5173",
-      "https://genlearning.in"
+      "https://genlearning.in",
+      "https://www.genlearning.in"
     ],
     credentials: true
   })

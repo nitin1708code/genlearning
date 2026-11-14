@@ -227,10 +227,6 @@ if (!clickedDesktopServices && !clickedMobileServices) {
       path: "/",
     },
     {
-      name: "Courses",
-      path: "/courses",
-    },
-    {
       name: "Projects",
       path: "/projects",
     },
@@ -328,6 +324,9 @@ if (!clickedDesktopServices && !clickedMobileServices) {
                 </NavLink>
                 <NavLink to="/training" onClick={handleNavClick}>
                   Training
+                </NavLink>
+                <NavLink to="/courses" onClick={handleNavClick}>
+                  Courses
                 </NavLink>
               </div>
             </div>
@@ -635,6 +634,17 @@ if (!clickedDesktopServices && !clickedMobileServices) {
   }}
 >
   Training
+            </NavLink>
+            <NavLink
+              to="/courses"
+              className="mobile-link"
+              onClick={() => {
+                setMenuOpen(false);
+                setServicesOpen(false);
+                navigate("/courses");
+              }}
+            >
+              Courses
             </NavLink>
           </div>
         </div>

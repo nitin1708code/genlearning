@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { InView } from "../components/motion-primitives/in-view";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 const Courses = () => {
   const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -20,9 +22,7 @@ const Courses = () => {
   useEffect(() => {
     const fetchCourses = async () => {
       try {
-        const response = await fetch(
-          "https://genlearning-production.up.railway.app/api/courses"
-        );
+        const response = await fetch(`${API_URL}/api/courses`);
 
         const data = await response.json();
 

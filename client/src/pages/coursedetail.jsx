@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { InView } from "../components/motion-primitives/in-view";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 const CourseDetail = () => {
   const { courseId } = useParams();
   const navigate = useNavigate();
@@ -23,7 +25,7 @@ const CourseDetail = () => {
         setError("");
 
         const response = await fetch(
-          `https://api.genlearning.in/api/courses/${courseId}`,
+          `${API_URL}/api/courses/${courseId}`,
           {
             cache: "no-store",
           }
@@ -66,7 +68,7 @@ const CourseDetail = () => {
 
       try {
         const response = await fetch(
-          "https://api.genlearning.in/api/enrollments/my",
+          `${API_URL}/api/enrollments/my`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -127,7 +129,7 @@ const CourseDetail = () => {
       // ========================================
 
       const orderResponse = await fetch(
-        "https://api.genlearning.in/api/payments/create-order",
+        `${API_URL}/api/payments/create-order`,
         {
           method: "POST",
 
@@ -174,7 +176,7 @@ const CourseDetail = () => {
           // ========================================
 
           const verifyResponse = await fetch(
-            "https://api.genlearning.in/api/payments/verify-payment",
+            `${API_URL}/api/payments/verify-payment`,
             {
               method: "POST",
 

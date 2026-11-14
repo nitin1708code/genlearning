@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { InView } from "../components/motion-primitives/in-view";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 const Contact = () => {
   const [formData, setFormData] = useState({
     name: "",
@@ -27,7 +29,7 @@ const Contact = () => {
 
     try {
       const response = await fetch(
-        "https://api.genlearning.in/api/contact",
+        `${API_URL}/api/contact`,
         {
           method: "POST",
 

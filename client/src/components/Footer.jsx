@@ -73,8 +73,8 @@ const Footer = () => {
 
           <div className="footer-column footer-contact">
             <h3>Let's Talk</h3>
-            <a href="mailto:genlearning8@gmail.com">
-              genlearning8@gmail.com
+            <a href="mailto:admin@genlearning.in">
+              admin@genlearning.in
             </a>
             <span>Lucknow, Uttar Pradesh</span>
             <Link to="/contact" className="footer-contact-link">

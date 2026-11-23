@@ -1,10 +1,11 @@
-const CACHE_NAME = "gen-learning-shell-v1";
+const CACHE_NAME = "gen-learning-shell-v2";
 const APP_SHELL = [
   "/",
   "/manifest.webmanifest",
   "/favicon.webp",
   "/pwa-icon-192.png",
   "/pwa-icon-512.png",
+  "/pwa-icon-maskable-512.png",
 ];
 
 self.addEventListener("install", (event) => {
